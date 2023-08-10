@@ -1,0 +1,22 @@
+{
+  "name": "minijs",
+  "version": "1.0.0",
+  "files":["dist"],
+  "main":"./dist/mini.umd.js",
+  "module":"./dist/mini.es.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^4.4.8"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/YOUR_LIBRARY_NAME.es.js",
+      "require": "./dist/YOUR_LIBRARY_NAME.umd.js"
+    }
+  }
+}
