@@ -1,2 +1,6 @@
-/node_modules
+.env*
+node_modules
+dist
 yarn.lock
+yarn-error.log
+.DS_STORE
