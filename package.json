@@ -4,6 +4,7 @@
   "files":["dist"],
   "main":"./dist/mini.umd.js",
   "module":"./dist/mini.es.js",
+  "author": "Jen Villaganas",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
