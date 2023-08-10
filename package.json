@@ -18,5 +18,13 @@
       "import": "./dist/YOUR_LIBRARY_NAME.es.js",
       "require": "./dist/YOUR_LIBRARY_NAME.umd.js"
     }
+  },
+  "auto": {
+    "plugins": [
+      "npm",
+      "all-contributors",
+      "first-time-contributor",
+      "released"
+    ]
   }
 }
