@@ -1,9 +1,11 @@
 {
   "name": "minijs",
   "version": "1.0.0",
-  "files":["dist"],
-  "main":"./dist/mini.umd.js",
-  "module":"./dist/mini.es.js",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/mini.umd.js",
+  "module": "./dist/mini.es.js",
   "author": "Jen Villaganas",
   "license": "MIT",
   "scripts": {
@@ -16,6 +18,7 @@
     "@auto-it/all-contributors": "^9.35.1",
     "@auto-it/first-time-contributor": "^9.35.1",
     "all-contributors-cli": "^6.14.2",
+    "auto": "^11.0.1",
     "vite": "^4.4.8"
   },
   "exports": {
