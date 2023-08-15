@@ -13,7 +13,7 @@
   <script>hljs.highlightAll();</script>
 </head>
 
-<body>
+<body class="pb-64">
   <div class="flex items-center justify-center p-10">
     <h1 class="text-3xl text-black font-mono font-bold">MiniJS</h1>
   </div>
@@ -313,6 +313,48 @@
         </pre>
       </div>
     </div>
+    </div>
+  </section>
+
+  <section class="p-5 bg-gray-100 mt-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold font-mono">Multi Select:</h3>
+        <button :click="showCode4 = !showCode4"
+          class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50 ">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-4 h-4 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          </svg>
+          SHOW CODE
+        </button>
+      </div>
+
+      <div>
+        <div :load="allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; filteredTags = []; selectedTags = [];">
+          <input type="hidden" :value="selectedTags">
+
+          <input type="text" class="w-full py-2 px-2" :change="filteredTags.toggle(allTags.search(this.value))" :enter="selectedTags.toggle(filteredTags[0]); filteredTags.toggle(filteredTags[0])" />
+
+          <div :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
+            <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
+            <div :each="tag in filteredTags">
+              <div :click="selectedTags.toggle(tag); filteredTags.toggle(tag)" class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700">
+                <span :text="tag" ></span>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-2">Selected Tags:</p>
+          <div class="flex items-center space-x-2" :each="tag in selectedTags">
+            <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
+              <span :text="tag" class="font-semibold font-mono text-xs"></span>
+              <span class="text-xs text-blue-800 font-semibold ml-2 cursor-pointer" :click="selectedTags.toggle(tag)">x</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </body>
