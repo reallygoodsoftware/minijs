@@ -106,23 +106,26 @@ const MiniJS$1 = (() => {
   function _addMethodsToVariables() {
     _variables.forEach((e) => {
       if (Array.isArray(proxyWindow[e])) {
-        let r = function(a) {
-          let i;
-          if (Array.isArray(a))
-            i = a;
+        let r = function(i) {
+          let s;
+          if (Array.isArray(i))
+            s = i;
           else {
-            let s = this.indexOf(a);
-            s === -1 ? i = this.concat(a) : i = this.slice(0, s).concat(this.slice(s + 1));
+            let a = this.indexOf(i);
+            a === -1 ? s = this.concat(i) : s = this.slice(0, a).concat(this.slice(a + 1));
           }
-          proxyWindow[e] = i, proxyWindow[e].toggle = r;
-        }, o = function(a, i) {
-          const s = a.toLowerCase(), h = i.filter((c) => c.toLowerCase().includes(s));
-          return h.sort((c, d) => Math.abs(s.length - c.length) - Math.abs(s.length - d.length)), h;
-        }, u = function(a) {
-          return o(a, this);
+          proxyWindow[e] = s, proxyWindow[e].toggle = r;
+        }, c = function(i, s) {
+          const a = i.toLowerCase().split(/\s+/);
+          return s.filter((u) => {
+            const h = u.toLowerCase();
+            return a.every((d) => h.includes(d));
+          });
+        }, o = function(i) {
+          return c(i, this);
         };
-        var t = r, n = o, l = u;
-        proxyWindow[e].search = u, proxyWindow[e].toggle = r;
+        var t = r, n = c, l = o;
+        proxyWindow[e].search = o, proxyWindow[e].toggle = r;
       }
     });
   }
