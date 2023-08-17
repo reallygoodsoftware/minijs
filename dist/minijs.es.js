@@ -13,7 +13,7 @@ class Entity {
   }
   _eventAction(e) {
     const t = this.element.getAttribute(e);
-    return console.log(t), this._sanitizeExpression(t);
+    return this._sanitizeExpression(t);
   }
   _sanitizeExpression(e) {
     return this.variables.forEach((t) => {
@@ -77,14 +77,20 @@ class Entity {
   }
   applyEventBindings() {
     const e = this.element;
-    e.hasAttribute(":click") && e.addEventListener("click", () => {
+    e.hasAttribute(":click") && e.addEventListener("click", (t) => {
       this.evaluateEventAction(":click");
-    }), e.hasAttribute(":change") && (e.type == "checkbox" || e.tagName == "select" ? e.addEventListener("change", () => {
+    }), e.hasAttribute(":change") && (e.type == "checkbox" || e.tagName == "select" ? e.addEventListener("change", (t) => {
       this.evaluateEventAction(":change");
-    }) : e.addEventListener("input", () => {
+    }) : e.addEventListener("input", (t) => {
       this.evaluateEventAction(":change");
     })), e.hasAttribute(":enter") && e.addEventListener("keypress", (t) => {
       t.key == "Enter" && this.evaluateEventAction(":enter");
+    }), e.hasAttribute(":keypress") && e.addEventListener("keypress", (t) => {
+      this.evaluateEventAction(":keypress");
+    }), e.hasAttribute(":keydown") && e.addEventListener("keydown", (t) => {
+      this.evaluateEventAction(":keydown");
+    }), e.hasAttribute(":keyup") && e.addEventListener("keyup", (t) => {
+      this.evaluateEventAction(":keyup");
     }), document.addEventListener("click", (t) => {
       e.hasAttribute(":clickout") && !e.contains(t.target) && this.evaluateEventAction(":clickout");
     });
@@ -93,20 +99,26 @@ class Entity {
     return !!this.element.getAttribute(e);
   }
 }
+let nativeProps = Object.getOwnPropertyNames(window);
 const MiniJS$1 = (() => {
-  const _elements = [], _variables = [], _actionEvents = [":click", ":change", ":input", ":keypress"], _loadEvent = ":load", watchHandler = {
+  let _elements = [], _variables = [];
+  const _actionEvents = [":click", ":change", ":input", ":keypress"], _loadEvent = ":load", watchHandler = {
     set: function(e, t, n) {
-      return e[t] = n, t[0] === "$" && localStorage.setItem(t, JSON.stringify(n)), _variables.includes(t) && updateStates(t), !0;
+      return e[t] = n, t[0] === "$" && localStorage.setItem(t, JSON.stringify(n)), _variables.includes(t) && (updateStates(t), _addMethodsToVariables([t])), !0;
     }
   };
   window.proxyWindow = null;
   async function init() {
     await _domReady(), _findElements(), _initializeGlobalVariables(), _setProxyWindow(), _addMethodsToVariables(), _applyBindings(), updateStates();
   }
-  function _addMethodsToVariables() {
-    _variables.forEach((e) => {
-      if (Array.isArray(proxyWindow[e])) {
-        let r = function(i) {
+  function _addMethodsToVariables(e = _variables) {
+    e.forEach((t) => {
+      if (Array.isArray(proxyWindow[t])) {
+        let r = function() {
+          return proxyWindow[t][0];
+        }, o = function() {
+          return proxyWindow[t][proxyWindow[t].length - 1];
+        }, c = function(i) {
           let s;
           if (Array.isArray(i))
             s = i;
@@ -114,18 +126,24 @@ const MiniJS$1 = (() => {
             let a = this.indexOf(i);
             a === -1 ? s = this.concat(i) : s = this.slice(0, a).concat(this.slice(a + 1));
           }
-          proxyWindow[e] = s, proxyWindow[e].toggle = r;
-        }, c = function(i, s) {
+          proxyWindow[t] = s;
+        }, u = function(i) {
+          let s;
+          this.indexOf(i) === -1 && (s = this.concat(i), proxyWindow[t] = s);
+        }, d = function(i) {
+          let s, a = this.indexOf(i);
+          a !== -1 && (s = this.slice(0, a).concat(this.slice(a + 1)), proxyWindow[t] = s);
+        }, h = function(i, s) {
           const a = i.toLowerCase().split(/\s+/);
-          return s.filter((u) => {
-            const h = u.toLowerCase();
-            return a.every((d) => h.includes(d));
+          return s.filter((p) => {
+            const f = p.toLowerCase();
+            return a.every((E) => f.includes(E));
           });
-        }, o = function(i) {
-          return c(i, this);
+        }, m = function(i) {
+          return h(i, this);
         };
-        var t = r, n = c, l = o;
-        proxyWindow[e].search = o, proxyWindow[e].toggle = r;
+        var n = r, l = o, w = c, v = u, x = d, y = h, g = m;
+        proxyWindow[t].first = r(), proxyWindow[t].last = o(), proxyWindow[t].remove = d, proxyWindow[t].add = u, proxyWindow[t].toggle = c, proxyWindow[t].search = m;
       }
     });
   }
@@ -133,7 +151,8 @@ const MiniJS$1 = (() => {
     proxyWindow = new Proxy(window, watchHandler);
   }
   function _initializeGlobalVariables() {
-    _elements.forEach((entity) => {
+    let currentProps = Object.getOwnPropertyNames(window);
+    _variables = currentProps.filter((e) => !nativeProps.includes(e)), _elements.forEach((entity) => {
       const el = entity.element, loadExpr = el.getAttribute(_loadEvent);
       if (loadExpr) {
         const assignments = loadExpr.split(";").map((e) => e.trim()).filter((e) => e.length > 0);
@@ -195,6 +214,9 @@ const MiniJS$1 = (() => {
     },
     get variables() {
       return [..._variables];
+    },
+    get window() {
+      return proxyWindow;
     }
   };
 })();

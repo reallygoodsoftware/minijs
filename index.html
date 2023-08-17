@@ -332,29 +332,73 @@
       </div>
 
       <div>
-        <div :load="allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; filteredTags = []; selectedTags = [];">
+        <script>
+          window.allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; 
+          window.filteredTags = []; 
+          window.selectedTags = [];
+        </script>
+        <div>
           <input type="hidden" :value="selectedTags">
 
-          <input type="text" class="w-full py-2 px-2" :change="filteredTags.toggle(allTags.search(this.value))" :enter="selectedTags.toggle(filteredTags[0]); filteredTags.toggle(filteredTags[0])" />
+          <input type="text" class="w-full py-2 px-2" :change="filteredTags = allTags.search(this.value)" :enter="selectedTags.add(filteredTags.first); filteredTags.remove(filteredTags.first)" />
 
-          <div :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
+          <div :clickout="filteredTags = []" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
             <div :each="tag in filteredTags">
-              <div :click="selectedTags.toggle(tag); filteredTags.toggle(tag)" class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700">
+              <div :click="selectedTags.add(tag); this.classList.add('hidden')" class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700">
                 <span :text="tag" ></span>
               </div>
             </div>
           </div>
 
+
           <p class="mt-2">Selected Tags:</p>
           <div class="flex items-center space-x-2" :each="tag in selectedTags">
             <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
               <span :text="tag" class="font-semibold font-mono text-xs"></span>
-              <span class="text-xs text-blue-800 font-semibold ml-2 cursor-pointer" :click="selectedTags.toggle(tag)">x</span>
+              <span class="text-xs text-blue-800 font-semibold ml-2 cursor-pointer" :click="selectedTags.remove(tag)">x</span>
             </div>
           </div>
         </div>
       </div>
+
+
+      <div :class="showCode4 ? 'block' : 'hidden'">
+        <pre>
+          <code class="language-html text-xs overflow-hidden rounded-lg">
+&lt;script&gt;
+  window.allTags = [&apos;Tag 1&apos;, &apos;Tag 2&apos;, &apos;Tag 3&apos;, &apos;Tag 4&apos;]; 
+  window.filteredTags = []; 
+  window.selectedTags = [];
+&lt;/script&gt;
+&lt;div&gt;
+  &lt;input type=&quot;hidden&quot; :value=&quot;selectedTags&quot;&gt;
+
+  &lt;input type=&quot;text&quot; class=&quot;w-full py-2 px-2&quot; :change=&quot;filteredTags = allTags.search(this.value)&quot; :enter=&quot;selectedTags.add(filteredTags.first); filteredTags.remove(filteredTags.first)&quot; /&gt;
+
+  &lt;div :clickout=&quot;filteredTags = []&quot; :class=&quot;filteredTags.length ? &apos;&apos; : &apos;hidden&apos; &quot;  class=&quot;bg-white rounded&quot;&gt;
+    &lt;p class=&quot;p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed&quot;&gt;Search Result:&lt;/p&gt;
+    &lt;div :each=&quot;tag in filteredTags&quot;&gt;
+      &lt;div :click=&quot;selectedTags.add(tag); this.classList.add(&apos;hidden&apos;)&quot; class=&quot;text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700&quot;&gt;
+        &lt;span :text=&quot;tag&quot; &gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+  &lt;p class=&quot;mt-2&quot;&gt;Selected Tags:&lt;/p&gt;
+  &lt;div class=&quot;flex items-center space-x-2&quot; :each=&quot;tag in selectedTags&quot;&gt;
+    &lt;div class=&quot;flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700&quot; &gt;
+      &lt;span :text=&quot;tag&quot; class=&quot;font-semibold font-mono text-xs&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;text-xs text-blue-800 font-semibold ml-2 cursor-pointer&quot; :click=&quot;selectedTags.remove(tag)&quot;&gt;x&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+          </code>
+        </pre>
+      </div>
+
     </div>
   </section>
 </body>
