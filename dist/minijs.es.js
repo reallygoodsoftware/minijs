@@ -2,11 +2,41 @@ class Entity {
   constructor(e) {
     this.element = e, this.tagName = e.tagName, this.initialState = {
       className: e.className
-    };
+    }, this.variables = [], this.id = this.generateEntityUUID();
   }
-  get variables() {
-    const e = MiniJS.variables, t = Array.from(this.element.attributes).map((l) => l.value).join(" ");
-    return e.filter((l) => t.includes(l));
+  setAsParent() {
+    this.uuid = this.id, this.element.dataset.uuid = this.uuid;
+  }
+  isParent() {
+    return !!this.uuid;
+  }
+  getActionVariables() {
+    this.allEvents.forEach((e) => {
+      const t = this.element.getAttribute(e);
+      if (t) {
+        const a = /(\$?\w+(\.\w+)?)\s*=/g;
+        let s;
+        for (; (s = a.exec(t)) !== null; )
+          if (s && !window.hasOwnProperty(s[1])) {
+            if (s[1].includes("el.")) {
+              const u = s[1].replace("el.", "");
+              this.setAsParent(), window[this.uuid] || (window[this.uuid] = {}), window[this.uuid][u] = MiniJS.tryFromLocal(s[1].replace("el.", this.uuid)), MiniJS.variables.push(this.uuid);
+            } else
+              window[s[1]] = MiniJS.tryFromLocal(s[1]);
+            MiniJS.variables.push(s[1]);
+          }
+      }
+    });
+  }
+  getVariables() {
+    const e = MiniJS.variables, t = Array.from(this.element.attributes).map((s) => s.value).join(" "), a = [...new Set(e.filter((s) => t.includes(s)))];
+    for (let s of a)
+      typeof window[s] == "function" && a.push(e.find((u) => window[s].toString().includes(u))), s.includes("el.") && !this.parent && (this.parent = this.getParent());
+    this.variables = a;
+  }
+  get allEvents() {
+    const e = MiniJS.allEvents, t = new Set(e);
+    return Array.from(this.element.attributes).map((u) => u.name).filter((u) => t.has(u));
   }
   get baseClasses() {
     return this.initialState.className.split(" ");
@@ -15,10 +45,44 @@ class Entity {
     const t = this.element.getAttribute(e);
     return this._sanitizeExpression(t);
   }
-  _sanitizeExpression(e) {
-    return this.variables.forEach((t) => {
-      e.includes(t) && !e.includes(`proxyWindow.${t}`) && (e = e.replace(t, `proxyWindow.${t}`));
-    }), e = e.replace("this", "this.element"), e;
+  _sanitizeExpression(expr) {
+    return this.variables.forEach((variable) => {
+      const exp = expr.split(";").find((e) => e.includes(variable));
+      if (exp)
+        if (exp.includes("el.")) {
+          window.temp = eval(`proxyWindow['${this.parent.uuid}']`);
+          let tempExpr = exp;
+          tempExpr = tempExpr.replaceAll(variable, `temp['${variable.replace("el.", "")}']`), eval(tempExpr);
+          const newVal = JSON.stringify(window.temp), newExpr = exp.replace(exp, `proxyWindow.${this.parent.uuid} = ${newVal};`);
+          expr = expr.replace(exp, newExpr);
+        } else
+          expr = expr.replace(variable, `proxyWindow.${variable}`);
+    }), expr = expr.replace("this", "this.element"), expr;
+  }
+  _sanitizeContentExpression(e) {
+    if (e.includes("el.")) {
+      let t = this.parent;
+      this.variables.forEach((a) => {
+        if (a.includes("el.")) {
+          const s = `proxyWindow.${t.uuid}['${a.replace("el.", "")}']`;
+          e = e.replace(a, s);
+        }
+      });
+    }
+    return e;
+  }
+  getParent() {
+    if (this.isParent())
+      return this;
+    {
+      let e = this.element, t = e.parentNode;
+      for (; !t.dataset.uuid; )
+        e = t, t = e.parentNode;
+      return MiniJS.elements.find((s) => s.uuid == t.dataset.uuid);
+    }
+  }
+  generateEntityUUID() {
+    return "Entity" + Date.now() + Math.floor(Math.random() * 1e4);
   }
   evaluateEventAction(attrName) {
     eval(this._eventAction(attrName));
@@ -26,7 +90,7 @@ class Entity {
   evaluateClass() {
     const classExpr = this.element.getAttribute(":class");
     if (classExpr) {
-      const newClassNames = eval(classExpr), classesCombined = [...this.baseClasses, ...newClassNames.split(" ")].join(" ");
+      const newClassNames = eval(this._sanitizeContentExpression(classExpr)), classesCombined = [...this.baseClasses, ...newClassNames.split(" ")].join(" ");
       this.element.className = classesCombined;
     }
   }
@@ -39,17 +103,10 @@ class Entity {
       items.forEach((e) => {
         newHTML += this.childClone.replaceAll(variable, `'${e}'`);
       }), this.element.innerHTML = newHTML;
-      const xpathResult = document.evaluate(
-        './/*[@*[starts-with(name(), ":")]]',
-        this.element,
-        // Use the current :each element as the context node
-        null,
-        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-        null
-      );
-      for (let e = 0; e < xpathResult.snapshotLength; e++) {
-        const t = new Entity(xpathResult.snapshotItem(e));
-        t.applyEventBindings(), t.evaluateAll();
+      const elements = this.element.querySelectorAll("*");
+      for (let e = 0; e < elements.length; e++) {
+        const t = new Entity(elements[e]);
+        t.getActionVariables(), t.getVariables(), t.applyEventBindings(), t.evaluateAll(), MiniJS.elements.push(t);
       }
     }
   }
@@ -59,8 +116,8 @@ class Entity {
   evaluateText() {
     const textExpr = this.element.getAttribute(":text");
     if (textExpr) {
-      const newText = eval(textExpr);
-      newText && (this.element.innerText = newText);
+      const newText = eval(this._sanitizeContentExpression(textExpr));
+      (newText || newText == "") && (this.element.innerText = newText);
     }
   }
   evaluateValue() {
@@ -77,7 +134,11 @@ class Entity {
   }
   applyEventBindings() {
     const e = this.element;
-    e.hasAttribute(":click") && e.addEventListener("click", (t) => {
+    this.allEvents.forEach((t) => {
+      e[t] = () => {
+        this.evaluateEventAction(t);
+      };
+    }), e.hasAttribute(":click") && e.addEventListener("click", (t) => {
       this.evaluateEventAction(":click");
     }), e.hasAttribute(":change") && (e.type == "checkbox" || e.tagName == "select" ? e.addEventListener("change", (t) => {
       this.evaluateEventAction(":change");
@@ -101,123 +162,138 @@ class Entity {
 }
 let nativeProps = Object.getOwnPropertyNames(window);
 const MiniJS$1 = (() => {
-  let _elements = [], _variables = [];
-  const _actionEvents = [":click", ":change", ":input", ":keypress"], _loadEvent = ":load", watchHandler = {
-    set: function(e, t, n) {
-      return e[t] = n, t[0] === "$" && localStorage.setItem(t, JSON.stringify(n)), _variables.includes(t) && (updateStates(t), _addMethodsToVariables([t])), !0;
+  window.proxyWindow = null;
+  let e = [], t = [], a = [], s = [":click", ":change", ":input", ":clickout"];
+  const u = {
+    set: function(n, i, o) {
+      return n[i] = o, i[0] === "$" && localStorage.setItem(i, JSON.stringify(o)), t.includes(i) && (f(i), p([i])), !0;
     }
   };
-  window.proxyWindow = null;
-  async function init() {
-    await _domReady(), _findElements(), _initializeGlobalVariables(), _setProxyWindow(), _addMethodsToVariables(), _applyBindings(), updateStates();
+  function b() {
+    const n = ["div", "a", "input", "textarea", "select", "button", "video", "audio", "img", "form", "details", "iframe", "canvas"], i = /* @__PURE__ */ new Set();
+    n.forEach((o) => {
+      const d = document.createElement(o);
+      for (let h in d)
+        h.startsWith("on") && i.add(h);
+    }), a = [...i];
   }
-  function _addMethodsToVariables(e = _variables) {
-    e.forEach((t) => {
-      if (Array.isArray(proxyWindow[t])) {
-        let r = function() {
-          return proxyWindow[t][0];
-        }, o = function() {
-          return proxyWindow[t][proxyWindow[t].length - 1];
-        }, c = function(i) {
-          let s;
-          if (Array.isArray(i))
-            s = i;
-          else {
-            let a = this.indexOf(i);
-            a === -1 ? s = this.concat(i) : s = this.slice(0, a).concat(this.slice(a + 1));
-          }
-          proxyWindow[t] = s;
-        }, u = function(i) {
-          let s;
-          this.indexOf(i) === -1 && (s = this.concat(i), proxyWindow[t] = s);
-        }, d = function(i) {
-          let s, a = this.indexOf(i);
-          a !== -1 && (s = this.slice(0, a).concat(this.slice(a + 1)), proxyWindow[t] = s);
-        }, h = function(i, s) {
-          const a = i.toLowerCase().split(/\s+/);
-          return s.filter((p) => {
-            const f = p.toLowerCase();
-            return a.every((E) => f.includes(E));
-          });
-        }, m = function(i) {
-          return h(i, this);
-        };
-        var n = r, l = o, w = c, v = u, x = d, y = h, g = m;
-        proxyWindow[t].first = r(), proxyWindow[t].last = o(), proxyWindow[t].remove = d, proxyWindow[t].add = u, proxyWindow[t].toggle = c, proxyWindow[t].search = m;
+  async function A() {
+    await _();
+    let n = performance.now();
+    S(), b(), L(), W(), p(), M(), k(), f();
+    const o = performance.now() - n;
+    console.log(`myFunction took ${o}ms to run.`);
+  }
+  function k() {
+    Object.defineProperty(Number.prototype, "times", {
+      get: function() {
+        return Array.from({ length: this });
       }
     });
   }
-  function _setProxyWindow() {
-    proxyWindow = new Proxy(window, watchHandler);
-  }
-  function _initializeGlobalVariables() {
-    let currentProps = Object.getOwnPropertyNames(window);
-    _variables = currentProps.filter((e) => !nativeProps.includes(e)), _elements.forEach((entity) => {
-      const el = entity.element, loadExpr = el.getAttribute(_loadEvent);
-      if (loadExpr) {
-        const assignments = loadExpr.split(";").map((e) => e.trim()).filter((e) => e.length > 0);
-        assignments.forEach((assignment) => {
-          const [varName, varVal] = assignment.replace(" ", "").split("=");
-          window[varName] = varName.startsWith("$") && JSON.parse(localStorage.getItem(varName)) || void 0, eval(assignment), _variables.push(varName);
-        });
-      } else
-        _actionEvents.forEach((e) => {
-          const t = el.getAttribute(e);
-          if (t) {
-            const n = t.match(/(\$?\w+)\s*=\s*/);
-            n && !window.hasOwnProperty(n[1]) && (window[n[1]] = n[1].startsWith("$") && JSON.parse(localStorage.getItem(n[1])) || void 0, _variables.push(n[1]));
+  function p(n = t) {
+    n.forEach((i) => {
+      if (Array.isArray(proxyWindow[i])) {
+        let m = function() {
+          return proxyWindow[i][0];
+        }, w = function() {
+          return proxyWindow[i][proxyWindow[i].length - 1];
+        }, E = function(r) {
+          let l;
+          if (Array.isArray(r))
+            l = r;
+          else {
+            let c = this.indexOf(r);
+            c === -1 ? l = this.concat(r) : l = this.slice(0, c).concat(this.slice(c + 1));
           }
-        });
+          proxyWindow[i] = l;
+        }, x = function(r) {
+          let l;
+          this.indexOf(r) === -1 && (l = this.concat(r), proxyWindow[i] = l);
+        }, v = function(r) {
+          let l, c = this.indexOf(r);
+          c !== -1 && (l = this.slice(0, c).concat(this.slice(c + 1)), proxyWindow[i] = l);
+        }, g = function(r, l) {
+          const c = r.toLowerCase().split(/\s+/);
+          return l.filter((P) => {
+            const C = P.toLowerCase();
+            return c.every((J) => C.includes(J));
+          });
+        }, y = function(r) {
+          return g(r, this);
+        };
+        var o = m, d = w, h = E, $ = x, O = v, z = g, H = y;
+        proxyWindow[i].first = m(), proxyWindow[i].last = w(), proxyWindow[i].remove = v, proxyWindow[i].add = x, proxyWindow[i].toggle = E, proxyWindow[i].search = y;
+      }
     });
   }
-  function updateStates(e = null) {
-    _elements.forEach((t) => {
-      (t.variables.includes(e) || e == null) && (t.evaluateEach(), t.evaluateAll());
+  function S() {
+    proxyWindow = new Proxy(window, u);
+  }
+  function V() {
+    t = Object.getOwnPropertyNames(window).filter((i) => !nativeProps.includes(i));
+  }
+  function W() {
+    V(), e.forEach((n, i) => {
+      n.getActionVariables(i), n.getVariables();
     });
   }
-  function _applyBindings() {
-    _elements.forEach((e) => {
-      e.applyEventBindings();
+  function N(n) {
+    return n.startsWith("$") && JSON.parse(localStorage.getItem(n)) || void 0;
+  }
+  function f(n = null) {
+    e.forEach((i) => {
+      var o;
+      (i.variables.includes(n) || n == null || i.uuid == n || ((o = i.parent) == null ? void 0 : o.uuid) == n) && (i.evaluateEach(), i.evaluateAll());
     });
   }
-  function _findElements() {
-    const e = document.evaluate(
-      '//*[@*[starts-with(name(), ":")]]',
-      document,
-      null,
-      XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-      null
-    );
-    for (let t = 0; t < e.snapshotLength; t++) {
-      const n = new Entity(e.snapshotItem(t));
-      isInsideEachElement(n.element.parentElement) || _elements.push(n);
+  function M() {
+    e.forEach((n) => {
+      n.applyEventBindings();
+    });
+  }
+  function L() {
+    var n = document.body.getElementsByTagName("*");
+    for (let i = 0; i < n.length; i++) {
+      const o = n[i], d = new Entity(o);
+      T(d.element.parentElement) || e.push(d);
     }
   }
-  function isInsideEachElement(e) {
-    for (; e; ) {
-      if (e.hasAttribute && e.hasAttribute(":each"))
+  function T(n) {
+    for (; n; ) {
+      if (n.hasAttribute && n.hasAttribute(":each"))
         return !0;
-      e = e.parentElement;
+      n = n.parentElement;
     }
     return !1;
   }
-  function _domReady() {
-    return new Promise((e) => {
-      document.readyState == "loading" ? document.addEventListener("DOMContentLoaded", e) : e();
+  function _() {
+    return new Promise((n) => {
+      document.readyState == "loading" ? document.addEventListener("DOMContentLoaded", n) : n();
     });
   }
-  return init().catch((e) => {
-    console.error("Error initializing MiniJS:", e);
+  return A().catch((n) => {
+    console.error("Error initializing MiniJS:", n);
   }), {
     get elements() {
-      return [..._elements];
+      return e;
+    },
+    set elements(n) {
+      return n;
     },
     get variables() {
-      return [..._variables];
+      return t;
+    },
+    set variables(n) {
+      t = n;
+    },
+    get allEvents() {
+      return [...a, ...s];
     },
     get window() {
       return proxyWindow;
-    }
+    },
+    tryFromLocal: N
   };
 })();
 window.MiniJS = MiniJS$1;

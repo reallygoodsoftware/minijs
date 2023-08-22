@@ -333,9 +333,9 @@
 
       <div>
         <script>
-          window.allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; 
-          window.filteredTags = []; 
-          window.selectedTags = [];
+          allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; 
+          filteredTags = []; 
+          selectedTags = [];
         </script>
         <div>
           <input type="hidden" :value="selectedTags">
@@ -399,7 +399,16 @@
         </pre>
       </div>
 
+      <p class="mt-12 font-bold font-mono ">For Experiment</p>
+
+      <script>
+ 
+      </script>
+      <input class="py-2 px-3" type="text" oninput="experimentText = event.target.value" />
+      <p class="font-bold" :text="experimentText"></p>
+
     </div>
+
   </section>
 </body>
 
