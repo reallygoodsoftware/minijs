@@ -10,17 +10,17 @@ class Entity {
   isParent() {
     return !!this.uuid;
   }
-  getActionVariables() {
+  getVariablesFromEvents() {
     this.allEvents.forEach((e) => {
       const t = this.element.getAttribute(e);
       if (t) {
         const a = /(\$?\w+(\.\w+)?)\s*=/g;
         let s;
         for (; (s = a.exec(t)) !== null; )
-          if (s && !window.hasOwnProperty(s[1])) {
+          if (s && !window.hasOwnProperty(s[1]) && !s[1].includes("this.")) {
             if (s[1].includes("el.")) {
-              const u = s[1].replace("el.", "");
-              this.setAsParent(), window[this.uuid] || (window[this.uuid] = {}), window[this.uuid][u] = MiniJS.tryFromLocal(s[1].replace("el.", this.uuid)), MiniJS.variables.push(this.uuid);
+              const c = s[1].replace("el.", "");
+              this.setAsParent(), window[this.uuid] || (window[this.uuid] = {}), window[this.uuid][c] = MiniJS.tryFromLocal(s[1].replace("el.", this.uuid)), MiniJS.variables.push(this.uuid);
             } else
               window[s[1]] = MiniJS.tryFromLocal(s[1]);
             MiniJS.variables.push(s[1]);
@@ -29,14 +29,19 @@ class Entity {
     });
   }
   getVariables() {
-    const e = MiniJS.variables, t = Array.from(this.element.attributes).map((s) => s.value).join(" "), a = [...new Set(e.filter((s) => t.includes(s)))];
-    for (let s of a)
-      typeof window[s] == "function" && a.push(e.find((u) => window[s].toString().includes(u))), s.includes("el.") && !this.parent && (this.parent = this.getParent());
+    const e = MiniJS.variables, t = Array.from(this.element.attributes).map((s) => s.value), a = [...new Set(e.filter((s) => t.find((c) => c.includes(s))))];
+    for (let s of a) {
+      if (typeof window[s] == "function") {
+        const c = e.filter((h) => window[s].toString().includes(h));
+        a.concat(c);
+      }
+      s.includes("el.") && !this.parent && (this.parent = this.getParent());
+    }
     this.variables = a;
   }
   get allEvents() {
     const e = MiniJS.allEvents, t = new Set(e);
-    return Array.from(this.element.attributes).map((u) => u.name).filter((u) => t.has(u));
+    return Array.from(this.element.attributes).map((c) => c.name).filter((c) => t.has(c));
   }
   get baseClasses() {
     return this.initialState.className.split(" ");
@@ -46,7 +51,7 @@ class Entity {
     return this._sanitizeExpression(t);
   }
   _sanitizeExpression(expr) {
-    return this.variables.forEach((variable) => {
+    return console.log(expr, this.variables), this.variables.forEach((variable) => {
       const exp = expr.split(";").find((e) => e.includes(variable));
       if (exp)
         if (exp.includes("el.")) {
@@ -106,7 +111,7 @@ class Entity {
       const elements = this.element.querySelectorAll("*");
       for (let e = 0; e < elements.length; e++) {
         const t = new Entity(elements[e]);
-        t.getActionVariables(), t.getVariables(), t.applyEventBindings(), t.evaluateAll(), MiniJS.elements.push(t);
+        t.getVariablesFromEvents(), t.getVariables(), t.applyEventBindings(), t.evaluateAll(), MiniJS.elements.push(t);
       }
     }
   }
@@ -164,23 +169,23 @@ let nativeProps = Object.getOwnPropertyNames(window);
 const MiniJS$1 = (() => {
   window.proxyWindow = null;
   let e = [], t = [], a = [], s = [":click", ":change", ":input", ":clickout"];
-  const u = {
+  const c = {
     set: function(n, i, o) {
-      return n[i] = o, i[0] === "$" && localStorage.setItem(i, JSON.stringify(o)), t.includes(i) && (f(i), p([i])), !0;
+      return n[i] = o, i[0] === "$" && localStorage.setItem(i, JSON.stringify(o)), t.includes(i) && (m(i), f([i])), !0;
     }
   };
-  function b() {
+  function h() {
     const n = ["div", "a", "input", "textarea", "select", "button", "video", "audio", "img", "form", "details", "iframe", "canvas"], i = /* @__PURE__ */ new Set();
     n.forEach((o) => {
       const d = document.createElement(o);
-      for (let h in d)
-        h.startsWith("on") && i.add(h);
+      for (let p in d)
+        p.startsWith("on") && i.add(p);
     }), a = [...i];
   }
   async function A() {
     await _();
     let n = performance.now();
-    S(), b(), L(), W(), p(), M(), k(), f();
+    S(), h(), L(), W(), f(), M(), k(), m();
     const o = performance.now() - n;
     console.log(`myFunction took ${o}ms to run.`);
   }
@@ -191,57 +196,59 @@ const MiniJS$1 = (() => {
       }
     });
   }
-  function p(n = t) {
+  function f(n = t) {
     n.forEach((i) => {
       if (Array.isArray(proxyWindow[i])) {
-        let m = function() {
+        let w = function() {
           return proxyWindow[i][0];
-        }, w = function() {
+        }, E = function() {
           return proxyWindow[i][proxyWindow[i].length - 1];
-        }, E = function(r) {
+        }, x = function(r) {
           let l;
           if (Array.isArray(r))
             l = r;
           else {
-            let c = this.indexOf(r);
-            c === -1 ? l = this.concat(r) : l = this.slice(0, c).concat(this.slice(c + 1));
+            let u = this.indexOf(r);
+            u === -1 ? l = this.concat(r) : l = this.slice(0, u).concat(this.slice(u + 1));
           }
           proxyWindow[i] = l;
-        }, x = function(r) {
+        }, v = function(r) {
           let l;
           this.indexOf(r) === -1 && (l = this.concat(r), proxyWindow[i] = l);
-        }, v = function(r) {
-          let l, c = this.indexOf(r);
-          c !== -1 && (l = this.slice(0, c).concat(this.slice(c + 1)), proxyWindow[i] = l);
-        }, g = function(r, l) {
-          const c = r.toLowerCase().split(/\s+/);
+        }, g = function(r) {
+          let l, u = this.indexOf(r);
+          u !== -1 && (l = this.slice(0, u).concat(this.slice(u + 1)), proxyWindow[i] = l);
+        }, y = function(r, l) {
+          const u = r.toLowerCase().split(/\s+/);
           return l.filter((P) => {
             const C = P.toLowerCase();
-            return c.every((J) => C.includes(J));
+            return u.every((J) => C.includes(J));
           });
-        }, y = function(r) {
-          return g(r, this);
+        }, b = function(r) {
+          return y(r, this);
         };
-        var o = m, d = w, h = E, $ = x, O = v, z = g, H = y;
-        proxyWindow[i].first = m(), proxyWindow[i].last = w(), proxyWindow[i].remove = v, proxyWindow[i].add = x, proxyWindow[i].toggle = E, proxyWindow[i].search = y;
+        var o = w, d = E, p = x, $ = v, O = g, z = y, F = b;
+        proxyWindow[i].first = w(), proxyWindow[i].last = E(), proxyWindow[i].remove = g, proxyWindow[i].add = v, proxyWindow[i].toggle = x, proxyWindow[i].search = b;
       }
     });
   }
   function S() {
-    proxyWindow = new Proxy(window, u);
+    proxyWindow = new Proxy(window, c);
   }
   function V() {
     t = Object.getOwnPropertyNames(window).filter((i) => !nativeProps.includes(i));
   }
   function W() {
     V(), e.forEach((n, i) => {
-      n.getActionVariables(i), n.getVariables();
+      n.getVariablesFromEvents(i);
+    }), e.forEach((n, i) => {
+      n.getVariables();
     });
   }
   function N(n) {
     return n.startsWith("$") && JSON.parse(localStorage.getItem(n)) || void 0;
   }
-  function f(n = null) {
+  function m(n = null) {
     e.forEach((i) => {
       var o;
       (i.variables.includes(n) || n == null || i.uuid == n || ((o = i.parent) == null ? void 0 : o.uuid) == n) && (i.evaluateEach(), i.evaluateAll());

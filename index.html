@@ -410,6 +410,46 @@
     </div>
 
   </section>
+
+
+  <section>
+<style type="text/css">
+  .accordion section {
+    grid-template-rows: 0fr 0fr;
+  }
+  .accordion section.active {
+    grid-template-rows: 0fr 1fr;
+  }
+</style>
+<div class="accordion">
+	<section class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100" :class="activeSection =='about' ? 'active' : ''" >
+		<a onclick="activeSection='about'" class="cursor-pointer font-bold p-4">About Us</a>
+		<div class="overflow-hidden">
+			<div class="p-4 pt-2">
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
+			</div>
+		</div>
+	</section>
+
+	<section class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100" :class="activeSection =='contact' ? 'active' : ''" >
+		<a onclick="activeSection='contact'" class="cursor-pointer font-bold p-4">Contact Us</a>
+		<div class="overflow-hidden">
+			<div class="p-4 pt-2">
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
+			</div>
+		</div>
+	</section>
+
+	<section class="grid transition-all border-gray-300 border rounded hover:bg-gray-100" :class="activeSection =='team' ? 'active' : ''" >
+		<a onclick="activeSection='team'"  class="cursor-pointer font-bold p-4">Team 3</a>
+		<div class="overflow-hidden">
+			<div class="p-4 pt-2">
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
+			</div>
+		</div>
+	</section>
+</div>
+  </section>
 </body>
 
 </html>
