@@ -344,8 +344,12 @@
 
           <div :clickout="filteredTags = []" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
-            <div :each="tag in filteredTags">
-              <div :click="selectedTags.add(tag); this.classList.add('hidden')" class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700">
+            <div :each="tag, index in filteredTags">
+              <div
+                :click="selectedTags.add(tag); this.classList.add('hidden')"
+                :class="index == 0 ? 'bg-blue-100 text-blue-700' : ''"
+                class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700"
+              >
                 <span :text="tag" ></span>
               </div>
             </div>
