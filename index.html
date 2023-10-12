@@ -334,7 +334,7 @@
       <div>
         <script>
           const vars = MiniJS.reactive();
-          allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; 
+          allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']; 
           filteredTags = []; 
           selectedTags = [];
           vars.selectedTag = null;
@@ -342,6 +342,10 @@
           const handleSelect = (tag) => {
             selectedTags.add(tag);
             filteredTags.remove(tag);
+            vars.selectedTag = filteredTags.first;
+          };
+
+          const handleChange = (filteredTags) => {
             vars.selectedTag = filteredTags[0];
           };
         </script>
@@ -354,18 +358,18 @@
             class="w-full py-2 px-2"
             :change="currentTags = allTags.subtract(selectedTags);
                      filteredTags = currentTags.search(this.value);
-                     selectedTag = filteredTags.first;"
+                     handleChange(filteredTags)"
             :enter="if (filteredTags.length) handleSelect(filteredTags.first)"
           />
 
-          <div :clickout="filteredTags = []" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
+          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
-            <div :each="tag in filteredTags">
+            <div :each="tag, index in filteredTags">
               <div
                 :click="handleSelect(tag)"
                 :mouseover="selectedTag = tag"
-                :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
-                class="test font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700"
+                :class="(selectedTag == tag || (selectedTag == null && index === 0)) ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
+                class="test font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
               >
                 <span :text="tag"></span>
               </div>
