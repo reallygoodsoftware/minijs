@@ -27,10 +27,12 @@ Set variables with vanilla JS
 - :text
   - Set the text of any dom element based on the value of a js variable.
 
-#### Other
-- :each 
+#### Statements
+- :each - loop through an array and render a template for each item
 
 #### Variable Methods
+
+##### Array
 - search
 - toggle
 - add 
@@ -41,12 +43,17 @@ Set variables with vanilla JS
 ## Tips
 - Use `this.value` to get the value of the current form
 
+### Native Events
+- All native events are supported. You can use them like this:
 
-#### Actions
-- :click
+```html
+<button :click="console.log('click')">Click Me</button>
+<div :load="activeTab = 'My Accounts'"></div>
+```
+
+- For `:load` events, it will fire immediately after MiniJS is initialized.
+
+#### Custom Events
 - :clickout
 - :change
 - :enter
-- :keypress
-- :keydown
-- :keyup
