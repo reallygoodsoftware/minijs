@@ -358,10 +358,8 @@
             :enter="selectedTags = selectedTags.add(selectedTag);
                     filteredTags = filteredTags.remove(selectedTag);
                     selectedTag = filteredTags.first"
-            :keyup.up="el.index = filteredTags.at(filteredTags.indexOf(selectedTag) - 1) == null ? filteredTags.length : filteredTags.indexOf(selectedTag) - 1;
-                       selectedTag = filteredTags.at(el.index)"
-            :keyup.down="el.index = filteredTags.at(filteredTags.indexOf(selectedTag) + 1) == null ? 0 : filteredTags.indexOf(selectedTag) + 1;
-                         selectedTag = filteredTags.at(el.index)"
+            :keyup.up="selectedTag = filteredTags.previousOf(selectedTag)"
+            :keyup.down="selectedTag = filteredTags.nextOf(selectedTag)"
           />
 
           <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
@@ -386,10 +384,11 @@
             <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
               <span :text="tag" class="font-semibold font-mono text-xs"></span>
               <span
-                class="text-xs text-blue-800 font-semibold ml-2 cursor-pointer"
+                class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
                 :click="selectedTags = selectedTags.remove(tag);
                         filteredTags = allTags.subtract(selectedTags).search(searchQuery);
-                        selectedTag = filteredTags.first">
+                        selectedTag = filteredTags.first"
+              >
                 x
               </span>
             </div>
