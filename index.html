@@ -66,40 +66,45 @@
           </a>
         </nav>
       </div>
-      <div :class="showCode1 ? 'block' : 'hidden'" >
+      <div :class="showCode1 ? 'block' : 'hidden'">
         <p class="mt-4 -mb-4 text-gray-500 font-medium font-mono text-xs text-right">With TailwindCSS classes</p>
         <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
-&lt;div :load=&quot;activeTab = 'My Account'&quot; class=&quot;hidden sm:block&quot;&gt;
-  &lt;nav class=&quot;isolate flex divide-x divide-gray-200 rounded-lg shadow&quot; aria-label=&quot;Tabs&quot;&gt;
-    &lt;a :class=&quot;activeTab == 'My Account' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'My Account'&quot;
+&lt;script&gt;
+  activeTab = 'Company';
+&lt;/script&gt;
+
+&lt;nav class=&quot;isolate flex divide-x divide-gray-200 rounded-lg shadow&quot; aria-label=&quot;Tabs&quot;&gt;
+  &lt;a :class=&quot;activeTab == 'My Account' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'My Account'&quot;
       class=&quot; rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10&quot;
       aria-current=&quot;page&quot;&gt;
-      &lt;span&gt;My Account&lt;/span&gt;
-      &lt;span :class=&quot;activeTab == 'My Account' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
-        class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
-    &lt;/a&gt;
-    &lt;a :class=&quot;activeTab == 'Company' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'Company'&quot;
+  &lt;span&gt;My Account&lt;/span&gt;
+  &lt;span :class=&quot;activeTab == 'My Account' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
+      class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;a :class=&quot;activeTab == 'Company' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'Company'&quot;
       class=&quot;hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10&quot;&gt;
-      &lt;span&gt;Company&lt;/span&gt;
-      &lt;span :class=&quot;activeTab == 'Company' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
-        class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
-    &lt;/a&gt;
-    &lt;a :class=&quot;activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500' &quot;
+  &lt;span&gt;Company&lt;/span&gt;
+  &lt;span :class=&quot;activeTab == 'Company' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
+      class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;a :class=&quot;activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500' &quot;
       :click=&quot;activeTab = 'Team Members'&quot;
       class=&quot;hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10&quot;&gt;
-      &lt;span&gt;Team Members&lt;/span&gt;
-      &lt;span :class=&quot;activeTab == 'Team Members' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
-        class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
-    &lt;/a&gt;
-    &lt;a :class=&quot;activeTab == 'Billing' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'Billing'&quot;
+  &lt;span&gt;Team Members&lt;/span&gt;
+  &lt;span :class=&quot;activeTab == 'Team Members' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
+      class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;a :class=&quot;activeTab == 'Billing' ? 'text-gray-900' : 'text-gray-500' &quot; :click=&quot;activeTab = 'Billing'&quot;
       class=&quot;hover:text-gray-700 rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10&quot;&gt;
-      &lt;span&gt;Billing&lt;/span&gt;
-      &lt;span :class=&quot;activeTab == 'Billing' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
-        class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
-    &lt;/a&gt;
-  &lt;/nav&gt;
-&lt;/div&gt;
+  &lt;span&gt;Billing&lt;/span&gt;
+  &lt;span :class=&quot;activeTab == 'Billing' ? 'bg-indigo-500' : 'bg-transparent'&quot; aria-hidden=&quot;true&quot;
+      class=&quot;absolute inset-x-0 bottom-0 h-0.5&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/nav&gt;
           </code>
         </pre>
       </div>
@@ -347,8 +352,6 @@
         </script>
 
         <div>
-          <input type="hidden" :value="selectedTags">
-
           <input
             type="text"
             class="w-full py-2 px-2"
@@ -378,7 +381,6 @@
             </div>
           </div>
 
-
           <p class="mt-2">Selected Tags:</p>
           <div class="flex items-center space-x-2" :each="tag in selectedTags">
             <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
@@ -401,33 +403,55 @@
         <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
-  window.allTags = [&apos;Tag 1&apos;, &apos;Tag 2&apos;, &apos;Tag 3&apos;, &apos;Tag 4&apos;]; 
-  window.filteredTags = []; 
-  window.selectedTags = [];
+   allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']; 
+   filteredTags = []; 
+   selectedTags = [];
+   selectedTag = null;
+   searchQuery = '';
 &lt;/script&gt;
-&lt;div&gt;
-  &lt;input type=&quot;hidden&quot; :value=&quot;selectedTags&quot;&gt;
 
-  &lt;input type=&quot;text&quot; class=&quot;w-full py-2 px-2&quot; :change=&quot;filteredTags = allTags.search(this.value)&quot; :enter=&quot;selectedTags.add(filteredTags.first); filteredTags.remove(filteredTags.first)&quot; /&gt;
+&lt;input
+   type=&quot;text&quot;
+   class=&quot;w-full py-2 px-2&quot;
+   :change=&quot;searchQuery = this.value;
+   filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+   selectedTag = filteredTags.first&quot;
+   :enter=&quot;selectedTags = selectedTags.add(selectedTag);
+   filteredTags = filteredTags.remove(selectedTag);
+   selectedTag = filteredTags.first&quot;
+   :keyup.up=&quot;selectedTag = filteredTags.previousOf(selectedTag)&quot;
+   :keyup.down=&quot;selectedTag = filteredTags.nextOf(selectedTag)&quot;
+/&gt;
 
-  &lt;div :clickout=&quot;filteredTags = []&quot; :class=&quot;filteredTags.length ? &apos;&apos; : &apos;hidden&apos; &quot;  class=&quot;bg-white rounded&quot;&gt;
-    &lt;p class=&quot;p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed&quot;&gt;Search Result:&lt;/p&gt;
-    &lt;div :each=&quot;tag in filteredTags&quot;&gt;
-      &lt;div :click=&quot;selectedTags.add(tag); this.classList.add(&apos;hidden&apos;)&quot; class=&quot;text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700&quot;&gt;
-        &lt;span :text=&quot;tag&quot; &gt;&lt;/span&gt;
+&lt;div :clickout=&quot;filteredTags = []; selectedTag = null&quot; :class=&quot;filteredTags.length ? '' : 'hidden' &quot;  class=&quot;bg-white rounded&quot;&gt;
+   &lt;p class=&quot;p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed&quot;&gt;Search Result:&lt;/p&gt;
+   &lt;div :each=&quot;tag in filteredTags&quot;&gt;
+      &lt;div
+         :click=&quot;selectedTags = selectedTags.add(tag);
+         filteredTags = filteredTags.remove(selectedTag);
+         selectedTag = filteredTags.first&quot;
+         :mouseover=&quot;selectedTag = tag&quot;
+         :class=&quot;selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'&quot;
+         class=&quot;font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700&quot;
+         &gt;
+         &lt;span :text=&quot;tag&quot;&gt;&lt;/span&gt;
       &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-
-  &lt;p class=&quot;mt-2&quot;&gt;Selected Tags:&lt;/p&gt;
-  &lt;div class=&quot;flex items-center space-x-2&quot; :each=&quot;tag in selectedTags&quot;&gt;
-    &lt;div class=&quot;flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700&quot; &gt;
-      &lt;span :text=&quot;tag&quot; class=&quot;font-semibold font-mono text-xs&quot;&gt;&lt;/span&gt;
-      &lt;span class=&quot;text-xs text-blue-800 font-semibold ml-2 cursor-pointer&quot; :click=&quot;selectedTags.remove(tag)&quot;&gt;x&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+   &lt;/div&gt;
 &lt;/div&gt;
+
+&lt;p class=&quot;mt-2&quot;&gt;Selected Tags:&lt;/p&gt;
+&lt;div class=&quot;flex items-center space-x-2&quot; :each=&quot;tag in selectedTags&quot;&gt;
+   &lt;div class=&quot;flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700&quot; &gt;
+      &lt;span :text=&quot;tag&quot; class=&quot;font-semibold font-mono text-xs&quot;&gt;&lt;/span&gt;
+      &lt;span
+         class=&quot;px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600&quot;
+         :click=&quot;selectedTags = selectedTags.remove(tag);
+         filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+         selectedTag = filteredTags.first&quot;
+         &gt;
+      x
+      &lt;/span&gt;
+   &lt;/div&gt;
 &lt;/div&gt;
           </code>
         </pre>
