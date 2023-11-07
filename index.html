@@ -31,7 +31,10 @@
         SHOW CODE
       </button>
     </div>
-    <div :load="activeTab = 'My Account';">
+    <script>
+      activeTab = 'Company';
+    </script>
+    <div>
       <div class="hidden sm:block">
         <nav class="isolate flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
           <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
@@ -198,6 +201,9 @@
         </div>
       </div>
 
+      <script>
+        showSelect = false;
+      </script>
       <div class="p-4 border border-dashed border-black rounded mt-2">
         <div class="flex items-end">
           <div class="flex flex-col w-full">
@@ -333,20 +339,41 @@
 
       <div>
         <script>
-          allTags = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']; 
+          allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']; 
           filteredTags = []; 
           selectedTags = [];
+          selectedTag = null;
+          searchQuery = '';
         </script>
+
         <div>
           <input type="hidden" :value="selectedTags">
 
-          <input type="text" class="w-full py-2 px-2" :change="filteredTags = allTags.search(this.value)" :enter="selectedTags.add(filteredTags.first); filteredTags.remove(filteredTags.first)" />
+          <input
+            type="text"
+            class="w-full py-2 px-2"
+            :change="searchQuery = this.value;
+                     filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+                     selectedTag = filteredTags.first"
+            :enter="selectedTags = selectedTags.add(selectedTag);
+                    filteredTags = filteredTags.remove(selectedTag);
+                    selectedTag = filteredTags.first"
+            :keyup.up="selectedTag = filteredTags.previousOf(selectedTag)"
+            :keyup.down="selectedTag = filteredTags.nextOf(selectedTag)"
+          />
 
-          <div :clickout="filteredTags = []" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
+          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
             <div :each="tag in filteredTags">
-              <div :click="selectedTags.add(tag); this.classList.add('hidden')" class="text-gray-700 font-mono font-semibold py-2 px-3 rounded hover:bg-blue-100 hover:text-blue-700">
-                <span :text="tag" ></span>
+              <div
+                :click="selectedTags = selectedTags.add(tag);
+                        filteredTags = filteredTags.remove(selectedTag);
+                        selectedTag = filteredTags.first"
+                :mouseover="selectedTag = tag"
+                :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
+                class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
+              >
+                <span :text="tag"></span>
               </div>
             </div>
           </div>
@@ -356,7 +383,14 @@
           <div class="flex items-center space-x-2" :each="tag in selectedTags">
             <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
               <span :text="tag" class="font-semibold font-mono text-xs"></span>
-              <span class="text-xs text-blue-800 font-semibold ml-2 cursor-pointer" :click="selectedTags.remove(tag)">x</span>
+              <span
+                class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
+                :click="selectedTags = selectedTags.remove(tag);
+                        filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+                        selectedTag = filteredTags.first"
+              >
+                x
+              </span>
             </div>
           </div>
         </div>
