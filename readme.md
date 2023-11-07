@@ -90,9 +90,39 @@ These are the events added in by MiniJS:
 
 - :each - loop through an array and render a template for each item
 
-## Variable Methods
+## Variable
 
-MiniJS adds some commonly-used custom methods to variables.
+### Variable Scoping
+
+Whenever you create a variable, it will automatically be added to the global scope. This means that you can access it anywhere in your code.
+
+```html
+<script type="text/javascript">
+  firstName = "Tony"
+</script>
+
+<button :click="console.log(firstName)">Click Me</button>
+```
+
+If you want to create a local variable, instead of using `const`, `var`, and `let` variable declarations, you need use `el.`:
+  
+```html
+<script>
+  items = ["Tag 1", "Tag 2", "Tag 3", "Tag 4"]
+  selectedItem = null
+</script>
+
+<button :click="el.lastItem = items.pop();
+                selectedItem = `Last Item: ${el.lastItem}`"
+        :text="selectedItem"
+>
+  Click Me
+</button>
+```
+
+### Variable Methods
+
+MiniJS added some commonly-used custom methods to variables.
 
 ### Array
 
