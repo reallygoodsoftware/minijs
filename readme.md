@@ -129,13 +129,13 @@ MiniJS added some commonly-used custom methods to variables.
 Here are the custom array methods which are available for you to use:
 
 - `first` - returns the first item in the array.
-  Usage: `array.first()`
+  Usage: `array.first`
   ```js
   array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   array.last // returns 'Vanilla'
   ```
 - `last` - returns the last item in the array.
-  Usage: `array.last()`
+  Usage: `array.last`
   ```js
   array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   array.first // returns 'Cherries'
