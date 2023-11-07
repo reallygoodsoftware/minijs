@@ -370,8 +370,7 @@
               <div
                 :click="selectedTags = selectedTags.add(tag);
                         filteredTags = filteredTags.remove(selectedTag);
-                        selectedTag = filteredTags.first;
-                        this.classList.add('hidden')"
+                        selectedTag = filteredTags.first"
                 :mouseover="selectedTag = tag"
                 :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
                 class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
