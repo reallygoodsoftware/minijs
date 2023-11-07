@@ -130,24 +130,56 @@ Here are the custom array methods which are available for you to use:
 
 - `first` - returns the first item in the array.
   Usage: `array.first()`
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.last // returns 'Vanilla'
+  ```
 - `last` - returns the last item in the array.
   Usage: `array.last()`
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.first // returns 'Cherries'
+  ```
 - `search` - returns an array of items that match the query.
   Usage: `array.search('query')`
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.search('c') // returns ['Cherries', 'Chocolate']
+  ```
 - `toggle`
   Usage: `array.toggle('item')`
 - `add` - adds an item to the array if it doesn't exist.
   Usage: `array.add('item')`
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.add('Tag 5') // returns ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']
+  ```
 - `remove` - removes an item from the array if it exists.
   Usage: `array.remove('item')`
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.remove('Tag 2') // returns ['Tag 1', 'Tag 3', 'Tag 4']
+  ```
+- `nextOf` - gets the next item in the array.
+  Usage: `array.nextOf('item')`
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.nextOf('Tag 2') // returns 'Tag 3'
+  ```
+- `previousOf` - gets the next item in the array.
+  Usage: `array.previousOf('item')`
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.nextOf('Tag 2') // returns 'Tag 1'
+  ```
 
 To trigger a re-render you need to update the variable:
 
 ```js
 // Will not trigger a re-render
-filteredTags.remove("Chocolates")
+filteredTags.remove('Chocolates')
 
 // Will trigger a re-render due to re-assignment of the
 // filteredTags variable.
-filteredTags = filteredTags.remove("Chocolates")
+filteredTags = filteredTags.remove('Chocolates')
 ```
