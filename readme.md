@@ -170,7 +170,7 @@ Here are the custom array methods which are available for you to use:
   Usage: `array.previousOf('item')`
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.nextOf('Tag 2') // returns 'Tag 1'
+  array.previousOf('Tag 2') // returns 'Tag 1'
   ```
 
 To trigger a re-render you need to update the variable:
