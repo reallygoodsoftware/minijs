@@ -160,17 +160,17 @@ Here are the custom array methods which are available for you to use:
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.remove('Tag 2') // returns ['Tag 1', 'Tag 3', 'Tag 4']
   ```
-- `nextOf` - gets the next item in the array.
-  Usage: `array.nextOf('item')`
+- `nextItem` - gets the next item in the array.
+  Usage: `array.nextItem('item')`
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.nextOf('Tag 2') // returns 'Tag 3'
+  array.nextItem('Tag 2') // returns 'Tag 3'
   ```
-- `previousOf` - gets the next item in the array.
+- `previousItem` - gets the next item in the array.
   Usage: `array.previousOf('item')`
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.previousOf('Tag 2') // returns 'Tag 1'
+  array.previousItem('Tag 2') // returns 'Tag 1'
   ```
 
 To trigger a re-render you need to update the variable:
