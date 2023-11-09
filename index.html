@@ -673,17 +673,14 @@ Delete Account
 
       <div>
         <script>
-          user = {
-            id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-            username: 'johndoe',
-          };
+          firstName = 'John';
+          lastName = 'Doe';
+          username = 'johndoe';
         </script>
 
         <div class="flex flex-col gap-4 max-w-sm">
           <div class="flex justify-between gap-4">
-            <p :text="`Hello ${user.firstName}`"></p>
+            <p :text="`Hello ${firstName}`"></p>
 
             <button
               id="edit-profile-btn"
@@ -697,9 +694,9 @@ Delete Account
 
           <dl class="grid grid-cols-2 text-sm text-gray-900">
             <dt class="font-bold">Your Name:</dt>
-            <dt :text="user.firstName + ' ' + user.lastName"></dt>
+            <dt :text="firstName + ' ' + lastName"></dt>
             <dt class="font-bold">Username:</dt>
-            <dt :text="user.username"></dt>
+            <dt :text="username"></dt>
           </dl>
         </div>
 
@@ -708,22 +705,9 @@ Delete Account
           class="rounded-lg max-w-sm"
           :click="if (event.target == this) { this.close() }"
         >
-          <script>
-            firstName = user.firstName;
-            lastName = user.lastName;
-            username = user.username;
-          </script>
-
           <form
             class="p-4 flex flex-col gap-4"
-            :submit="event.preventDefault();
-                    user = {
-                      ...user,
-                      firstName: firstName,
-                      lastName: lastName,
-                      username: username,
-                    };
-                    this.closest('dialog').close()"
+            :submit="event.preventDefault(); this.closest('dialog').close()"
           >
             <h1 class="text-xl text-gray-900 font-bold">
               Edit Profile
@@ -793,17 +777,14 @@ Delete Account
         <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
-  user = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    username: 'johndoe',
-  };
+  firstName = 'John';
+  lastName = 'Doe';
+  username = 'johndoe';
 &lt;/script&gt;
 
 &lt;div class=&quot;flex flex-col gap-4 max-w-sm&quot;&gt;
   &lt;div class=&quot;flex justify-between gap-4&quot;&gt;
-      &lt;p :text=&quot;`Hello ${user.firstName}`&quot;&gt;&lt;/p&gt;
+      &lt;p :text=&quot;`Hello ${firstName}`&quot;&gt;&lt;/p&gt;
       &lt;button
         id=&quot;edit-profile-btn&quot;
         type=&quot;button&quot;
@@ -815,9 +796,9 @@ Delete Account
   &lt;/div&gt;
   &lt;dl class=&quot;grid grid-cols-2 text-sm text-gray-900&quot;&gt;
       &lt;dt class=&quot;font-bold&quot;&gt;Your Name:&lt;/dt&gt;
-      &lt;dt :text=&quot;user.firstName + ' ' + user.lastName&quot;&gt;&lt;/dt&gt;
+      &lt;dt :text=&quot;firstName + ' ' + lastName&quot;&gt;&lt;/dt&gt;
       &lt;dt class=&quot;font-bold&quot;&gt;Username:&lt;/dt&gt;
-      &lt;dt :text=&quot;user.username&quot;&gt;&lt;/dt&gt;
+      &lt;dt :text=&quot;username&quot;&gt;&lt;/dt&gt;
   &lt;/dl&gt;
 &lt;/div&gt;
 
@@ -826,21 +807,9 @@ Delete Account
   class=&quot;rounded-lg max-w-sm&quot;
   :click=&quot;if (event.target == this) { this.close() }&quot;
   &gt;
-  &lt;script&gt;
-      firstName = user.firstName;
-      lastName = user.lastName;
-      username = user.username;
-  &lt;/script&gt;
   &lt;form
       class=&quot;p-4 flex flex-col gap-4&quot;
-      :submit=&quot;event.preventDefault();
-      user = {
-      ...user,
-      firstName: firstName,
-      lastName: lastName,
-      username: username,
-      };
-      this.closest('dialog').close()&quot;
+      :submit=&quot;event.preventDefault(); this.closest('dialog').close()&quot;
       &gt;
       &lt;h1 class=&quot;text-xl text-gray-900 font-bold&quot;&gt;
         Edit Profile
@@ -899,7 +868,7 @@ Delete Account
         &lt;/button&gt;
       &lt;/div&gt;
   &lt;/form&gt;
-&lt;/dialog&gt;               
+&lt;/dialog&gt;                
           </code>
         </pre>
       </div>
