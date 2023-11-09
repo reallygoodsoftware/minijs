@@ -512,6 +512,148 @@
 	</section>
 </div>
   </section>
+
+
+  <section class="p-5 bg-gray-100 mt-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold font-mono">Alert Dialog:</h3>
+        <button
+          :click="showCode5 = !showCode5"
+          class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-4 h-4 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          </svg>
+          Show Code
+        </button>
+      </div>
+
+      <div>
+        <script>
+          userId = 1;
+        </script>
+
+        <button
+          type="button"
+          class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+          :class="userId ? '' : 'hidden'"
+          :click="document.querySelector('#dialog').showModal()"
+        >
+          Delete Account
+        </button>
+
+        <p class="text-base text-gray-900" :class="userId == null ? '' : 'hidden'">
+          Your account has been deleted.
+
+          <button
+            type="button"
+            :click="userId = 1"
+            class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+          >
+            Reset
+          </button>
+        </p>
+
+        <dialog id="dialog" class="p-4 rounded-lg max-w-sm">
+          <form
+            class="flex flex-col gap-3"
+            :submit="event.preventDefault();
+                     userId = null;
+                     document.querySelector('#dialog').close()"
+          >
+            <h1 class="text-lg text-gray-900 font-bold">
+              Are you sure you want to delete your account?
+            </h1>
+            
+            <p class="text-base text-gray-700">
+              This action cannot be undone. This will permanently delete your account and remove all your data.
+            </p>
+  
+            <div class="flex justify-end gap-2">
+              <button
+                type="button"
+                :click="document.querySelector('#dialog').close()"
+                class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+              >
+                Yes, delete my account
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+
+      <div :class="showCode5 ? 'block' : 'hidden'">
+        <pre>
+          <code class="language-html text-xs overflow-hidden rounded-lg">
+&lt;script&gt;
+  userId = 1;
+&lt;/script&gt;
+
+&lt;button
+  type=&quot;button&quot;
+  class=&quot;py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600&quot;
+  :class=&quot;userId ? '' : 'hidden'&quot;
+  :click=&quot;document.querySelector('#dialog').showModal()&quot;
+  &gt;
+Delete Account
+&lt;/button&gt;
+
+&lt;p class=&quot;text-base text-gray-900&quot; :class=&quot;userId == null ? '' : 'hidden'&quot;&gt;
+  Your account has been deleted.
+  &lt;button
+      type=&quot;button&quot;
+      :click=&quot;userId = 1&quot;
+      class=&quot;py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
+      &gt;
+  Reset
+  &lt;/button&gt;
+&lt;/p&gt;
+
+&lt;dialog id=&quot;dialog&quot; class=&quot;p-4 rounded-lg max-w-sm&quot;&gt;
+  &lt;form
+      class=&quot;flex flex-col gap-3&quot;
+      :submit=&quot;event.preventDefault();
+      userId = null;
+      document.querySelector('#dialog').close()&quot;
+      &gt;
+      &lt;h1 class=&quot;text-lg text-gray-900 font-bold&quot;&gt;
+        Are you sure you want to delete your account?
+      &lt;/h1&gt;
+      &lt;p class=&quot;text-base text-gray-700&quot;&gt;
+        This action cannot be undone. This will permanently delete your account and remove all your data.
+      &lt;/p&gt;
+      &lt;div class=&quot;flex justify-end gap-2&quot;&gt;
+        &lt;button
+            type=&quot;button&quot;
+            :click=&quot;document.querySelector('#dialog').close()&quot;
+            class=&quot;py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
+            &gt;
+        Cancel
+        &lt;/button&gt;
+        &lt;button
+            type=&quot;submit&quot;
+            class=&quot;py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600&quot;
+            &gt;
+        Yes, delete my account
+        &lt;/button&gt;
+      &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;         
+          </code>
+        </pre>
+      </div>
+    </div>
+
+  </section>
 </body>
 
 </html>
