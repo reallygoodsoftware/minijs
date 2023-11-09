@@ -352,7 +352,11 @@
         </script>
 
         <div>
+          <label id="selected-flavor-label" for="selected-flavor-input" class="sr-only">
+            Flavor
+          </label>
           <input
+            id="selected-flavor-input"
             type="text"
             class="w-full py-2 px-2"
             :change="searchQuery = this.value;
@@ -365,20 +369,20 @@
             :keyup.down="selectedTag = filteredTags.nextOf(selectedTag)"
           />
 
-          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden' "  class="bg-white rounded">
+          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden'" class="bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
-            <div :each="tag in filteredTags">
-              <div
+            <ul :each="tag in filteredTags" tabindex="-1" role="listbox" aria-labelledby="selected-flavor-label">
+              <li
+                role="option"
                 :click="selectedTags = selectedTags.add(tag);
                         filteredTags = filteredTags.remove(selectedTag);
                         selectedTag = filteredTags.first"
                 :mouseover="selectedTag = tag"
                 :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
                 class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
-              >
-                <span :text="tag"></span>
-              </div>
-            </div>
+                :text="tag"
+              ></li>
+            </ul>
           </div>
 
           <p class="mt-2">Selected Tags:</p>
