@@ -365,8 +365,8 @@
             :enter="selectedTags = selectedTags.add(selectedTag);
                     filteredTags = filteredTags.remove(selectedTag);
                     selectedTag = filteredTags.first"
-            :keyup.up="selectedTag = filteredTags.previousOf(selectedTag)"
-            :keyup.down="selectedTag = filteredTags.nextOf(selectedTag)"
+            :keyup.up="selectedTag = filteredTags.previousItem(selectedTag)"
+            :keyup.down="selectedTag = filteredTags.nextItem(selectedTag)"
           />
 
           <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden'" class="bg-white rounded">
@@ -423,8 +423,8 @@
    :enter=&quot;selectedTags = selectedTags.add(selectedTag);
    filteredTags = filteredTags.remove(selectedTag);
    selectedTag = filteredTags.first&quot;
-   :keyup.up=&quot;selectedTag = filteredTags.previousOf(selectedTag)&quot;
-   :keyup.down=&quot;selectedTag = filteredTags.nextOf(selectedTag)&quot;
+   :keyup.up=&quot;selectedTag = filteredTags.previousItem(selectedTag)&quot;
+   :keyup.down=&quot;selectedTag = filteredTags.nextItem(selectedTag)&quot;
 /&gt;
 
 &lt;div :clickout=&quot;filteredTags = []; selectedTag = null&quot; :class=&quot;filteredTags.length ? '' : 'hidden' &quot;  class=&quot;bg-white rounded&quot;&gt;
