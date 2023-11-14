@@ -1,6 +1,6 @@
 {
   "name": "tonic-minijs",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "files": [
     "dist"
   ],
@@ -19,6 +19,7 @@
     "@auto-it/first-time-contributor": "^9.35.1",
     "all-contributors-cli": "^6.14.2",
     "auto": "^9.35.1",
+    "js-tokens": "^8.0.2",
     "vite": "^4.4.8"
   },
   "exports": {
