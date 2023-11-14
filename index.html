@@ -920,7 +920,7 @@ Delete Account
           }
         </style>
         <script>
-          isModalOpen = false
+          isModalOpen = false;
         </script>
 
         <a
@@ -974,76 +974,63 @@ Delete Account
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;style&gt;
   .shimmer {
-  background: #f6f7f8;
-  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-  background-repeat: no-repeat;
-  background-size: 800px 100px; 
-  position: relative; 
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-fill-mode: forwards;
-  animation-name: placeholderShimmer;
-  animation-timing-function: linear;
+    background: #f6f7f8;
+    background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 100px; 
+    position: relative; 
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-name: placeholderShimmer;
+    animation-timing-function: linear;
   }
   @keyframes placeholderShimmer {
-  0% {
-  background-position: -468px 0;
-  }
-  100% {
-  background-position: 468px 0; 
-  }
+    0% {
+      background-position: -468px 0;
+    }
+    100% {
+      background-position: 468px 0; 
+    }
   }
 &lt;/style&gt;
 
 &lt;script&gt;
-  function openModal() {
-    const loader = document.createElement('div');
-    loader.className = 'shimmer h-32 w-full';
-    loader.style.minWidth = '300px';
-    document.querySelector('#modal-container-content').innerHTML = loader.outerHTML;
-    
-    const modalOuter = document.querySelector('#modal-outer');
-    modalOuter.classList.remove('opacity-0', 'pointer-events-none');
-    modalOuter.classList.add('opacity-100', 'pointer-events-auto');
-    
-    const modalInner = document.querySelector('#modal-inner');
-    modalInner.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-    modalInner.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
-  }
-  
-  function closeModal() {
-    const modalOuter = document.querySelector('#modal-outer');
-    modalOuter.classList.remove('opacity-100', 'pointer-events-auto');
-    modalOuter.classList.add('opacity-0', 'pointer-events-none');
-  
-    const modalInner = document.querySelector('#modal-inner');
-    modalInner.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-    modalInner.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-  }
+  isModalOpen = false;
 &lt;/script&gt;
 
 &lt;a
   class=&quot;bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer&quot;
-  :click=&quot;openModal()&quot;
+  :click=&quot;isModalOpen = true;
+          el.loader = document.createElement('div');
+          el.loader.className = 'shimmer h-32 w-full';
+          el.loader.style.minWidth = '300px';
+          el.modalContent = document.querySelector('#modal-container-content');
+          el.modalContent.innerHTML = el.loader.outerHTML;&quot;
   &gt;
 Open Modal
 &lt;/a&gt;
 
 &lt;div
   id=&quot;modal-outer&quot;
-  class=&quot;relative z-10 opacity-0 duration-300 transition-all pointer-events-none&quot;
+  class=&quot;relative z-10 duration-300 transition-all opacity-0&quot;
   aria-labelledby=&quot;modal-title&quot;
   aria-modal=&quot;true&quot;
-  :click=&quot;if (event.target.id == 'modal-container-outer') { closeModal() }&quot;
-  &gt;
+  :class=&quot;isModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'&quot;
+  :click=&quot;if (event.target.id == 'modal-container-outer') { isModalOpen = false }&quot;
+&gt;
   &lt;div class=&quot;fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity&quot;&gt;&lt;/div&gt;
-  &lt;div id=&quot;modal-inner&quot; class=&quot;transition-all fixed inset-0 z-10 overflow-y-auto opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95&quot;&gt;
+  &lt;div
+    id=&quot;modal-inner&quot;
+    class=&quot;transition-all fixed inset-0 z-10 overflow-y-auto&quot;
+    :class=&quot;isModalOpen ? 'opacity-100 translate-y-0 sm:scale-100' : 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'&quot;
+  &gt;
       &lt;div id=&quot;modal-container-outer&quot; class=&quot;flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0&quot;&gt;
         &lt;div class=&quot;relative&quot;&gt;
             &lt;button
               style=&quot;left:-30px; top:2rem&quot;
               class=&quot;hidden md:block cursor-pointer absolute&quot;
-              :click=&quot;closeModal()&quot;
+              :click=&quot;isModalOpen = false&quot;
               aria-label=&quot;Close Modal&quot;
               &gt;
               &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke-width=&quot;1.5&quot; stroke=&quot;currentColor&quot; class=&quot;w-6 h-6 text-white&quot;&gt;
@@ -1055,7 +1042,7 @@ Open Modal
         &lt;/div&gt;
       &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;            
+&lt;/div&gt;                 
           </code>
         </pre>
       </div>
