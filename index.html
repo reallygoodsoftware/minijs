@@ -673,14 +673,16 @@ Delete Account
 
       <div>
         <script>
-          firstName = 'John';
-          lastName = 'Doe';
-          username = 'johndoe';
+          user = {
+            firstName: 'John',
+            lastName: 'Doe',
+            username: 'johndoe',
+          };
         </script>
 
         <div class="flex flex-col gap-4 max-w-sm">
           <div class="flex justify-between gap-4">
-            <p :text="`Hello ${firstName}`"></p>
+            <p :text="`Hello ${user.firstName}`"></p>
 
             <button
               id="edit-profile-btn"
@@ -694,9 +696,9 @@ Delete Account
 
           <dl class="grid grid-cols-2 text-sm text-gray-900">
             <dt class="font-bold">Your Name:</dt>
-            <dt :text="firstName + ' ' + lastName"></dt>
+            <dt :text="user.firstName + ' ' + user.lastName"></dt>
             <dt class="font-bold">Username:</dt>
-            <dt :text="username"></dt>
+            <dt :text="user.username"></dt>
           </dl>
         </div>
 
@@ -722,8 +724,8 @@ Delete Account
                   type="text"
                   name="first_name"
                   class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="firstName"
-                  :change="firstName = this.value"
+                  :value="user.firstName"
+                  :change="user.firstName = this.value"
                 />
               </div>
 
@@ -735,8 +737,8 @@ Delete Account
                   type="text"
                   name="last_name"
                   class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="lastName"
-                  :change="lastName = this.value"
+                  :value="user.lastName"
+                  :change="user.lastName = this.value"
                 />
               </div>
 
@@ -748,8 +750,8 @@ Delete Account
                   type="text"
                   name="username"
                   class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="username"
-                  :change="username = this.value"
+                  :value="user.username"
+                  :change="user.username = this.value"
                 />
               </div>
             </div>
@@ -777,9 +779,11 @@ Delete Account
         <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
-  firstName = 'John';
-  lastName = 'Doe';
-  username = 'johndoe';
+  user = {
+    firstName: 'John',
+    lastName: 'Doe',
+    username: 'johndoe',
+  };
 &lt;/script&gt;
 
 &lt;div class=&quot;flex flex-col gap-4 max-w-sm&quot;&gt;
@@ -796,9 +800,9 @@ Delete Account
   &lt;/div&gt;
   &lt;dl class=&quot;grid grid-cols-2 text-sm text-gray-900&quot;&gt;
       &lt;dt class=&quot;font-bold&quot;&gt;Your Name:&lt;/dt&gt;
-      &lt;dt :text=&quot;firstName + ' ' + lastName&quot;&gt;&lt;/dt&gt;
+      &lt;dt :text=&quot;user.firstName + ' ' + user.lastName&quot;&gt;&lt;/dt&gt;
       &lt;dt class=&quot;font-bold&quot;&gt;Username:&lt;/dt&gt;
-      &lt;dt :text=&quot;username&quot;&gt;&lt;/dt&gt;
+      &lt;dt :text=&quot;user.username&quot;&gt;&lt;/dt&gt;
   &lt;/dl&gt;
 &lt;/div&gt;
 
@@ -823,8 +827,8 @@ Delete Account
               type=&quot;text&quot;
               name=&quot;first_name&quot;
               class=&quot;col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
-              :value=&quot;firstName&quot;
-              :change=&quot;firstName = this.value&quot;
+              :value=&quot;user.firstName&quot;
+              :change=&quot;user.firstName = this.value&quot;
               /&gt;
         &lt;/div&gt;
         &lt;div class=&quot;grid grid-cols-3 items-center gap-4&quot;&gt;
@@ -835,8 +839,8 @@ Delete Account
               type=&quot;text&quot;
               name=&quot;last_name&quot;
               class=&quot;col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
-              :value=&quot;lastName&quot;
-              :change=&quot;lastName = this.value&quot;
+              :value=&quot;user.lastName&quot;
+              :change=&quot;user.lastName = this.value&quot;
               /&gt;
         &lt;/div&gt;
         &lt;div class=&quot;grid grid-cols-3 items-center gap-4&quot;&gt;
@@ -847,8 +851,8 @@ Delete Account
               type=&quot;text&quot;
               name=&quot;username&quot;
               class=&quot;col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
-              :value=&quot;username&quot;
-              :change=&quot;username = this.value&quot;
+              :value=&quot;user.username&quot;
+              :change=&quot;user.username = this.value&quot;
               /&gt;
         &lt;/div&gt;
       &lt;/div&gt;
