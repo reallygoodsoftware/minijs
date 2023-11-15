@@ -3,7 +3,7 @@
 - Lots of libraries have emerged to address these shortcomings - react, vue etc. These libraries are great but they:
   - Have a high learning curve when it comes to code patterns and tooling.
   - Are primarily suited for interfaces with *lots* of interactivity.
-- HTML Plus lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new  concepts. It's designed to be extremely minimal and learnable within an afternoon.
+- Mini JS lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new  concepts. It's designed to be extremely minimal and learnable within an afternoon.
 - The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2). 
 
 ## Setting State
