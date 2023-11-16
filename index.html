@@ -140,6 +140,7 @@
                            filteredDestinations = destinations.search(this.value)
                            selectedDestination = filteredDestinations.first"
                   :keyup.enter="if (selectedDestination != null) {
+                                  destination = selectedDestination;
                                   selectedTab = 'When';
                                   filteredDestinations = [];
                                   selectedDestination = ''
