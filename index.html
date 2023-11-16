@@ -110,12 +110,18 @@
           <script>
             selectedTab = 'Where';
             destination = '';
+            time = 'Any week';
+            checkIn = '';
+            checkOut = '';
 
-            // For Seaching Destinations
+            // Where Tab
             regions = ['Europe', 'Japan', 'United States', 'South Korea', 'Australia'];
             destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
             filteredDestinations = [];
             selectedDestination = '';
+
+            // When Tab
+            whenSelectedTab = 'Flexible';
           </script>
 
           <div
@@ -131,7 +137,7 @@
                         el.input = document.querySelector('#destination');
                         el.input.focus();"
               >
-                <label htmlFor="destination" class="text-xs">
+                <label htmlFor="destination" class="font-bold text-xs pointer-events-none">
                   Where
                 </label>
                 <input
@@ -141,9 +147,9 @@
                   :change="destination = this.value;
                            filteredDestinations = destinations.search(this.value)
                            selectedDestination = filteredDestinations.first"
-                  :keyup.enter="if (selectedDestination != null) {
+                  :keyup.enter="if (selectedDestination == null) {
                                   destination = selectedDestination;
-                                  selectedTab = 'When';
+                                  selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
                                   this.blur();
                                  }"
                   :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
@@ -166,11 +172,59 @@
               <div
                 class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
                 tabindex="0"
-                :class="selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                :class="(selectedTab === 'Check In' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                  + (whenSelectedTab !== 'Dates' ? ' hidden' : '')"
+                :press="selectedTab = 'Check In'"
+              >
+                <label htmlFor="check-in" class="font-bold text-xs pointer-events-none">
+                  Check In
+                </label>
+                <input
+                  id="check-in"
+                  type="text"
+                  :value="checkIn"
+                  placeholder="Add dates"
+                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
+                  disabled
+                />
+              </div>
+              <div
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                tabindex="0"
+                :class="(selectedTab === 'Check Out' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                  + (whenSelectedTab !== 'Dates' ? ' hidden' : '')"
+                :press="selectedTab = 'Check Out'"
+              >
+                <label htmlFor="check-out" class="font-bold text-xs pointer-events-none">
+                  Check Out
+                </label>
+                <input
+                  id="check-out"
+                  type="text"
+                  :value="checkOut"
+                  placeholder="Add dates"
+                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
+                  disabled
+                />
+              </div>
+              <div
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                tabindex="0"
+                :class="(selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                        + (whenSelectedTab === 'Dates' ? ' hidden' : '')"
                 :press="selectedTab = 'When'"
               >
                 <span class="sr-only">Check In / Check Out</span>
-                Any week
+                <label htmlFor="time" class="font-bold text-xs pointer-events-none">
+                  When
+                </label>
+                <input
+                  id="time"
+                  type="text"
+                  :value="time"
+                  class="bg-transparent pointer-events-none"
+                  disabled
+                />
               </div>
               <div
                 class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
@@ -199,7 +253,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = ''; selectedTab = 'When'"
+                    :click="destination = '';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of whole world" src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg">
                   </button>
@@ -212,7 +267,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Europe'; selectedTab = 'When'"
+                    :click="destination = 'Europe';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of Europe" src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg">
                   </button>
@@ -225,7 +281,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Japan'; selectedTab = 'When'"
+                    :click="destination = 'Japan';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of Japan" src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320">
                   </button>
@@ -238,7 +295,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'United States'; selectedTab = 'When'"
+                    :click="destination = 'United States';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of United States" src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg">
                   </button>
@@ -251,7 +309,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'South Korea'; selectedTab = 'When'"
+                    :click="destination = 'South Korea';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of South Korea" src="https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg">
                   </button>
@@ -264,7 +323,8 @@
                   <button
                     type="button"
                     class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Australia'; selectedTab = 'When'"
+                    :click="destination = 'Australia';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                   >
                     <img class="touch-none h-full w-full" alt="Map of Australia" src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg">
                   </button>
@@ -287,7 +347,7 @@
                     type="button"
                     class="py-2 flex items-center gap-2"
                     :click="destination = place;
-                            selectedTab = 'When'"
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                     :mouseover="selectedDestination = place"
                   >
                     <div class="p-3 bg-gray-200 rounded-lg">
@@ -312,18 +372,14 @@
             <!-- When -->
             <div
               class="w-full py-6 flex flex-col gap-8 bg-white rounded-3xl border border-gray-300 shadow"
-              :class="selectedTab === 'When' ? '' : 'hidden'"
+              :class="['When', 'Check In', 'Check Out'].includes(selectedTab) ? '' : 'hidden'"
             >
-              <script>
-                whenSelectedTab = 'Flexible';
-              </script>
-              
               <div class="mx-auto p-1 w-max flex gap-1 bg-gray-200 rounded-full">
                 <button
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Dates'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Dates'"
+                  :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In'; time = ''"
                 >
                   Dates
                 </button>
@@ -331,7 +387,26 @@
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Months'"
+                  :click="whenSelectedTab = 'Months';
+                          selectedTab = 'When';
+                          el.today = new Date();
+                          el.startMonth = el.today.getMonth() + 1;
+                          el.endMonth   = el.today.getMonth() + 1 + 3;
+
+                          el.startDate = new Date(el.today.getFullYear(), el.startMonth, 1);
+                          el.endDate   = new Date(el.today.getFullYear(), el.endMonth, 1);
+
+                          time = el.startDate.toLocaleString('default', {
+                            month: 'short',
+                            year: 'numeric',
+                            day: 'numeric',
+                          });
+                          time += ' - ';
+                          time += el.endDate.toLocaleString('default', {
+                            month: 'short',
+                            year: 'numeric',
+                            day: 'numeric',
+                          });"
                 >
                   Months
                 </button>
@@ -339,7 +414,9 @@
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Flexible'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Flexible'"
+                  :click="whenSelectedTab = 'Flexible';
+                          selectedTab = 'When';
+                          time = 'Any week'"
                 >
                   Flexible
                 </button>
