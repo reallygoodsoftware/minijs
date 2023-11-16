@@ -35,35 +35,36 @@
         </button>
       </div>
 
-      <div>
+      <div :clickout="showSearch = false">
         <script>
           showSearch = false
         </script>
 
         <div class="flex items-center justify-center">
           <div
+            id="search-bar"
             role="search"
-            class="inline-block p-3 rounded-full bg-white text-gray-900 border border-gray-300 shadow"
+            class="inline-block p-3 rounded-full bg-white text-gray-900 border border-gray-300 cursor-pointer shadow"
             aria-labelledby="airbnb-search"
             :class="showSearch ? 'hidden' : ''"
             :click="showSearch = true"
           >
             <span id="airbnb-search" class="sr-only">Start your search</span>
             <div class="flex justify-between divide-x divide-gray-300">
-              <button
+              <div
                 type="button"
                 class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
               >
                 <span class="sr-only">Location</span>
                 Anywhere
-              </button>
-              <button
+              </div>
+              <div
                 type="button"
                 class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
               >
                 <span class="sr-only">Check In / Check Out</span>
                 Any week
-              </button>
+              </div>
               <button
                 type="button"
                 class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-500 font-normal whitespace-nowrap"
@@ -82,8 +83,8 @@
         </div>
 
         <div
-          class="z-10 w-full flex flex-col gap-8 duration-300 transition-all opacity-0"
-          :class="showSearch ? 'opacity-100 translate-y-0 pointer-events-auto' : 'translate-y-4 opacity-0 pointer-events-none'"
+          class="z-10 w-full flex flex-col gap-8 duration-300 transition-all opacity-0 h-0 "
+          :class="showSearch ? 'h-auto opacity-100 translate-y-0 pointer-events-auto' : 'h-0 translate-y-4 opacity-0 pointer-events-none'"
         >
           <div class="mx-auto w-max flex gap-8">
             <button
@@ -111,6 +112,7 @@
             destination = '';
 
             // For Seaching Destinations
+            regions = ['Europe', 'Japan', 'United States', 'South Korea', 'Australia'];
             destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
             filteredDestinations = [];
             selectedDestination = '';
@@ -122,7 +124,7 @@
           >
             <div class="flex justify-between divide-x divide-gray-300">
               <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
                 tabindex="0"
                 :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
                 :press="selectedTab = 'Where';
@@ -142,8 +144,6 @@
                   :keyup.enter="if (selectedDestination != null) {
                                   destination = selectedDestination;
                                   selectedTab = 'When';
-                                  filteredDestinations = [];
-                                  selectedDestination = ''
                                   this.blur();
                                  }"
                   :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
@@ -164,7 +164,7 @@
                 </button>
               </div>
               <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
                 tabindex="0"
                 :class="selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
                 :press="selectedTab = 'When'"
@@ -173,7 +173,7 @@
                 Any week
               </div>
               <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
                 tabindex="0"
                 :class="selectedTab === 'Who' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
                 :press="selectedTab = 'Who'"
@@ -185,9 +185,10 @@
           </div>
   
           <div id="search-flyout" class="-mt-6">
+            <!-- Where: Search by Region -->
             <div
               class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
-              :class="selectedTab === 'Where' && !destination.length ? '' : 'hidden'"
+              :class="selectedTab === 'Where' && (regions.includes(destination) || !destination.length) ? '' : 'hidden'"
             >
               <div class="text-xs font-bold text-gray-900">
                 Search by region
@@ -275,9 +276,10 @@
               </div>
             </div>
             
+            <!-- Where: Search Results -->
             <div
               class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
-              :class="selectedTab === 'Where' && destination.length ? '' : 'hidden'"
+              :class="selectedTab === 'Where' && destination.length && !regions.includes(destination) ? '' : 'hidden'"
             >
               <ul :each="place in filteredDestinations">
                 <li class="px-6" :class="selectedDestination == place ? 'bg-gray-100' : ''">
@@ -285,9 +287,7 @@
                     type="button"
                     class="py-2 flex items-center gap-2"
                     :click="destination = place;
-                            selectedTab = 'When';
-                            selectedDestination = '';
-                            filteredDestinations = []"
+                            selectedTab = 'When'"
                     :mouseover="selectedDestination = place"
                   >
                     <div class="p-3 bg-gray-200 rounded-lg">
@@ -307,6 +307,43 @@
               >
                 There are no results matching your search.
               </p>
+            </div>
+
+            <!-- When -->
+            <div
+              class="w-full py-6 flex flex-col gap-8 bg-white rounded-3xl border border-gray-300 shadow"
+              :class="selectedTab === 'When' ? '' : 'hidden'"
+            >
+              <script>
+                whenSelectedTab = 'Flexible';
+              </script>
+              
+              <div class="mx-auto p-1 w-max flex gap-1 bg-gray-200 rounded-full">
+                <button
+                  type="button"
+                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                  :class="whenSelectedTab === 'Dates'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                  :click="whenSelectedTab = 'Dates'"
+                >
+                  Dates
+                </button>
+                <button
+                  type="button"
+                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                  :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                  :click="whenSelectedTab = 'Months'"
+                >
+                  Months
+                </button>
+                <button
+                  type="button"
+                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                  :class="whenSelectedTab === 'Flexible'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                  :click="whenSelectedTab = 'Flexible'"
+                >
+                  Flexible
+                </button>
+              </div>
             </div>
           </div>
         </div>
