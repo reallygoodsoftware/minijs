@@ -147,7 +147,7 @@
                   :change="destination = this.value;
                            filteredDestinations = destinations.search(this.value)
                            selectedDestination = filteredDestinations.first"
-                  :keyup.enter="if (selectedDestination == null) {
+                  :keyup.enter="if (selectedDestination != null) {
                                   destination = selectedDestination;
                                   selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
                                   this.blur();
