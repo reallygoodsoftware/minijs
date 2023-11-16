@@ -17,7 +17,303 @@
   <div class="flex items-center justify-center p-10">
     <h1 class="text-3xl text-black font-mono font-bold">MiniJS</h1>
   </div>
-  <section class="p-5 bg-gray-100">
+
+  <section class="p-5 bg-gray-100 mt-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold font-mono">AirBnB Search Bar:</h3>
+        <button
+          :click="showCode8 = !showCode8"
+          class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-4 h-4 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          </svg>
+          Show Code
+        </button>
+      </div>
+
+      <div>
+        <script>
+          showSearch = false
+        </script>
+
+        <div class="flex items-center justify-center">
+          <div
+            role="search"
+            class="inline-block p-3 rounded-full bg-white text-gray-900 border border-gray-300 shadow"
+            aria-labelledby="airbnb-search"
+            :class="showSearch ? 'hidden' : ''"
+            :click="showSearch = true"
+          >
+            <span id="airbnb-search" class="sr-only">Start your search</span>
+            <div class="flex justify-between divide-x divide-gray-300">
+              <button
+                type="button"
+                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
+              >
+                <span class="sr-only">Location</span>
+                Anywhere
+              </button>
+              <button
+                type="button"
+                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
+              >
+                <span class="sr-only">Check In / Check Out</span>
+                Any week
+              </button>
+              <button
+                type="button"
+                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-500 font-normal whitespace-nowrap"
+              >
+                <span class="sr-only">Guests</span>
+                Add guests
+  
+                <span class="ml-4 -mr-5 -my-3 inline-block p-2 bg-red-500 text-white rounded-full" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>              
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="z-10 w-full flex flex-col gap-8 duration-300 transition-all opacity-0"
+          :class="showSearch ? 'opacity-100 translate-y-0 pointer-events-auto' : 'translate-y-4 opacity-0 pointer-events-none'"
+        >
+          <div class="mx-auto w-max flex gap-8">
+            <button
+              type="button"
+              class="text-base text-gray-900 underline decoration-2 underline-offset-8 decoration-gray-900"
+            >
+              Stays
+            </button>
+            <button
+              type="button"
+              class="text-base text-gray-900"
+            >
+              Experiences
+            </button>
+            <button
+              type="button"
+              class="text-base text-gray-900"
+            >
+              Online Experiences
+            </button>
+          </div>
+
+          <script>
+            selectedTab = 'Where';
+            destination = '';
+
+            // For Seaching Destinations
+            destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
+            filteredDestinations = [];
+            selectedDestination = '';
+          </script>
+
+          <div
+            role="search"
+            class="relative w-full rounded-full bg-gray-200 text-gray-900 border border-gray-300 shadow"
+          >
+            <div class="flex justify-between divide-x divide-gray-300">
+              <div
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                tabindex="0"
+                :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                :press="selectedTab = 'Where';
+                        el.input = document.querySelector('#destination');
+                        el.input.focus();"
+              >
+                <label htmlFor="destination" class="text-xs">
+                  Where
+                </label>
+                <input
+                  id="destination"
+                  type="text"
+                  :value="destination"
+                  :change="destination = this.value;
+                           filteredDestinations = destinations.search(this.value)
+                           selectedDestination = filteredDestinations.first"
+                  :keyup.enter="if (selectedDestination != null) {
+                                  selectedTab = 'When';
+                                  filteredDestinations = [];
+                                  selectedDestination = ''
+                                  this.blur();
+                                 }"
+                  :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
+                  :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
+                  placeholder="Search destinations"
+                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
+                />
+
+                <button
+                  class="absolute top-1/2 right-4 -translate-y-1/2 p-1 text-gray-900 rounded-full hover:bg-gray-300 focus:bg-gray-100"
+                  :class="destination.length && selectedTab === 'Where' ? '' : 'hidden'"
+                  :click="destination = ''"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span class="sr-only">Close</span>
+                </button>
+              </div>
+              <div
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                tabindex="0"
+                :class="selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                :press="selectedTab = 'When'"
+              >
+                <span class="sr-only">Check In / Check Out</span>
+                Any week
+              </div>
+              <div
+                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer"
+                tabindex="0"
+                :class="selectedTab === 'Who' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                :press="selectedTab = 'Who'"
+              >
+                <span class="sr-only">Guests</span>
+                Add guests
+              </div>
+            </div>
+          </div>
+  
+          <div id="search-flyout" class="-mt-6">
+            <div
+              class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
+              :class="selectedTab === 'Where' && !destination.length ? '' : 'hidden'"
+            >
+              <div class="text-xs font-bold text-gray-900">
+                Search by region
+              </div>
+
+              <div class="my-6 grid grid-cols-3 gap-x-3 gap-y-6">
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = ''; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of whole world" src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    I'm flexible
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = 'Europe'; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of Europe" src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    Europe
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = 'Japan'; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of Japan" src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    Japan
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = 'United States'; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of United States" src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    United States
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = 'South Korea'; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of South Korea" src="https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    South Korea
+                  </div>
+                </div>
+                
+                <div class="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                    :click="destination = 'Australia'; selectedTab = 'When'"
+                  >
+                    <img class="touch-none h-full w-full" alt="Map of Australia" src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg">
+                  </button>
+                  <div class="text-sm text-gray-600">
+                    Australia
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+            <div
+              class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
+              :class="selectedTab === 'Where' && destination.length ? '' : 'hidden'"
+            >
+              <ul :each="place in filteredDestinations">
+                <li class="px-6" :class="selectedDestination == place ? 'bg-gray-100' : ''">
+                  <button
+                    type="button"
+                    class="py-2 flex items-center gap-2"
+                    :click="destination = place;
+                            selectedTab = 'When';
+                            selectedDestination = '';
+                            filteredDestinations = []"
+                    :mouseover="selectedDestination = place"
+                  >
+                    <div class="p-3 bg-gray-200 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                      </svg>
+                    </div>
+                    <div class="text-base text-gray-700" :text="place"></div>
+                  </button>
+                </li>
+              </ul>
+
+              <p
+                class="px-6 text-sm text-gray-700"
+                :class="filteredDestinations.length ? 'sr-only' : ''"
+              >
+                There are no results matching your search.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-5 bg-gray-100 mt-10">
     <div class="max-w-5xl mx-auto">
     <div class="flex items-center justify-between mb-5">
       <h3 class="font-bold font-mono">Active State Example:</h3>
