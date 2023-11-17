@@ -37,7 +37,21 @@
 
       <div :clickout="showSearch = false">
         <script>
-          showSearch = false
+          showSearch = false;
+          selectedTab = 'Where';
+          destination = '';
+          time = 'Any week';
+          checkIn = '';
+          checkOut = '';
+
+          // Where Tab
+          regions = ['Europe', 'Japan', 'United States', 'South Korea', 'Australia'];
+          destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
+          filteredDestinations = [];
+          selectedDestination = '';
+
+          // When Tab
+          whenSelectedTab = 'Flexible';
         </script>
 
         <div class="flex items-center justify-center">
@@ -107,23 +121,6 @@
             </button>
           </div>
 
-          <script>
-            selectedTab = 'Where';
-            destination = '';
-            time = 'Any week';
-            checkIn = '';
-            checkOut = '';
-
-            // Where Tab
-            regions = ['Europe', 'Japan', 'United States', 'South Korea', 'Australia'];
-            destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
-            filteredDestinations = [];
-            selectedDestination = '';
-
-            // When Tab
-            whenSelectedTab = 'Flexible';
-          </script>
-
           <div
             role="search"
             class="relative w-full rounded-full bg-gray-200 text-gray-900 border border-gray-300 shadow"
@@ -134,8 +131,7 @@
                 tabindex="0"
                 :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
                 :press="selectedTab = 'Where';
-                        el.input = document.querySelector('#destination');
-                        el.input.focus();"
+                        document.querySelector('#destination').focus();"
               >
                 <label htmlFor="destination" class="font-bold text-xs pointer-events-none">
                   Where
@@ -147,15 +143,15 @@
                   :change="destination = this.value;
                            filteredDestinations = destinations.search(this.value)
                            selectedDestination = filteredDestinations.first"
+                  :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
+                  :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
+                  placeholder="Search destinations"
+                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
                   :keyup.enter="if (selectedDestination != null) {
                                   destination = selectedDestination;
                                   selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
                                   this.blur();
                                  }"
-                  :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
-                  :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
-                  placeholder="Search destinations"
-                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
                 />
 
                 <button
@@ -773,7 +769,7 @@
             :change="searchQuery = this.value;
                      filteredTags = allTags.subtract(selectedTags).search(searchQuery);
                      selectedTag = filteredTags.first"
-            :enter="selectedTags = selectedTags.add(selectedTag);
+            :keyup.enter="selectedTags = selectedTags.add(selectedTag);
                     filteredTags = filteredTags.remove(selectedTag);
                     selectedTag = filteredTags.first"
             :keyup.up="selectedTag = filteredTags.previousItem(selectedTag)"
@@ -831,7 +827,7 @@
    :change=&quot;searchQuery = this.value;
    filteredTags = allTags.subtract(selectedTags).search(searchQuery);
    selectedTag = filteredTags.first&quot;
-   :enter=&quot;selectedTags = selectedTags.add(selectedTag);
+   :keyup.enter=&quot;selectedTags = selectedTags.add(selectedTag);
    filteredTags = filteredTags.remove(selectedTag);
    selectedTag = filteredTags.first&quot;
    :keyup.up=&quot;selectedTag = filteredTags.previousItem(selectedTag)&quot;
