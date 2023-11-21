@@ -140,7 +140,7 @@
                 tabindex="0"
                 :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
                 :press="selectedTab = 'Where';
-                        document.querySelector('#destination').focus();"
+                        $('#destination').focus();"
               >
                 <label htmlFor="destination" class="font-bold text-xs pointer-events-none">
                   Where
@@ -427,6 +427,7 @@
                 </button>
               </div>
 
+              <!-- When - Flexible -->
               <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Flexible' ? '' : 'hidden'">
                 <div class="flex flex-col gap-3">
                   <div class="text-lg font-medium text-gray-900">
@@ -539,6 +540,13 @@
                     </button>
                   </div>
   
+                </div>
+              </div>
+
+              <!-- When - Months -->
+              <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Months' ? '' : 'hidden'">
+                <div class="text-lg font-medium text-gray-900">
+                  When's your trip?
                 </div>
               </div>
 
@@ -1073,7 +1081,7 @@
           type="button"
           class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
           :class="userId ? '' : 'hidden'"
-          :click="document.querySelector('#delete-account-dialog').showModal()"
+          :click="$('#delete-account-dialog').showModal()"
         >
           Delete Account
         </button>
@@ -1135,7 +1143,7 @@
   type=&quot;button&quot;
   class=&quot;py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600&quot;
   :class=&quot;userId ? '' : 'hidden'&quot;
-  :click=&quot;document.querySelector('#dialog').showModal()&quot;
+  :click=&quot;$('#dialog').showModal()&quot;
   &gt;
 Delete Account
 &lt;/button&gt;
@@ -1221,7 +1229,7 @@ Delete Account
               id="edit-profile-btn"
               type="button"
               class="inline-block w-max py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-              :click="document.querySelector('#edit-profile-dialog').showModal()"
+              :click="$('#edit-profile-dialog').showModal()"
             >
               Edit Profile
             </button>
@@ -1326,7 +1334,7 @@ Delete Account
         id=&quot;edit-profile-btn&quot;
         type=&quot;button&quot;
         class=&quot;inline-block w-max py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600&quot;
-        :click=&quot;document.querySelector('#edit-profile-dialog').showModal()&quot;
+        :click=&quot;$('#edit-profile-dialog').showModal()&quot;
         &gt;
       Edit Profile
       &lt;/button&gt;
@@ -1466,7 +1474,7 @@ Delete Account
                   el.loader = document.createElement('div');
                   el.loader.className = 'shimmer h-32 w-full';
                   el.loader.style.minWidth = '300px';
-                  el.modalContent = document.querySelector('#modal-container-content');
+                  el.modalContent = $('#modal-container-content');
                   el.modalContent.innerHTML = el.loader.outerHTML;"
         >
           Open Modal
@@ -1542,7 +1550,7 @@ Delete Account
           el.loader = document.createElement('div');
           el.loader.className = 'shimmer h-32 w-full';
           el.loader.style.minWidth = '300px';
-          el.modalContent = document.querySelector('#modal-container-content');
+          el.modalContent = $('#modal-container-content');
           el.modalContent.innerHTML = el.loader.outerHTML;&quot;
   &gt;
 Open Modal
