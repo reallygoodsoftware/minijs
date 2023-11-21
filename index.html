@@ -227,7 +227,7 @@
                   id="time"
                   type="text"
                   :value="time"
-                  class="bg-transparent pointer-events-none"
+                  class="bg-transparent pointer-events-none text-ellipsis"
                   disabled
                 />
               </div>
@@ -438,7 +438,10 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Weekend' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Weekend'"
+                      :click="whenHowLong = 'Weekend';
+                              time = selectedMonths.length
+                                ? `Weekend in ${selectedMonths.join(', ')}`
+                                : 'Any weekend'"
                     >
                       Weekend
                     </button>
@@ -446,7 +449,10 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Week' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Week'"
+                      :click="whenHowLong = 'Week';
+                              time = selectedMonths.length
+                                ? `Week in ${selectedMonths.join(', ')}`
+                                : 'Any week'"
                     >
                       Week
                     </button>
@@ -454,7 +460,10 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Month' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Month'"
+                      :click="whenHowLong = 'Month';
+                              time = selectedMonths.length
+                                ? `Month in ${selectedMonths.join(', ')}`
+                                : 'Any month'"
                     >
                       Month
                     </button>
@@ -498,7 +507,10 @@
                           type="button"
                           class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
                           :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                          :click="selectedMonths = selectedMonths.toggle(month)"
+                          :click="selectedMonths = selectedMonths.toggle(month);
+                                  time = selectedMonths.length
+                                    ? `${whenHowLong} in ${selectedMonths.join(', ')}`
+                                    : `Any ${whenHowLong[0].toLowerCase() + whenHowLong.slice(1)}`"
                         >
                           <span :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10" : aria-hidden="true">
