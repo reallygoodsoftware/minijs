@@ -21,16 +21,6 @@ You can set the initial state of the variables using vanilla JS:
 </script>
 ```
 
-For class names, you can set the initial state by using the `class` attribute:
-
-```html
-<!-- Initial state - class="active"
-     Dynamic state - :class="" -->
-<div class="active" 
-  :class="showCode ? 'active' : ''"
-></div>
-```
-
 ### Syncing the DOM with your state
 
 These are the following attributes that you can use to sync the DOM with your state:
