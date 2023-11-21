@@ -54,7 +54,13 @@
           selectedDestination = '';
 
           // When Tab
+          months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           whenSelectedTab = 'Flexible';
+          whenHowLong = 'Week';
+          selectedMonths = [];
+
+          scrollPosition = 'middle';
+          SCROLL_OFFSET = 128;
         </script>
 
         <div class="flex items-center justify-center">
@@ -370,14 +376,14 @@
 
             <!-- When -->
             <div
-              class="w-full py-6 flex flex-col gap-8 bg-white rounded-3xl border border-gray-300 shadow"
+              class="w-full py-6 bg-white text-center rounded-3xl border border-gray-300 shadow overflow-hidden"
               :class="['When', 'Check In', 'Check Out'].includes(selectedTab) ? '' : 'hidden'"
             >
               <div class="mx-auto p-1 w-max flex gap-1 bg-gray-200 rounded-full">
                 <button
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
-                  :class="whenSelectedTab === 'Dates'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                  :class="whenSelectedTab === 'Dates' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
                   :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In'; time = ''"
                 >
                   Dates
@@ -412,7 +418,7 @@
                 <button
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
-                  :class="whenSelectedTab === 'Flexible'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                  :class="whenSelectedTab === 'Flexible' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
                   :click="whenSelectedTab = 'Flexible';
                           selectedTab = 'When';
                           time = 'Any week'"
@@ -420,7 +426,112 @@
                   Flexible
                 </button>
               </div>
+
+              <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Flexible' ? '' : 'hidden'">
+                <div class="flex flex-col gap-3">
+                  <div class="text-lg font-medium text-gray-900">
+                    How long would you like to stay?
+                  </div>
+  
+                  <div class="flex gap-2">
+                    <button
+                      type="button"
+                      class="py-2 px-4 text-base text-gray-900 rounded-full"
+                      :class="whenHowLong === 'Weekend' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                      :click="whenHowLong = 'Weekend'"
+                    >
+                      Weekend
+                    </button>
+                    <button
+                      type="button"
+                      class="py-2 px-4 text-base text-gray-900 rounded-full"
+                      :class="whenHowLong === 'Week' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                      :click="whenHowLong = 'Week'"
+                    >
+                      Week
+                    </button>
+                    <button
+                      type="button"
+                      class="py-2 px-4 text-base text-gray-900 rounded-full"
+                      :class="whenHowLong === 'Month' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                      :click="whenHowLong = 'Month'"
+                    >
+                      Month
+                    </button>
+                  </div>
+                </div>
+  
+                <div class="flex flex-col gap-3">
+                  <div class="text-lg font-medium text-gray-900">
+                    When do you want to go?
+                  </div>
+  
+                  <style>
+                    .scrollbar-hidden::-webkit-scrollbar {
+                      display: none;
+                    }
+                    .scrollbar-hidden {
+                      -ms-overflow-style: none;
+                      scrollbar-width: none;
+                    }
+                  </style>
+  
+                  <div class="max-w-4xl relative">
+                    <button
+                      type="button"
+                      :class="scrollPosition === 'left' ? 'hidden' : ''"
+                      class="absolute top-1/2 -translate-y-1/2 -left-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
+                      :click="$('#months').scrollBy({ top: 0, left: -SCROLL_OFFSET, behavior: 'smooth' });
+                              scrollPosition = $('#months').scrollLeft <= SCROLL_OFFSET
+                                ? 'left'
+                                : 'middle';"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                      </svg>                  
+                      <span class="sr-only">Previous Months</span>
+                    </button>
+  
+                    <ul id="months" class="p-1 flex gap-2 overflow-y-auto scrollbar-hidden" :each="month in months">
+                      <li>
+                        <button
+                          type="button"
+                          class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
+                          :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                          :click="selectedMonths = selectedMonths.toggle(month)"
+                        >
+                          <span :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10" : aria-hidden="true">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                            </svg>
+                          </span>
+                        
+                          <span class="text-base text-gray-900" :text="month"></span>
+                        </button>
+                      </li>
+                    </ul>
+  
+                    <button
+                      type="button"
+                      :class="scrollPosition === 'right' ? 'hidden' : ''"
+                      class="absolute top-1/2 -translate-y-1/2 -right-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
+                      :click="$('#months').scrollBy({ top: 0, left: SCROLL_OFFSET, behavior: 'smooth' });
+                              scrollPosition = $('#months').scrollLeftMax - $('#months').scrollLeft - SCROLL_OFFSET <= 0
+                                ? 'right'
+                                : 'middle';"
+                    > 
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                      </svg>                            
+                      <span class="sr-only">Next Months</span>
+                    </button>
+                  </div>
+  
+                </div>
+              </div>
+
             </div>
+
           </div>
         </div>
       </div>
