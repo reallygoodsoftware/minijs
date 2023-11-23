@@ -31,6 +31,7 @@
           selectedTab = 'Where';
           destination = '';
           time = 'Any week';
+          totalMonths = 12;
           checkIn = '';
           checkOut = '';
 
@@ -48,6 +49,31 @@
 
           scrollPosition = 'middle';
           SCROLL_OFFSET = 128;
+
+          function getStartAndEndMonth(totalMonths) {
+            const today = new Date();
+            const startMonth = today.getMonth() + 1;
+            const endMonth   = today.getMonth() + 1 + totalMonths;
+
+            const startDate = new Date(today.getFullYear(), startMonth, 1);
+            const endDate   = new Date(today.getFullYear(), endMonth, 1);
+            return [startDate, endDate];
+          }
+
+          function getSliderValue(position) {
+            const rect = document.querySelector('.slider').getBoundingClientRect();
+            const dx = position.x - rect.left - rect.width / 2;
+            const dy = position.y - rect.top - rect.height / 2;
+            const theta = Math.atan2(dy, dx);
+            const left = 50 + 50 * Math.cos(theta);
+            const top = 50 + 50 * Math.sin(theta);
+            let percentage = (theta + Math.PI / 2) / (2 * Math.PI) * 100;
+            
+            if (percentage < 0)
+              percentage += 100;
+
+            return { left, top, percentage };
+          }
         </script>
 
         <div class="flex items-center justify-center">
@@ -381,12 +407,9 @@
                   :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
                   :click="whenSelectedTab = 'Months';
                           selectedTab = 'When';
-                          const today = new Date();
-                          const startMonth = today.getMonth() + 1;
-                          const endMonth   = today.getMonth() + 1 + 3;
-
-                          const startDate = new Date(today.getFullYear(), startMonth, 1);
-                          const endDate   = new Date(today.getFullYear(), endMonth, 1);
+                          const dates = getStartAndEndMonth(totalMonths);
+                          const startDate = dates[0];
+                          const endDate = dates[1];
 
                           time = startDate.toLocaleString('default', {
                             month: 'short',
@@ -534,6 +557,73 @@
               <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Months' ? '' : 'hidden'">
                 <div class="text-lg font-medium text-gray-900">
                   When's your trip?
+                </div>
+
+                <style>
+                  .slider-fill:before {
+                    background: conic-gradient(var(--fill-color) calc(var(--percentage)*1%), #0000 0);
+                  }
+                </style>
+
+                <!-- Slider -->
+                <div class="slider-container relative shadow-inset rounded-full" style="width: 230px; height: 230px;">
+                  <!-- Slider Fill -->
+                  <div
+                    class="slider-fill absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-square inline-grid place-content-center bg-gray-200 rounded-full before:content-[''] before:absolute before:rounded-full before:inset-0"
+                    style="--percentage: 100; --fill-color: #e11d48"
+                    aria-hidden="true"
+                  ></div>
+
+                  <!-- Slider with Handle -->
+                  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div
+                      class="slider relative"
+                      style="width: 200px; height: 200px;"
+                      :mousedown="mousedown = true"
+                      :mouseup="mousedown = false"
+                      :mousemove="if (mousedown) {
+                                    const value = getSliderValue({
+                                      x: event.clientX,
+                                      y: event.clientY,
+                                    });
+
+                                    totalMonths = Math.round(value.percentage / 100 * 12) === 0
+                                      ? 12
+                                      : Math.round(value.percentage / 100 * 12);
+
+                                    const dates = getStartAndEndMonth(totalMonths);
+                                    const startDate = dates[0];
+                                    const endDate = dates[1];
+
+                                    // TODO: Make start date and end date global variables instead of using time
+                                    time = startDate.toLocaleString('default', {
+                                      month: 'short',
+                                      year: 'numeric',
+                                      day: 'numeric',
+                                    });
+                                    time += ' - ';
+                                    time += endDate.toLocaleString('default', {
+                                      month: 'short',
+                                      year: 'numeric',
+                                      day: 'numeric',
+                                    });
+                                    
+                                    $('.slider-fill').style.setProperty('--percentage', value.percentage);
+                                    $('.slider-handle').style.left = `${value.left}%`;
+                                    $('.slider-handle').style.top = `${value.top}%`;
+                                  }"
+                    >
+                      <div class="slider-circle relative w-full h-full rounded-full">
+                        <div class="slider-handle absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full ring-2 ring-rose-500" style="width:25px; height:25px"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slider Label -->
+                  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-3/4 w-3/4 flex flex-col items-center justify-center bg-white rounded-full shadow-lg pointer-events-none">
+                    <span class="slider-label text-6xl font-bold" :text="totalMonths"></span>
+                    <span class="text-base font-bold">months</span>
+                  </div>
                 </div>
               </div>
 
