@@ -381,20 +381,20 @@
                   :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
                   :click="whenSelectedTab = 'Months';
                           selectedTab = 'When';
-                          el.today = new Date();
-                          el.startMonth = el.today.getMonth() + 1;
-                          el.endMonth   = el.today.getMonth() + 1 + 3;
+                          const today = new Date();
+                          const startMonth = today.getMonth() + 1;
+                          const endMonth   = today.getMonth() + 1 + 3;
 
-                          el.startDate = new Date(el.today.getFullYear(), el.startMonth, 1);
-                          el.endDate   = new Date(el.today.getFullYear(), el.endMonth, 1);
+                          const startDate = new Date(today.getFullYear(), startMonth, 1);
+                          const endDate   = new Date(today.getFullYear(), endMonth, 1);
 
-                          time = el.startDate.toLocaleString('default', {
+                          time = startDate.toLocaleString('default', {
                             month: 'short',
                             year: 'numeric',
                             day: 'numeric',
                           });
                           time += ' - ';
-                          time += el.endDate.toLocaleString('default', {
+                          time += endDate.toLocaleString('default', {
                             month: 'short',
                             year: 'numeric',
                             day: 'numeric',
