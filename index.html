@@ -30,9 +30,7 @@
           showSearch = false;
           selectedTab = 'Where';
           destination = '';
-
-          // TODO: update time logic
-          time = 'Any week';
+          
           totalMonths = 12;
           checkIn = '';
           checkOut = '';
@@ -241,7 +239,41 @@
                 <input
                   id="time"
                   type="text"
-                  :value="time"
+                  :value="if (whenSelectedTab === 'Flexible') {
+                            if (whenHowLong === 'Week') {
+                              selectedMonths.length
+                                ? `Week in ${selectedMonths.join(', ')}`
+                                : 'Any week'
+                            } else if (whenHowLong === 'Weekend') {
+                              selectedMonths.length
+                                ? `Weekend in ${selectedMonths.join(', ')}`
+                                : 'Any weekend'
+                            } else {
+                              selectedMonths.length
+                                ? `Month in ${selectedMonths.join(', ')}`
+                                : 'Any month'
+                            }
+                          } else if (whenSelectedTab === 'Months') {
+                            const dates = getStartAndEndMonth(totalMonths);
+                            const startDate = dates[0];
+                            const endDate = dates[1];
+
+                            let date = startDate.toLocaleString('default', {
+                              month: 'short',
+                              year: 'numeric',
+                              day: 'numeric',
+                            });
+                            date += ' - ';
+                            date += endDate.toLocaleString('default', {
+                              month: 'short',
+                              year: 'numeric',
+                              day: 'numeric',
+                            });
+
+                            date
+                          } else {
+                            ''
+                          }"
                   class="bg-transparent pointer-events-none text-ellipsis"
                   disabled
                 />
@@ -399,7 +431,7 @@
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Dates' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In'; time = ''"
+                  :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In';"
                 >
                   Dates
                 </button>
@@ -407,23 +439,7 @@
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Months';
-                          selectedTab = 'When';
-                          const dates = getStartAndEndMonth(totalMonths);
-                          const startDate = dates[0];
-                          const endDate = dates[1];
-
-                          time = startDate.toLocaleString('default', {
-                            month: 'short',
-                            year: 'numeric',
-                            day: 'numeric',
-                          });
-                          time += ' - ';
-                          time += endDate.toLocaleString('default', {
-                            month: 'short',
-                            year: 'numeric',
-                            day: 'numeric',
-                          });"
+                  :click="whenSelectedTab = 'Months'; selectedTab = 'When';"
                 >
                   Months
                 </button>
@@ -431,9 +447,7 @@
                   type="button"
                   class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
                   :class="whenSelectedTab === 'Flexible' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Flexible';
-                          selectedTab = 'When';
-                          time = 'Any week'"
+                  :click="whenSelectedTab = 'Flexible'; selectedTab = 'When';"
                 >
                   Flexible
                 </button>
@@ -451,10 +465,7 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Weekend' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Weekend';
-                              time = selectedMonths.length
-                                ? `Weekend in ${selectedMonths.join(', ')}`
-                                : 'Any weekend'"
+                      :click="whenHowLong = 'Weekend';"
                     >
                       Weekend
                     </button>
@@ -462,10 +473,7 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Week' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Week';
-                              time = selectedMonths.length
-                                ? `Week in ${selectedMonths.join(', ')}`
-                                : 'Any week'"
+                      :click="whenHowLong = 'Week';"
                     >
                       Week
                     </button>
@@ -473,10 +481,7 @@
                       type="button"
                       class="py-2 px-4 text-base text-gray-900 rounded-full"
                       :class="whenHowLong === 'Month' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Month';
-                              time = selectedMonths.length
-                                ? `Month in ${selectedMonths.join(', ')}`
-                                : 'Any month'"
+                      :click="whenHowLong = 'Month';"
                     >
                       Month
                     </button>
@@ -520,10 +525,7 @@
                           type="button"
                           class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
                           :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                          :click="selectedMonths = selectedMonths.toggle(month);
-                                  time = selectedMonths.length
-                                    ? `${whenHowLong} in ${selectedMonths.join(', ')}`
-                                    : `Any ${whenHowLong[0].toLowerCase() + whenHowLong.slice(1)}`"
+                          :click="selectedMonths = selectedMonths.toggle(month);"
                         >
                           <span :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10" : aria-hidden="true">
@@ -592,23 +594,6 @@
                                     totalMonths = Math.round(value.percentage / 100 * 12) === 0
                                       ? 12
                                       : Math.round(value.percentage / 100 * 12);
-
-                                    const dates = getStartAndEndMonth(totalMonths);
-                                    const startDate = dates[0];
-                                    const endDate = dates[1];
-
-                                    // TODO: Make start date and end date global variables instead of using time
-                                    time = startDate.toLocaleString('default', {
-                                      month: 'short',
-                                      year: 'numeric',
-                                      day: 'numeric',
-                                    });
-                                    time += ' - ';
-                                    time += endDate.toLocaleString('default', {
-                                      month: 'short',
-                                      year: 'numeric',
-                                      day: 'numeric',
-                                    });
                                     
                                     $('.slider-fill').style.setProperty('--percentage', value.percentage);
                                     $('.slider-handle').style.left = `${value.left}%`;
