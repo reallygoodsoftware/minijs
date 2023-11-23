@@ -240,19 +240,9 @@
                   id="time"
                   type="text"
                   :value="if (whenSelectedTab === 'Flexible') {
-                            if (whenHowLong === 'Week') {
-                              selectedMonths.length
-                                ? `Week in ${selectedMonths.join(', ')}`
-                                : 'Any week'
-                            } else if (whenHowLong === 'Weekend') {
-                              selectedMonths.length
-                                ? `Weekend in ${selectedMonths.join(', ')}`
-                                : 'Any weekend'
-                            } else {
-                              selectedMonths.length
-                                ? `Month in ${selectedMonths.join(', ')}`
-                                : 'Any month'
-                            }
+                            selectedMonths.length
+                              ? `${whenHowLong} in ${selectedMonths.join(', ')}`
+                              : `Any ${whenHowLong.toLowerCase()}`
                           } else if (whenSelectedTab === 'Months') {
                             const dates = getStartAndEndMonth(totalMonths);
                             const startDate = dates[0];
@@ -269,8 +259,6 @@
                               year: 'numeric',
                               day: 'numeric',
                             });
-
-                            date
                           } else {
                             ''
                           }"
