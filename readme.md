@@ -53,6 +53,59 @@ A DOM update or a re-render happens when the state variable is re-assigned:
 <!-- the re-assignment of firstName will trigger DOM updates that uses that variable -->
 ```
 
+## Classes
+
+You can make your class names reactive by using the `:class` attribute:
+
+```html
+<script type="text/javascript">
+  isActive = false
+</script>
+
+<button :click="isActive = !isActive" :class="isActive ? 'active' : ''">
+  Click Me
+</button>
+```
+
+### Setting the Default Classes
+
+To set default classes, you can use the `class` attribute:
+
+```html
+<div class="hidden" :class="shouldShow ? 'visible' : 'hidden'"></div>
+```
+
+### Setting Multiple Reactive Classes
+
+To set multiple reactive classes, you can use the `:class` attribute:
+
+1. Use multiple ternary operators enclosed in parentheses:
+
+```html
+<div
+  :class="(selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+          (whenSelectedTab === 'Dates' ? 'hidden' : '')"
+></div>
+```
+
+2. Use if-else statements:
+
+```html
+<div
+  :class="if (selectedTab === 'When') {
+            'bg-white shadow-lg'
+          } else {
+            'hover:bg-gray-300'
+          }
+
+          if (whenSelectedTab === 'Dates') {
+            'hidden'
+          } else {
+            ''
+          }"
+></div>
+```
+
 ## Events
 
 You can create, use, and update state variables inside DOM events.
