@@ -959,7 +959,7 @@
             :keyup.down="selectedTag = filteredTags.nextItem(selectedTag)"
           />
 
-          <div :clickout="filteredTags = []; selectedTag = null" class="hidden" :class="filteredTags.length ? '' : 'hidden'" class="bg-white rounded">
+          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden'" class="hidden bg-white rounded">
             <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
             <ul :each="tag in filteredTags" tabindex="-1" role="listbox" aria-labelledby="selected-flavor-label">
               <li
@@ -977,7 +977,7 @@
 
           <p class="mt-2">Selected Tags:</p>
           <div class="flex items-center space-x-2" :each="tag in selectedTags">
-            <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700" >
+            <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700">
               <span :text="tag" class="font-semibold font-mono text-xs"></span>
               <span
                 class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
