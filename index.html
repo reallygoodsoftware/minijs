@@ -747,7 +747,7 @@
             <p class="font-bold font-mono text-sm">Checkbox:</p>
             <div class="flex items-center mt-3">
               <input :change="checkboxValue = this.checked" :checked="checkboxValue" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-              <h2 class="ml-2 text-sm font-semibold font-mono" :text="checkboxValue ? 'ON' : 'OFF' "></h2>
+              <h2 class="ml-2 text-sm font-semibold font-mono" :text="checkboxValue ? 'ON' : 'OFF' ">OFF</h2>
             </div>
           </div>
         </div>
@@ -769,12 +769,12 @@
             <p class="font-bold font-mono text-sm">Select:</p>
             <select :value="selectedCountry ||= 'Canada' " :change="selectedCountry = this.value" name="location" class="w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
               <option>United States</option>
-              <option>Canada</option>
+              <option selected>Canada</option>
               <option>Mexico</option>
             </select>
           </div>
   
-          <p class="ml-4">Selected: <span class="font-bold" :text="selectedCountry"></span></p>
+          <p class="ml-4">Selected: <span class="font-bold" :text="selectedCountry">Canada</span></p>
         </div>
         <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
           <pre>
