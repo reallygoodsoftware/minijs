@@ -6,7 +6,7 @@ To setup MiniJS in your local machine, you can do the following:
 
 1. Clone [repository](https://github.com/Group-One-Technology/minijs).
 2. Run `npm install` to install dependencies.
-3. Run `npm build` to create a `dist` -> output for MiniJS.
+3. Run `npm run build` to create a `dist` -> output for MiniJS.
 4. Run `npm run dev` to run demo page locally.
 5. Run `npm run build-watch` to run build when code changes.
 
