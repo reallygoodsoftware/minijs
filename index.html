@@ -240,10 +240,12 @@
                   id="time"
                   type="text"
                   :value="if (whenSelectedTab === 'Flexible') {
-                            selectedMonths.length
+                            return selectedMonths.length
                               ? `${whenHowLong} in ${selectedMonths.join(', ')}`
                               : `Any ${whenHowLong.toLowerCase()}`
-                          } else if (whenSelectedTab === 'Months') {
+                          }
+                          
+                          if (whenSelectedTab === 'Months') {
                             const dates = getStartAndEndMonth(totalMonths);
                             const startDate = dates[0];
                             const endDate = dates[1];
@@ -259,9 +261,11 @@
                               year: 'numeric',
                               day: 'numeric',
                             });
-                          } else {
-                            ''
-                          }"
+
+                            return date;
+                          }
+                          
+                          return  ''"
                   class="bg-transparent pointer-events-none text-ellipsis"
                   disabled
                 />
@@ -722,7 +726,7 @@
         <div class="flex items-end">
           <div class="flex flex-col">
             <p class="font-bold font-mono text-sm">Input:</p>
-            <input :change="inputValue = this.value" :value="inputValue" value="Hello World" type="text" name="text" class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input :change="inputValue = this.value;" :value="inputValue" value="Hello World" type="text" name="text" class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
           <h2 class="ml-3 mt-2 text-lg font-medium font-mono" :text="inputValue">Hello World</h2>
         </div>

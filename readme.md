@@ -105,15 +105,15 @@ To set multiple reactive classes, you can use the `:class` attribute:
 ```html
 <div
   :class="if (selectedTab === 'When') {
-            'bg-white shadow-lg'
+            return 'bg-white shadow-lg'
           } else {
-            'hover:bg-gray-300'
+            return 'hover:bg-gray-300'
           }
 
           if (whenSelectedTab === 'Dates') {
-            'hidden'
+            return 'hidden'
           } else {
-            ''
+            return ''
           }"
 ></div>
 ```
