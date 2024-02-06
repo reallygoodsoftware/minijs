@@ -1,245 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiniJS</title>
+    <script src="/dist/minijs.umd.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/google-light.min.css"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiniJS</title>
-  <script src="/dist/minijs.umd.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/google-light.min.css">
+    <script>
+      hljs.highlightAll()
+    </script>
+    <script>
+      MiniJS.debug = false
+    </script>
+  </head>
 
-  <script>hljs.highlightAll();</script>
-  <script>MiniJS.debug = false;</script>
-</head>
+  <body class="pb-64">
+    <div class="flex items-center justify-center p-10">
+      <h1 class="text-3xl text-black font-mono font-bold">MiniJS</h1>
+    </div>
 
-<body class="pb-64">
-  <div class="flex items-center justify-center p-10">
-    <h1 class="text-3xl text-black font-mono font-bold">MiniJS</h1>
-  </div>
-
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="font-bold font-mono">AirBnB Search Bar:</h3>
-      </div>
-
-      <div :clickout="showSearch = false">
-        <script>
-          showSearch = false;
-          selectedTab = 'Where';
-          destination = '';
-          
-          totalMonths = 12;
-          checkIn = '';
-          checkOut = '';
-
-          // Where Tab
-          regions = ['Europe', 'Japan', 'United States', 'South Korea', 'Australia'];
-          destinations = ['Boracay, Philippines', 'Kyoto, Japan', 'Barcelona, Spain', 'Santorini, Greece', 'Paris, France', 'London, United Kingdom', 'New York, United States', 'Cape Town, South Africa', 'Rio de Janeiro, Brazil', 'Sydney, Australia'];
-          filteredDestinations = [];
-          selectedDestination = '';
-
-          // When Tab
-          months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-          whenSelectedTab = 'Flexible';
-          whenHowLong = 'Week';
-          selectedMonths = [];
-
-          scrollPosition = 'middle';
-          SCROLL_OFFSET = 128;
-
-          function getStartAndEndMonth(totalMonths) {
-            const today = new Date();
-            const startMonth = today.getMonth() + 1;
-            const endMonth   = today.getMonth() + 1 + totalMonths;
-
-            const startDate = new Date(today.getFullYear(), startMonth, 1);
-            const endDate   = new Date(today.getFullYear(), endMonth, 1);
-            return [startDate, endDate];
-          }
-
-          function getSliderValue(position) {
-            const rect = document.querySelector('.slider').getBoundingClientRect();
-            const dx = position.x - rect.left - rect.width / 2;
-            const dy = position.y - rect.top - rect.height / 2;
-            const theta = Math.atan2(dy, dx);
-            const left = 50 + 50 * Math.cos(theta);
-            const top = 50 + 50 * Math.sin(theta);
-            let percentage = (theta + Math.PI / 2) / (2 * Math.PI) * 100;
-            
-            if (percentage < 0)
-              percentage += 100;
-
-            return { left, top, percentage };
-          }
-        </script>
-
-        <div class="flex items-center justify-center">
-          <div
-            id="search-bar"
-            role="search"
-            class="inline-block p-3 rounded-full bg-white text-gray-900 border border-gray-300 cursor-pointer shadow"
-            aria-labelledby="airbnb-search"
-            :class="showSearch ? 'hidden' : ''"
-            :click="showSearch = true"
-          >
-            <span id="airbnb-search" class="sr-only">Start your search</span>
-            <div class="flex justify-between divide-x divide-gray-300">
-              <div
-                type="button"
-                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
-              >
-                <span class="sr-only">Location</span>
-                Anywhere
-              </div>
-              <div
-                type="button"
-                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
-              >
-                <span class="sr-only">Check In / Check Out</span>
-                Any week
-              </div>
-              <button
-                type="button"
-                class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-500 font-normal whitespace-nowrap"
-              >
-                <span class="sr-only">Guests</span>
-                Add guests
-  
-                <span class="ml-4 -mr-5 -my-3 inline-block p-2 bg-red-500 text-white rounded-full" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>              
-                </span>
-              </button>
-            </div>
-          </div>
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">AirBnB Search Bar:</h3>
         </div>
 
-        <div
-          class="z-10 w-full flex flex-col gap-8 duration-300 transition-all opacity-0 h-0"
-          :class="showSearch ? 'h-auto opacity-100 translate-y-0 pointer-events-auto' : 'h-0 translate-y-4 opacity-0 pointer-events-none'"
-        >
-          <div class="mx-auto w-max flex gap-8">
-            <button
-              type="button"
-              class="text-base text-gray-900 underline decoration-2 underline-offset-8 decoration-gray-900"
+        <div :clickout="showSearch = false">
+          <script>
+            showSearch = false
+            selectedTab = 'Where'
+            destination = ''
+
+            totalMonths = 12
+            checkIn = ''
+            checkOut = ''
+
+            // Where Tab
+            regions = [
+              'Europe',
+              'Japan',
+              'United States',
+              'South Korea',
+              'Australia',
+            ]
+            destinations = [
+              'Boracay, Philippines',
+              'Kyoto, Japan',
+              'Barcelona, Spain',
+              'Santorini, Greece',
+              'Paris, France',
+              'London, United Kingdom',
+              'New York, United States',
+              'Cape Town, South Africa',
+              'Rio de Janeiro, Brazil',
+              'Sydney, Australia',
+            ]
+            filteredDestinations = []
+            selectedDestination = ''
+
+            // When Tab
+            months = [
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December',
+            ]
+            whenSelectedTab = 'Flexible'
+            whenHowLong = 'Week'
+            selectedMonths = []
+
+            scrollPosition = 'middle'
+            SCROLL_OFFSET = 128
+
+            function getStartAndEndMonth(totalMonths) {
+              const today = new Date()
+              const startMonth = today.getMonth() + 1
+              const endMonth = today.getMonth() + 1 + totalMonths
+
+              const startDate = new Date(today.getFullYear(), startMonth, 1)
+              const endDate = new Date(today.getFullYear(), endMonth, 1)
+              return [startDate, endDate]
+            }
+
+            function getSliderValue(position) {
+              const rect = document
+                .querySelector('.slider')
+                .getBoundingClientRect()
+              const dx = position.x - rect.left - rect.width / 2
+              const dy = position.y - rect.top - rect.height / 2
+              const theta = Math.atan2(dy, dx)
+              const left = 50 + 50 * Math.cos(theta)
+              const top = 50 + 50 * Math.sin(theta)
+              let percentage = ((theta + Math.PI / 2) / (2 * Math.PI)) * 100
+
+              if (percentage < 0) percentage += 100
+
+              return { left, top, percentage }
+            }
+          </script>
+
+          <div class="flex items-center justify-center">
+            <div
+              id="search-bar"
+              role="search"
+              class="inline-block p-3 rounded-full bg-white text-gray-900 border border-gray-300 cursor-pointer shadow"
+              aria-labelledby="airbnb-search"
+              :class="showSearch ? 'hidden' : ''"
+              :click="showSearch = true"
             >
-              Stays
-            </button>
-            <button
-              type="button"
-              class="text-base text-gray-900"
-            >
-              Experiences
-            </button>
-            <button
-              type="button"
-              class="text-base text-gray-900"
-            >
-              Online Experiences
-            </button>
+              <span id="airbnb-search" class="sr-only">Start your search</span>
+              <div class="flex justify-between divide-x divide-gray-300">
+                <div
+                  type="button"
+                  class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
+                >
+                  <span class="sr-only">Location</span>
+                  Anywhere
+                </div>
+                <div
+                  type="button"
+                  class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap"
+                >
+                  <span class="sr-only">Check In / Check Out</span>
+                  Any week
+                </div>
+                <button
+                  type="button"
+                  class="w-full py-0.5 px-4 flex items-center justify-center text-sm text-gray-500 font-normal whitespace-nowrap"
+                >
+                  <span class="sr-only">Guests</span>
+                  Add guests
+
+                  <span
+                    class="ml-4 -mr-5 -my-3 inline-block p-2 bg-red-500 text-white rounded-full"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
 
           <div
-            role="search"
-            class="relative w-full rounded-full bg-gray-200 text-gray-900 border border-gray-300 shadow"
+            class="z-10 w-full flex flex-col gap-8 duration-300 transition-all opacity-0 h-0"
+            :class="showSearch ? 'h-auto opacity-100 translate-y-0 pointer-events-auto' : 'h-0 translate-y-4 opacity-0 pointer-events-none'"
           >
-            <div class="flex justify-between divide-x divide-gray-300">
-              <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
-                tabindex="0"
-                :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
-                :press="selectedTab = 'Where';
-                        $('#destination').focus();"
+            <div class="mx-auto w-max flex gap-8">
+              <button
+                type="button"
+                class="text-base text-gray-900 underline decoration-2 underline-offset-8 decoration-gray-900"
               >
-                <label htmlFor="destination" class="font-bold text-xs pointer-events-none">
-                  Where
-                </label>
-                <input
-                  id="destination"
-                  type="text"
-                  :value="destination"
-                  :change="destination = this.value;
+                Stays
+              </button>
+              <button type="button" class="text-base text-gray-900">
+                Experiences
+              </button>
+              <button type="button" class="text-base text-gray-900">
+                Online Experiences
+              </button>
+            </div>
+
+            <div
+              role="search"
+              class="relative w-full rounded-full bg-gray-200 text-gray-900 border border-gray-300 shadow"
+            >
+              <div class="flex justify-between divide-x divide-gray-300">
+                <div
+                  class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                  tabindex="0"
+                  :class="selectedTab === 'Where' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                  :press="selectedTab = 'Where';
+                        $('#destination').focus();"
+                >
+                  <label
+                    htmlFor="destination"
+                    class="font-bold text-xs pointer-events-none"
+                  >
+                    Where
+                  </label>
+                  <input
+                    id="destination"
+                    type="text"
+                    :value="destination"
+                    :change="destination = this.value;
                            filteredDestinations = destinations.search(this.value)
                            selectedDestination = filteredDestinations.first"
-                  :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
-                  :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
-                  placeholder="Search destinations"
-                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
-                  :keyup.enter="if (selectedDestination != null) {
+                    :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
+                    :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
+                    placeholder="Search destinations"
+                    class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
+                    :keyup.enter="if (selectedDestination != null) {
                                   destination = selectedDestination;
                                   selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
                                   this.blur();
                                  }"
-                />
+                  />
 
-                <button
-                  class="absolute top-1/2 right-4 -translate-y-1/2 p-1 text-gray-900 rounded-full hover:bg-gray-300 focus:bg-gray-100"
-                  :class="destination.length && selectedTab === 'Where' ? '' : 'hidden'"
-                  :click="destination = ''"
+                  <button
+                    class="absolute top-1/2 right-4 -translate-y-1/2 p-1 text-gray-900 rounded-full hover:bg-gray-300 focus:bg-gray-100"
+                    :class="destination.length && selectedTab === 'Where' ? '' : 'hidden'"
+                    :click="destination = ''"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="w-4 h-4"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                  </button>
+                </div>
+                <div
+                  class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                  tabindex="0"
+                  :class="(selectedTab === 'Check In' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                  + (whenSelectedTab !== 'Dates' ? ' hidden' : '')"
+                  :press="selectedTab = 'Check In'"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <span class="sr-only">Close</span>
-                </button>
-              </div>
-              <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
-                tabindex="0"
-                :class="(selectedTab === 'Check In' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                  <label
+                    htmlFor="check-in"
+                    class="font-bold text-xs pointer-events-none"
+                  >
+                    Check In
+                  </label>
+                  <input
+                    id="check-in"
+                    type="text"
+                    :value="checkIn"
+                    placeholder="Add dates"
+                    class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
+                    disabled
+                  />
+                </div>
+                <div
+                  class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                  tabindex="0"
+                  :class="(selectedTab === 'Check Out' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
                   + (whenSelectedTab !== 'Dates' ? ' hidden' : '')"
-                :press="selectedTab = 'Check In'"
-              >
-                <label htmlFor="check-in" class="font-bold text-xs pointer-events-none">
-                  Check In
-                </label>
-                <input
-                  id="check-in"
-                  type="text"
-                  :value="checkIn"
-                  placeholder="Add dates"
-                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
-                  disabled
-                />
-              </div>
-              <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
-                tabindex="0"
-                :class="(selectedTab === 'Check Out' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
-                  + (whenSelectedTab !== 'Dates' ? ' hidden' : '')"
-                :press="selectedTab = 'Check Out'"
-              >
-                <label htmlFor="check-out" class="font-bold text-xs pointer-events-none">
-                  Check Out
-                </label>
-                <input
-                  id="check-out"
-                  type="text"
-                  :value="checkOut"
-                  placeholder="Add dates"
-                  class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
-                  disabled
-                />
-              </div>
-              <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
-                tabindex="0"
-                :class="(selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
+                  :press="selectedTab = 'Check Out'"
+                >
+                  <label
+                    htmlFor="check-out"
+                    class="font-bold text-xs pointer-events-none"
+                  >
+                    Check Out
+                  </label>
+                  <input
+                    id="check-out"
+                    type="text"
+                    :value="checkOut"
+                    placeholder="Add dates"
+                    class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none pointer-events-none"
+                    disabled
+                  />
+                </div>
+                <div
+                  class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                  tabindex="0"
+                  :class="(selectedTab === 'When' ? 'bg-white shadow-lg' : 'hover:bg-gray-300')
                         (whenSelectedTab === 'Dates' ? 'hidden' : '')"
-                :press="selectedTab = 'When'"
-              >
-                <span class="sr-only">Check In / Check Out</span>
-                <label htmlFor="time" class="font-bold text-xs pointer-events-none">
-                  When
-                </label>
-                <input
-                  id="time"
-                  type="text"
-                  :value="if (whenSelectedTab === 'Flexible') {
+                  :press="selectedTab = 'When'"
+                >
+                  <span class="sr-only">Check In / Check Out</span>
+                  <label
+                    htmlFor="time"
+                    class="font-bold text-xs pointer-events-none"
+                  >
+                    When
+                  </label>
+                  <input
+                    id="time"
+                    type="text"
+                    :value="if (whenSelectedTab === 'Flexible') {
                             return selectedMonths.length
                               ? `${whenHowLong} in ${selectedMonths.join(', ')}`
                               : `Any ${whenHowLong.toLowerCase()}`
@@ -266,318 +335,403 @@
                           }
                           
                           return  ''"
-                  class="bg-transparent pointer-events-none text-ellipsis"
-                  disabled
-                />
+                    class="bg-transparent pointer-events-none text-ellipsis"
+                    disabled
+                  />
+                </div>
+                <div
+                  class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
+                  tabindex="0"
+                  :class="selectedTab === 'Who' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
+                  :press="selectedTab = 'Who'"
+                >
+                  <span class="sr-only">Guests</span>
+                  Add guests
+                </div>
               </div>
+            </div>
+
+            <div id="search-flyout" class="-mt-6">
+              <!-- Where: Search by Region -->
               <div
-                class="relative w-full py-4 px-6 flex flex-col gap-1 text-sm text-gray-900 font-medium whitespace-nowrap rounded-full border-none cursor-pointer transition-colors duration-100"
-                tabindex="0"
-                :class="selectedTab === 'Who' ? 'bg-white shadow-lg' : 'hover:bg-gray-300'"
-                :press="selectedTab = 'Who'"
+                class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
+                :class="selectedTab === 'Where' && (regions.includes(destination) || !destination.length) ? '' : 'hidden'"
               >
-                <span class="sr-only">Guests</span>
-                Add guests
+                <div class="text-xs font-bold text-gray-900">
+                  Search by region
+                </div>
+
+                <div class="my-6 grid grid-cols-3 gap-x-3 gap-y-6">
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = '';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of whole world"
+                        src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">I'm flexible</div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = 'Europe';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of Europe"
+                        src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">Europe</div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = 'Japan';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of Japan"
+                        src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">Japan</div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = 'United States';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of United States"
+                        src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">United States</div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = 'South Korea';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of South Korea"
+                        src="https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">South Korea</div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
+                      :click="destination = 'Australia';
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    >
+                      <img
+                        class="touch-none h-full w-full"
+                        alt="Map of Australia"
+                        src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg"
+                      />
+                    </button>
+                    <div class="text-sm text-gray-600">Australia</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-  
-          <div id="search-flyout" class="-mt-6">
-            <!-- Where: Search by Region -->
-            <div
-              class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
-              :class="selectedTab === 'Where' && (regions.includes(destination) || !destination.length) ? '' : 'hidden'"
-            >
-              <div class="text-xs font-bold text-gray-900">
-                Search by region
+
+              <!-- Where: Search Results -->
+              <div
+                class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
+                :class="selectedTab === 'Where' && destination.length && !regions.includes(destination) ? '' : 'hidden'"
+              >
+                <ul :each="place in filteredDestinations">
+                  <li
+                    class="px-6"
+                    :class="selectedDestination == place ? 'bg-gray-100' : ''"
+                  >
+                    <button
+                      type="button"
+                      class="py-2 flex items-center gap-2"
+                      :click="destination = place;
+                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                      :mouseover="selectedDestination = place"
+                    >
+                      <div class="p-3 bg-gray-200 rounded-lg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                          aria-hidden="true"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="text-base text-gray-700" :text="place"></div>
+                    </button>
+                  </li>
+                </ul>
+
+                <p
+                  class="px-6 text-sm text-gray-700"
+                  :class="filteredDestinations.length ? 'sr-only' : ''"
+                >
+                  There are no results matching your search.
+                </p>
               </div>
 
-              <div class="my-6 grid grid-cols-3 gap-x-3 gap-y-6">
-                <div class="flex flex-col gap-2">
+              <!-- When -->
+              <div
+                class="w-full py-6 bg-white text-center rounded-3xl border border-gray-300 shadow overflow-hidden"
+                :class="['When', 'Check In', 'Check Out'].includes(selectedTab) ? '' : 'hidden'"
+              >
+                <div
+                  class="mx-auto p-1 w-max flex gap-1 bg-gray-200 rounded-full"
+                >
                   <button
                     type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = '';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                    class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                    :class="whenSelectedTab === 'Dates' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                    :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In';"
                   >
-                    <img class="touch-none h-full w-full" alt="Map of whole world" src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg">
+                    Dates
                   </button>
-                  <div class="text-sm text-gray-600">
-                    I'm flexible
-                  </div>
+                  <button
+                    type="button"
+                    class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                    :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                    :click="whenSelectedTab = 'Months'; selectedTab = 'When';"
+                  >
+                    Months
+                  </button>
+                  <button
+                    type="button"
+                    class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
+                    :class="whenSelectedTab === 'Flexible' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
+                    :click="whenSelectedTab = 'Flexible'; selectedTab = 'When';"
+                  >
+                    Flexible
+                  </button>
                 </div>
 
-                <div class="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Europe';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                  >
-                    <img class="touch-none h-full w-full" alt="Map of Europe" src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg">
-                  </button>
-                  <div class="text-sm text-gray-600">
-                    Europe
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Japan';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                  >
-                    <img class="touch-none h-full w-full" alt="Map of Japan" src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320">
-                  </button>
-                  <div class="text-sm text-gray-600">
-                    Japan
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'United States';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                  >
-                    <img class="touch-none h-full w-full" alt="Map of United States" src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg">
-                  </button>
-                  <div class="text-sm text-gray-600">
-                    United States
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'South Korea';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                  >
-                    <img class="touch-none h-full w-full" alt="Map of South Korea" src="https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg">
-                  </button>
-                  <div class="text-sm text-gray-600">
-                    South Korea
-                  </div>
-                </div>
-                
-                <div class="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                    :click="destination = 'Australia';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                  >
-                    <img class="touch-none h-full w-full" alt="Map of Australia" src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg">
-                  </button>
-                  <div class="text-sm text-gray-600">
-                    Australia
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            
-            <!-- Where: Search Results -->
-            <div
-              class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
-              :class="selectedTab === 'Where' && destination.length && !regions.includes(destination) ? '' : 'hidden'"
-            >
-              <ul :each="place in filteredDestinations">
-                <li class="px-6" :class="selectedDestination == place ? 'bg-gray-100' : ''">
-                  <button
-                    type="button"
-                    class="py-2 flex items-center gap-2"
-                    :click="destination = place;
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    :mouseover="selectedDestination = place"
-                  >
-                    <div class="p-3 bg-gray-200 rounded-lg">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                      </svg>
+                <!-- When - Flexible -->
+                <div
+                  class="mt-8 flex flex-col items-center justify-center gap-8"
+                  :class="whenSelectedTab === 'Flexible' ? '' : 'hidden'"
+                >
+                  <div class="flex flex-col gap-3">
+                    <div class="text-lg font-medium text-gray-900">
+                      How long would you like to stay?
                     </div>
-                    <div class="text-base text-gray-700" :text="place"></div>
-                  </button>
-                </li>
-              </ul>
 
-              <p
-                class="px-6 text-sm text-gray-700"
-                :class="filteredDestinations.length ? 'sr-only' : ''"
-              >
-                There are no results matching your search.
-              </p>
-            </div>
+                    <div class="flex gap-2">
+                      <button
+                        type="button"
+                        class="py-2 px-4 text-base text-gray-900 rounded-full"
+                        :class="whenHowLong === 'Weekend' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                        :click="whenHowLong = 'Weekend';"
+                      >
+                        Weekend
+                      </button>
+                      <button
+                        type="button"
+                        class="py-2 px-4 text-base text-gray-900 rounded-full"
+                        :class="whenHowLong === 'Week' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                        :click="whenHowLong = 'Week';"
+                      >
+                        Week
+                      </button>
+                      <button
+                        type="button"
+                        class="py-2 px-4 text-base text-gray-900 rounded-full"
+                        :class="whenHowLong === 'Month' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                        :click="whenHowLong = 'Month';"
+                      >
+                        Month
+                      </button>
+                    </div>
+                  </div>
 
-            <!-- When -->
-            <div
-              class="w-full py-6 bg-white text-center rounded-3xl border border-gray-300 shadow overflow-hidden"
-              :class="['When', 'Check In', 'Check Out'].includes(selectedTab) ? '' : 'hidden'"
-            >
-              <div class="mx-auto p-1 w-max flex gap-1 bg-gray-200 rounded-full">
-                <button
-                  type="button"
-                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
-                  :class="whenSelectedTab === 'Dates' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Dates'; selectedTab = 'Check In';"
-                >
-                  Dates
-                </button>
-                <button
-                  type="button"
-                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
-                  :class="whenSelectedTab === 'Months'  ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Months'; selectedTab = 'When';"
-                >
-                  Months
-                </button>
-                <button
-                  type="button"
-                  class="py-2 px-6 flex items-center justify-center text-sm text-gray-900 font-medium whitespace-nowrap rounded-full cursor-pointer transition-colors duration-100"
-                  :class="whenSelectedTab === 'Flexible' ? 'bg-white ring-1 ring-gray-300' : 'hover:bg-gray-300'"
-                  :click="whenSelectedTab = 'Flexible'; selectedTab = 'When';"
-                >
-                  Flexible
-                </button>
-              </div>
+                  <div class="flex flex-col gap-3">
+                    <div class="text-lg font-medium text-gray-900">
+                      When do you want to go?
+                    </div>
 
-              <!-- When - Flexible -->
-              <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Flexible' ? '' : 'hidden'">
-                <div class="flex flex-col gap-3">
-                  <div class="text-lg font-medium text-gray-900">
-                    How long would you like to stay?
-                  </div>
-  
-                  <div class="flex gap-2">
-                    <button
-                      type="button"
-                      class="py-2 px-4 text-base text-gray-900 rounded-full"
-                      :class="whenHowLong === 'Weekend' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Weekend';"
-                    >
-                      Weekend
-                    </button>
-                    <button
-                      type="button"
-                      class="py-2 px-4 text-base text-gray-900 rounded-full"
-                      :class="whenHowLong === 'Week' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Week';"
-                    >
-                      Week
-                    </button>
-                    <button
-                      type="button"
-                      class="py-2 px-4 text-base text-gray-900 rounded-full"
-                      :class="whenHowLong === 'Month' ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                      :click="whenHowLong = 'Month';"
-                    >
-                      Month
-                    </button>
-                  </div>
-                </div>
-  
-                <div class="flex flex-col gap-3">
-                  <div class="text-lg font-medium text-gray-900">
-                    When do you want to go?
-                  </div>
-  
-                  <style>
-                    .scrollbar-hidden::-webkit-scrollbar {
-                      display: none;
-                    }
-                    .scrollbar-hidden {
-                      -ms-overflow-style: none;
-                      scrollbar-width: none;
-                    }
-                  </style>
-  
-                  <div class="max-w-4xl relative">
-                    <button
-                      type="button"
-                      :class="scrollPosition === 'left' ? 'hidden' : ''"
-                      class="absolute top-1/2 -translate-y-1/2 -left-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
-                      :click="$('#months').scrollBy({ top: 0, left: -SCROLL_OFFSET, behavior: 'smooth' });
+                    <style>
+                      .scrollbar-hidden::-webkit-scrollbar {
+                        display: none;
+                      }
+                      .scrollbar-hidden {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                      }
+                    </style>
+
+                    <div class="max-w-4xl relative">
+                      <button
+                        type="button"
+                        :class="scrollPosition === 'left' ? 'hidden' : ''"
+                        class="absolute top-1/2 -translate-y-1/2 -left-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
+                        :click="$('#months').scrollBy({ top: 0, left: -SCROLL_OFFSET, behavior: 'smooth' });
                               scrollPosition = $('#months').scrollLeft <= SCROLL_OFFSET
                                 ? 'left'
                                 : 'middle';"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-                      </svg>                  
-                      <span class="sr-only">Previous Months</span>
-                    </button>
-  
-                    <ul id="months" class="p-1 flex gap-2 overflow-y-auto scrollbar-hidden" :each="month in months">
-                      <li>
-                        <button
-                          type="button"
-                          class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
-                          :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                          :click="selectedMonths = selectedMonths.toggle(month);"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          class="w-5 h-5"
                         >
-                          <span :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10" : aria-hidden="true">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                            </svg>
-                          </span>
-                        
-                          <span class="text-base text-gray-900" :text="month"></span>
-                        </button>
-                      </li>
-                    </ul>
-  
-                    <button
-                      type="button"
-                      :class="scrollPosition === 'right' ? 'hidden' : ''"
-                      class="absolute top-1/2 -translate-y-1/2 -right-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
-                      :click="$('#months').scrollBy({ top: 0, left: SCROLL_OFFSET, behavior: 'smooth' });
+                          <path
+                            fill-rule="evenodd"
+                            d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span class="sr-only">Previous Months</span>
+                      </button>
+
+                      <ul
+                        id="months"
+                        class="p-1 flex gap-2 overflow-y-auto scrollbar-hidden"
+                        :each="month in months"
+                      >
+                        <li>
+                          <button
+                            type="button"
+                            class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
+                            :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
+                            :click="selectedMonths = selectedMonths.toggle(month);"
+                          >
+                            <span
+                              :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-10 h-10"
+                                :
+                                aria-hidden="true"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                                />
+                              </svg>
+                            </span>
+
+                            <span
+                              class="text-base text-gray-900"
+                              :text="month"
+                            ></span>
+                          </button>
+                        </li>
+                      </ul>
+
+                      <button
+                        type="button"
+                        :class="scrollPosition === 'right' ? 'hidden' : ''"
+                        class="absolute top-1/2 -translate-y-1/2 -right-4 h-8 w-8 flex items-center justify-center bg-white text-gray-900 rounded-full border border-gray-300 shadow-lg"
+                        :click="$('#months').scrollBy({ top: 0, left: SCROLL_OFFSET, behavior: 'smooth' });
                               scrollPosition = $('#months').scrollLeftMax - $('#months').scrollLeft - SCROLL_OFFSET <= 0
                                 ? 'right'
                                 : 'middle';"
-                    > 
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                      </svg>                            
-                      <span class="sr-only">Next Months</span>
-                    </button>
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          class="w-5 h-5"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span class="sr-only">Next Months</span>
+                      </button>
+                    </div>
                   </div>
-  
-                </div>
-              </div>
-
-              <!-- When - Months -->
-              <div class="mt-8 flex flex-col items-center justify-center gap-8" :class="whenSelectedTab === 'Months' ? '' : 'hidden'">
-                <div class="text-lg font-medium text-gray-900">
-                  When's your trip?
                 </div>
 
-                <style>
-                  .slider-fill:before {
-                    background: conic-gradient(var(--fill-color) calc(var(--percentage)*1%), #0000 0);
-                  }
-                </style>
+                <!-- When - Months -->
+                <div
+                  class="mt-8 flex flex-col items-center justify-center gap-8"
+                  :class="whenSelectedTab === 'Months' ? '' : 'hidden'"
+                >
+                  <div class="text-lg font-medium text-gray-900">
+                    When's your trip?
+                  </div>
 
-                <!-- Slider -->
-                <div class="slider-container relative shadow-inset rounded-full" style="width: 230px; height: 230px;">
-                  <!-- Slider Fill -->
+                  <style>
+                    .slider-fill:before {
+                      background: conic-gradient(
+                        var(--fill-color) calc(var(--percentage) * 1%),
+                        #0000 0
+                      );
+                    }
+                  </style>
+
+                  <!-- Slider -->
                   <div
-                    class="slider-fill absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-square inline-grid place-content-center bg-gray-200 rounded-full before:content-[''] before:absolute before:rounded-full before:inset-0"
-                    style="--percentage: 100; --fill-color: #e11d48"
-                    aria-hidden="true"
-                  ></div>
-
-                  <!-- Slider with Handle -->
-                  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    class="slider-container relative shadow-inset rounded-full"
+                    style="width: 230px; height: 230px"
+                  >
+                    <!-- Slider Fill -->
                     <div
-                      class="slider relative"
-                      style="width: 200px; height: 200px;"
-                      :mousedown="mousedown = true"
-                      :mouseup="mousedown = false"
-                      :mousemove="if (mousedown) {
+                      class="slider-fill absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-square inline-grid place-content-center bg-gray-200 rounded-full before:content-[''] before:absolute before:rounded-full before:inset-0"
+                      style="--percentage: 100; --fill-color: #e11d48"
+                      aria-hidden="true"
+                    ></div>
+
+                    <!-- Slider with Handle -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    >
+                      <div
+                        class="slider relative"
+                        style="width: 200px; height: 200px"
+                        :mousedown="mousedown = true"
+                        :mouseup="mousedown = false"
+                        :mousemove="if (mousedown) {
                                     const value = getSliderValue({
                                       x: event.clientX,
                                       y: event.clientY,
@@ -591,78 +745,130 @@
                                     $('.slider-handle').style.left = `${value.left}%`;
                                     $('.slider-handle').style.top = `${value.top}%`;
                                   }"
-                    >
-                      <div class="slider-circle relative w-full h-full rounded-full">
-                        <div class="slider-handle absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full ring-2 ring-rose-500" style="width:25px; height:25px"></div>
+                      >
+                        <div
+                          class="slider-circle relative w-full h-full rounded-full"
+                        >
+                          <div
+                            class="slider-handle absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full ring-2 ring-rose-500"
+                            style="width: 25px; height: 25px"
+                          ></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <!-- Slider Label -->
-                  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-3/4 w-3/4 flex flex-col items-center justify-center bg-white rounded-full shadow-lg pointer-events-none">
-                    <span class="slider-label text-6xl font-bold" :text="totalMonths"></span>
-                    <span class="text-base font-bold">months</span>
+                    <!-- Slider Label -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-3/4 w-3/4 flex flex-col items-center justify-center bg-white rounded-full shadow-lg pointer-events-none"
+                    >
+                      <span
+                        class="slider-label text-6xl font-bold"
+                        :text="totalMonths"
+                      ></span>
+                      <span class="text-base font-bold">months</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="font-bold font-mono">Active State Example:</h3>
-      <button :click="showCode1 = !showCode1"
-        class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50 ">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-4 h-4 mr-2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-        </svg>
-        SHOW CODE
-      </button>
-    </div>
-    <script>
-      activeTab = 'Company';
-    </script>
-    <div>
-      <div class="hidden sm:block">
-        <nav class="isolate flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
-          <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
-          <a :class="activeTab == 'My Account' ? 'text-gray-900' : 'text-gray-500' " :click="activeTab = 'My Account'"
-            class=" rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
-            aria-current="page">
-            <span>My Account</span>
-            <span :class="activeTab == 'My Account' ? 'bg-indigo-500' : 'bg-transparent'" aria-hidden="true"
-              class="absolute inset-x-0 bottom-0 h-0.5"></span>
-          </a>
-          <a :class="activeTab == 'Company' ? 'text-gray-900' : 'text-gray-500' " :click="activeTab = 'Company'"
-            class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10">
-            <span>Company</span>
-            <span class="bg-indigo-500 absolute inset-x-0 bottom-0 h-0.5" :class="activeTab == 'Company' ? 'bg-indigo-500' : 'bg-transparent'" aria-hidden="true"></span>
-          </a>
-          <a :class="activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500' "
-            :click="activeTab = 'Team Members'"
-            class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10">
-            <span>Team Members</span>
-            <span class="absolute inset-x-0 bottom-0 h-0.5" :class="activeTab == 'Team Members' ? 'bg-indigo-500' : 'bg-transparent'" aria-hidden="true"></span>
-          </a>
-          <a :class="activeTab == 'Billing' ? 'text-gray-900' : 'text-gray-500' " :click="activeTab = 'Billing'"
-            class="hover:text-gray-700 rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10">
-            <span>Billing</span>
-            <span class="absolute inset-x-0 bottom-0 h-0.5" :class="activeTab == 'Billing' ? 'bg-indigo-500' : 'bg-transparent'" aria-hidden="true"></span>
-          </a>
-        </nav>
-      </div>
-      <div class="hidden" :class="showCode1 ? 'block' : 'hidden'">
-        <p class="mt-4 -mb-4 text-gray-500 font-medium font-mono text-xs text-right">With TailwindCSS classes</p>
-        <pre>
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Active State Example:</h3>
+          <button
+            :click="showCode1 = !showCode1"
+            class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            SHOW CODE
+          </button>
+        </div>
+        <script>
+          activeTab = 'Company'
+        </script>
+        <div>
+          <div class="hidden sm:block">
+            <nav
+              class="isolate flex divide-x divide-gray-200 rounded-lg shadow"
+              aria-label="Tabs"
+            >
+              <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
+              <a
+                :class="activeTab == 'My Account' ? 'text-gray-900' : 'text-gray-500' "
+                :click="activeTab = 'My Account'"
+                class="rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
+                aria-current="page"
+              >
+                <span>My Account</span>
+                <span
+                  :class="activeTab == 'My Account' ? 'bg-indigo-500' : 'bg-transparent'"
+                  aria-hidden="true"
+                  class="absolute inset-x-0 bottom-0 h-0.5"
+                ></span>
+              </a>
+              <a
+                :class="activeTab == 'Company' ? 'text-gray-900' : 'text-gray-500' "
+                :click="activeTab = 'Company'"
+                class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
+              >
+                <span>Company</span>
+                <span
+                  class="bg-indigo-500 absolute inset-x-0 bottom-0 h-0.5"
+                  :class="activeTab == 'Company' ? 'bg-indigo-500' : 'bg-transparent'"
+                  aria-hidden="true"
+                ></span>
+              </a>
+              <a
+                :class="activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500' "
+                :click="activeTab = 'Team Members'"
+                class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
+              >
+                <span>Team Members</span>
+                <span
+                  class="absolute inset-x-0 bottom-0 h-0.5"
+                  :class="activeTab == 'Team Members' ? 'bg-indigo-500' : 'bg-transparent'"
+                  aria-hidden="true"
+                ></span>
+              </a>
+              <a
+                :class="activeTab == 'Billing' ? 'text-gray-900' : 'text-gray-500' "
+                :click="activeTab = 'Billing'"
+                class="hover:text-gray-700 rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
+              >
+                <span>Billing</span>
+                <span
+                  class="absolute inset-x-0 bottom-0 h-0.5"
+                  :class="activeTab == 'Billing' ? 'bg-indigo-500' : 'bg-transparent'"
+                  aria-hidden="true"
+                ></span>
+              </a>
+            </nav>
+          </div>
+          <div class="hidden" :class="showCode1 ? 'block' : 'hidden'">
+            <p
+              class="mt-4 -mb-4 text-gray-500 font-medium font-mono text-xs text-right"
+            >
+              With TailwindCSS classes
+            </p>
+            <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
   activeTab = 'Company';
@@ -701,37 +907,60 @@
 &lt;/nav&gt;
           </code>
         </pre>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="font-bold font-mono">On Change Example:</h3>
-      <button :click="showCode2 = !showCode2"
-        class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50 ">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-4 h-4 mr-2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-        </svg>
-        SHOW CODE
-      </button>
-    </div>
-
-    <div>
-      <div class=" p-4 border border-dashed border-black rounded">
-        <div class="flex items-end">
-          <div class="flex flex-col">
-            <p class="font-bold font-mono text-sm">Input:</p>
-            <input :change="inputValue = this.value;" :value="inputValue" value="Hello World" type="text" name="text" class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
-          <h2 class="ml-3 mt-2 text-lg font-medium font-mono" :text="inputValue">Hello World</h2>
         </div>
-        <div class="hidden" :class="showCode2 ? 'block' : 'hidden' ">
-          <pre>
+      </div>
+    </section>
+
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">On Change Example:</h3>
+          <button
+            :click="showCode2 = !showCode2"
+            class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            SHOW CODE
+          </button>
+        </div>
+
+        <div>
+          <div class="p-4 border border-dashed border-black rounded">
+            <div class="flex items-end">
+              <div class="flex flex-col">
+                <p class="font-bold font-mono text-sm">Input:</p>
+                <input
+                  :change="inputValue = this.value;"
+                  :value="inputValue"
+                  value="Hello World"
+                  type="text"
+                  name="text"
+                  class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <h2
+                class="ml-3 mt-2 text-lg font-medium font-mono"
+                :text="inputValue"
+              >
+                Hello World
+              </h2>
+            </div>
+            <div class="hidden" :class="showCode2 ? 'block' : 'hidden' ">
+              <pre>
             <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;div&gt;
   &lt;div class=&quot;flex flex-col&quot;&gt;
@@ -742,21 +971,31 @@
 &lt;/div&gt;
             </code>
           </pre>
-        </div>
-      </div>
-
-      <div class="p-4 border border-dashed border-black rounded mt-2">
-        <div class="flex items-end">
-          <div class="flex flex-col">
-            <p class="font-bold font-mono text-sm">Checkbox:</p>
-            <div class="flex items-center mt-3">
-              <input :change="checkboxValue = this.checked" :checked="checkboxValue" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-              <h2 class="ml-2 text-sm font-semibold font-mono" :text="checkboxValue ? 'ON' : 'OFF' ">OFF</h2>
             </div>
           </div>
-        </div>
-        <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
-          <pre>
+
+          <div class="p-4 border border-dashed border-black rounded mt-2">
+            <div class="flex items-end">
+              <div class="flex flex-col">
+                <p class="font-bold font-mono text-sm">Checkbox:</p>
+                <div class="flex items-center mt-3">
+                  <input
+                    :change="checkboxValue = this.checked"
+                    :checked="checkboxValue"
+                    type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <h2
+                    class="ml-2 text-sm font-semibold font-mono"
+                    :text="checkboxValue ? 'ON' : 'OFF' "
+                  >
+                    OFF
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
+              <pre>
             <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;div&gt;
   &lt;input :change=&quot;checkboxValue = this.checked&quot; :checked=&quot;checkboxValue&quot; type=&quot;checkbox&quot; class=&quot;h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600&quot;&gt;
@@ -764,24 +1003,32 @@
 &lt;/div&gt;
             </code>
           </pre>
-        </div>
-      </div>
-      
-      <div class=" p-4 border border-dashed border-black rounded mt-2">
-        <div class="flex items-end">
-          <div class="flex flex-col">
-            <p class="font-bold font-mono text-sm">Select:</p>
-            <select :value="selectedCountry ||= 'Canada' " :change="selectedCountry = this.value" name="location" class="w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <option>United States</option>
-              <option selected>Canada</option>
-              <option>Mexico</option>
-            </select>
+            </div>
           </div>
-  
-          <p class="ml-4">Selected: <span class="font-bold" :text="selectedCountry">Canada</span></p>
-        </div>
-        <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
-          <pre>
+
+          <div class="p-4 border border-dashed border-black rounded mt-2">
+            <div class="flex items-end">
+              <div class="flex flex-col">
+                <p class="font-bold font-mono text-sm">Select:</p>
+                <select
+                  :value="selectedCountry ||= 'Canada' "
+                  :change="selectedCountry = this.value"
+                  name="location"
+                  class="w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option>United States</option>
+                  <option selected>Canada</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+
+              <p class="ml-4">
+                Selected:
+                <span class="font-bold" :text="selectedCountry">Canada</span>
+              </p>
+            </div>
+            <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
+              <pre>
             <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;div&gt;
   &lt;div class=&quot;flex flex-col&quot;&gt;
@@ -797,71 +1044,188 @@
 &lt;/div&gt;
             </code>
           </pre>
-        </div>
-      </div>
-
-      <script>
-        showSelect = false;
-      </script>
-      <div class="p-4 border border-dashed border-black rounded mt-2">
-        <div class="flex items-end">
-          <div class="flex flex-col w-full">
-            <p class="font-bold font-mono text-sm">Custom Select:</p>
-            <div>
-              <div :clickout="showSelect = false"  class="relative mt-2 max-w-sm">
-                <button :click="showSelect = !showSelect" type="button" class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                  <span class="block truncate" :text="selectedOption">Wade Cooper</span>
-                  <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
-                    </svg>
-                  </span>
-                </button>
-            
-                <ul :class="showSelect ? 'opacity-100' : 'opacity-0 hidden'" class="hidden transition ease-in duration-100 absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-                  <li :click="selectedOption = 'Wade Cooper'" :class="selectedOption == 'Wade Cooper' ? 'bg-indigo-600 text-white' : 'text-gray-900' " class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" id="listbox-option-0" role="option">
-                    <span :class="selectedOption == 'Wade Cooper' ? 'font-semibold' : 'font-normal' " class="block truncate">Wade Cooper</span>
-                    <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-                  <li :click="selectedOption = 'Jen Villaganas'" :class="selectedOption == 'Jen Villaganas' ? 'bg-indigo-600 text-white' : 'text-gray-900' " class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" id="listbox-option-0" role="option">
-                    <span :class="selectedOption == 'Jen Villaganas' ? 'font-semibold' : 'font-normal' " class="block truncate">Jen Villaganas</span>
-                    <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-                  <li :click="selectedOption = 'Tony Ennis'" :class="selectedOption == 'Tony Ennis' ? 'bg-indigo-600 text-white' : 'text-gray-900' " class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" id="listbox-option-0" role="option">
-                    <span :class="selectedOption == 'Tony Ennis' ? 'font-semibold' : 'font-normal' " class="block truncate">Tony Ennis</span>
-                    <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-                  <li :click="selectedOption = 'AJ Browne'" :class="selectedOption == 'AJ Browne' ? 'bg-indigo-600 text-white' : 'text-gray-900' " class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" id="listbox-option-0" role="option">
-                    <span :class="selectedOption == 'AJ Browne' ? 'font-semibold' : 'font-normal' " class="block truncate">AJ Browne</span>
-                    <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
-  
-                <input type="text" class="border-2 border-dotted w-full py-1.5 rounded mt-2 border-gray-500" readonly :value="selectedOption ||= 'Wade Cooper'" />
-  
-              </div>
             </div>
           </div>
-  
-        </div>
-        <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
-          <pre>
+
+          <script>
+            showSelect = false
+          </script>
+          <div class="p-4 border border-dashed border-black rounded mt-2">
+            <div class="flex items-end">
+              <div class="flex flex-col w-full">
+                <p class="font-bold font-mono text-sm">Custom Select:</p>
+                <div>
+                  <div
+                    :clickout="showSelect = false"
+                    class="relative mt-2 max-w-sm"
+                  >
+                    <button
+                      :click="showSelect = !showSelect"
+                      type="button"
+                      class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      aria-haspopup="listbox"
+                      aria-expanded="true"
+                      aria-labelledby="listbox-label"
+                    >
+                      <span class="block truncate" :text="selectedOption"
+                        >Wade Cooper</span
+                      >
+                      <span
+                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+                      >
+                        <svg
+                          class="h-5 w-5 text-gray-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <ul
+                      :class="showSelect ? 'opacity-100' : 'opacity-0 hidden'"
+                      class="hidden transition ease-in duration-100 absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                      tabindex="-1"
+                      role="listbox"
+                      aria-labelledby="listbox-label"
+                      aria-activedescendant="listbox-option-3"
+                    >
+                      <li
+                        :click="selectedOption = 'Wade Cooper'"
+                        :class="selectedOption == 'Wade Cooper' ? 'bg-indigo-600 text-white' : 'text-gray-900' "
+                        class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                        id="listbox-option-0"
+                        role="option"
+                      >
+                        <span
+                          :class="selectedOption == 'Wade Cooper' ? 'font-semibold' : 'font-normal' "
+                          class="block truncate"
+                          >Wade Cooper</span
+                        >
+                        <span
+                          class="text-white absolute inset-y-0 right-0 flex items-center pr-4"
+                        >
+                          <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </li>
+                      <li
+                        :click="selectedOption = 'Jen Villaganas'"
+                        :class="selectedOption == 'Jen Villaganas' ? 'bg-indigo-600 text-white' : 'text-gray-900' "
+                        class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                        id="listbox-option-0"
+                        role="option"
+                      >
+                        <span
+                          :class="selectedOption == 'Jen Villaganas' ? 'font-semibold' : 'font-normal' "
+                          class="block truncate"
+                          >Jen Villaganas</span
+                        >
+                        <span
+                          class="text-white absolute inset-y-0 right-0 flex items-center pr-4"
+                        >
+                          <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </li>
+                      <li
+                        :click="selectedOption = 'Tony Ennis'"
+                        :class="selectedOption == 'Tony Ennis' ? 'bg-indigo-600 text-white' : 'text-gray-900' "
+                        class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                        id="listbox-option-0"
+                        role="option"
+                      >
+                        <span
+                          :class="selectedOption == 'Tony Ennis' ? 'font-semibold' : 'font-normal' "
+                          class="block truncate"
+                          >Tony Ennis</span
+                        >
+                        <span
+                          class="text-white absolute inset-y-0 right-0 flex items-center pr-4"
+                        >
+                          <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </li>
+                      <li
+                        :click="selectedOption = 'AJ Browne'"
+                        :class="selectedOption == 'AJ Browne' ? 'bg-indigo-600 text-white' : 'text-gray-900' "
+                        class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                        id="listbox-option-0"
+                        role="option"
+                      >
+                        <span
+                          :class="selectedOption == 'AJ Browne' ? 'font-semibold' : 'font-normal' "
+                          class="block truncate"
+                          >AJ Browne</span
+                        >
+                        <span
+                          class="text-white absolute inset-y-0 right-0 flex items-center pr-4"
+                        >
+                          <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </li>
+                    </ul>
+
+                    <input
+                      type="text"
+                      class="border-2 border-dotted w-full py-1.5 rounded mt-2 border-gray-500"
+                      readonly
+                      :value="selectedOption ||= 'Wade Cooper'"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hidden" :class="showCode2 ? 'block' : 'hidden'">
+              <pre>
             <code class="language-html text-xs overflow-hidden rounded-lg">
   &lt;div&gt;
     &lt;div :clickout=&quot;showSelect = false&quot;  class=&quot;relative mt-2 max-w-sm&quot;&gt;
@@ -879,36 +1243,58 @@
   &lt;/div&gt;
             </code>
           </pre>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-  </section>
-  
+    </section>
 
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="font-bold font-mono">Storing to Local Storage:</h3>
-      <button :click="showCode3 = !showCode3"
-        class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50 ">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-4 h-4 mr-2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-        </svg>
-        SHOW CODE
-      </button>
-    </div>
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Storing to Local Storage:</h3>
+          <button
+            :click="showCode3 = !showCode3"
+            class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            SHOW CODE
+          </button>
+        </div>
 
-    <div>
-      <div class="flex items-center">
-        <input :value="$storedValue" :change="$storedValue = this.value" value="Update and Reload" type="text" name="text" class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-        <h2 class="ml-3 mt-2 text-lg font-medium font-mono" :text="$storedValue">Update and Reload</h2>
-      </div>
+        <div>
+          <div class="flex items-center">
+            <input
+              :value="$storedValue"
+              :change="$storedValue = this.value"
+              value="Update and Reload"
+              type="text"
+              name="text"
+              class="px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <h2
+              class="ml-3 mt-2 text-lg font-medium font-mono"
+              :text="$storedValue"
+            >
+              Update and Reload
+            </h2>
+          </div>
 
-      <div class="hidden" :class="showCode3 ? 'block' : 'hidden'">
-        <pre>
+          <div class="hidden" :class="showCode3 ? 'block' : 'hidden'">
+            <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;div&gt;
   &lt;input :value=&quot;$storedValue&quot; :change=&quot;$storedValue = this.value&quot; value=&quot;Update and Reload&quot; type=&quot;text&quot; name=&quot;text&quot; class=&quot;px-3 max-w-sm block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6&quot;&gt;
@@ -916,89 +1302,124 @@
 &lt;/div&gt;
           </code>
         </pre>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="font-bold font-mono">Multi Select:</h3>
-        <button :click="showCode4 = !showCode4"
-          class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50 ">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-4 h-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-          </svg>
-          SHOW CODE
-        </button>
-      </div>
-
-      <div>
-        <script>
-          allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']; 
-          filteredTags = []; 
-          selectedTags = [];
-          selectedTag = null;
-          searchQuery = '';
-        </script>
-
-        <div>
-          <label id="selected-flavor-label" for="selected-flavor-input" class="sr-only">
-            Flavor
-          </label>
-          <input
-            id="selected-flavor-input"
-            type="text"
-            class="w-full py-2 px-2"
-            :change="searchQuery = this.value;
-                     filteredTags = allTags.subtract(selectedTags).search(searchQuery);
-                     selectedTag = filteredTags.first"
-            :keyup.enter="selectedTags = selectedTags.add(selectedTag);
-                    filteredTags = filteredTags.remove(selectedTag);
-                    selectedTag = filteredTags.first"
-            :keyup.up="selectedTag = filteredTags.previousItem(selectedTag)"
-            :keyup.down="selectedTag = filteredTags.nextItem(selectedTag)"
-          />
-
-          <div :clickout="filteredTags = []; selectedTag = null" :class="filteredTags.length ? '' : 'hidden'" class="hidden bg-white rounded">
-            <p class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed">Search Result:</p>
-            <ul :each="tag in filteredTags" tabindex="-1" role="listbox" aria-labelledby="selected-flavor-label">
-              <li
-                role="option"
-                :click="selectedTags = selectedTags.add(tag);
-                        filteredTags = filteredTags.remove(selectedTag);
-                        selectedTag = filteredTags.first"
-                :mouseover="selectedTag = tag"
-                :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
-                class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
-                :text="tag"
-              ></li>
-            </ul>
-          </div>
-
-          <p class="mt-2">Selected Tags:</p>
-          <div class="flex items-center space-x-2" :each="tag in selectedTags">
-            <div class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700">
-              <span :text="tag" class="font-semibold font-mono text-xs"></span>
-              <span
-                class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
-                :click="selectedTags = selectedTags.remove(tag);
-                        filteredTags = allTags.subtract(selectedTags).search(searchQuery);
-                        selectedTag = filteredTags.first"
-              >
-                x
-              </span>
-            </div>
           </div>
         </div>
       </div>
+    </section>
 
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Multi Select:</h3>
+          <button
+            :click="showCode4 = !showCode4"
+            class="flex items-center bg-white border shadow rounded-full px-5 py-2 text-xs font-bold font-mono hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            SHOW CODE
+          </button>
+        </div>
 
-      <div class="hidden" :class="showCode4 ? 'block' : 'hidden'">
-        <pre>
+        <div>
+          <script>
+            allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+            filteredTags = []
+            selectedTags = []
+            selectedTag = null
+            searchQuery = ''
+          </script>
+
+          <div>
+            <label
+              id="selected-flavor-label"
+              for="selected-flavor-input"
+              class="sr-only"
+            >
+              Flavor
+            </label>
+            <input
+              id="selected-flavor-input"
+              type="text"
+              class="w-full py-2 px-2"
+              :change="searchQuery = this.value;
+                     filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+                     selectedTag = filteredTags.first"
+              :keyup.enter="selectedTags = selectedTags.add(selectedTag);
+                    filteredTags = filteredTags.remove(selectedTag);
+                    selectedTag = filteredTags.first"
+              :keyup.up="selectedTag = filteredTags.previousItem(selectedTag)"
+              :keyup.down="selectedTag = filteredTags.nextItem(selectedTag)"
+            />
+
+            <div
+              :clickout="filteredTags = []; selectedTag = null"
+              :class="filteredTags.length ? '' : 'hidden'"
+              class="hidden bg-white rounded"
+            >
+              <p
+                class="p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed"
+              >
+                Search Result:
+              </p>
+              <ul
+                :each="tag in filteredTags"
+                tabindex="-1"
+                role="listbox"
+                aria-labelledby="selected-flavor-label"
+              >
+                <li
+                  role="option"
+                  :click="selectedTags = selectedTags.add(tag);
+                        filteredTags = filteredTags.remove(selectedTag);
+                        selectedTag = filteredTags.first"
+                  :mouseover="selectedTag = tag"
+                  :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
+                  class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
+                  :text="tag"
+                ></li>
+              </ul>
+            </div>
+
+            <p class="mt-2">Selected Tags:</p>
+            <div
+              class="flex items-center space-x-2"
+              :each="tag in selectedTags"
+            >
+              <div
+                class="flex items-center py-0.5 px-2 rounded-full bg-blue-100 text-blue-700"
+              >
+                <span
+                  :text="tag"
+                  class="font-semibold font-mono text-xs"
+                ></span>
+                <span
+                  class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
+                  :click="selectedTags = selectedTags.remove(tag);
+                        filteredTags = allTags.subtract(selectedTags).search(searchQuery);
+                        selectedTag = filteredTags.first"
+                >
+                  x
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden" :class="showCode4 ? 'block' : 'hidden'">
+          <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
    allTags = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']; 
@@ -1053,131 +1474,163 @@
 &lt;/div&gt;
           </code>
         </pre>
+        </div>
       </div>
-    </div>
+    </section>
 
-  </section>
-
-
-  <section>
-<style type="text/css">
-  .accordion section {
-    grid-template-rows: 0fr 0fr;
-  }
-  .accordion section.active {
-    grid-template-rows: 0fr 1fr;
-  }
-</style>
-<div class="accordion">
-	<section class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100" :class="activeSection =='about' ? 'active' : ''" >
-		<a onclick="activeSection='about'" class="cursor-pointer font-bold p-4">About Us</a>
-		<div class="overflow-hidden">
-			<div class="p-4 pt-2">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-			</div>
-		</div>
-	</section>
-
-	<section class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100" :class="activeSection =='contact' ? 'active' : ''" >
-		<a onclick="activeSection='contact'" class="cursor-pointer font-bold p-4">Contact Us</a>
-		<div class="overflow-hidden">
-			<div class="p-4 pt-2">
-			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-			</div>
-		</div>
-	</section>
-
-	<section class="grid transition-all border-gray-300 border rounded hover:bg-gray-100" :class="activeSection =='team' ? 'active' : ''" >
-		<a onclick="activeSection='team'"  class="cursor-pointer font-bold p-4">Team 3</a>
-		<div class="overflow-hidden">
-			<div class="p-4 pt-2">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-			</div>
-		</div>
-	</section>
-</div>
-  </section>
-
-
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="font-bold font-mono">Alert Dialog:</h3>
-        <button
-          :click="showCode5 = !showCode5"
-          class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+    <section>
+      <style type="text/css">
+        .accordion section {
+          grid-template-rows: 0fr 0fr;
+        }
+        .accordion section.active {
+          grid-template-rows: 0fr 1fr;
+        }
+      </style>
+      <div class="accordion">
+        <section
+          class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+          :class="activeSection =='about' ? 'active' : ''"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-4 h-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-          </svg>
-          Show Code
-        </button>
+          <a
+            onclick="activeSection='about'"
+            class="cursor-pointer font-bold p-4"
+            >About Us</a
+          >
+          <div class="overflow-hidden">
+            <div class="p-4 pt-2">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod.
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+          :class="activeSection =='contact' ? 'active' : ''"
+        >
+          <a
+            onclick="activeSection='contact'"
+            class="cursor-pointer font-bold p-4"
+            >Contact Us</a
+          >
+          <div class="overflow-hidden">
+            <div class="p-4 pt-2">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod.
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
+          :class="activeSection =='team' ? 'active' : ''"
+        >
+          <a onclick="activeSection='team'" class="cursor-pointer font-bold p-4"
+            >Team 3</a
+          >
+          <div class="overflow-hidden">
+            <div class="p-4 pt-2">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod.
+            </div>
+          </div>
+        </section>
       </div>
+    </section>
 
-      <div>
-        <script>
-          userId = 1;
-        </script>
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Alert Dialog:</h3>
+          <button
+            :click="showCode5 = !showCode5"
+            class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            Show Code
+          </button>
+        </div>
 
-        <button
-          type="button"
-          class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
-          :class="userId ? '' : 'hidden'"
-          :click="$('#delete-account-dialog').showModal()"
-        >
-          Delete Account
-        </button>
-
-        <p class="text-base text-gray-900" :class="userId == null ? '' : 'hidden'">
-          Your account has been deleted.
+        <div>
+          <script>
+            userId = 1
+          </script>
 
           <button
             type="button"
-            :click="userId = 1"
-            class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+            :class="userId ? '' : 'hidden'"
+            :click="$('#delete-account-dialog').showModal()"
           >
-            Reset
+            Delete Account
           </button>
-        </p>
 
-        <dialog id="delete-account-dialog" class="p-4 rounded-lg max-w-sm">
-          <form
-            class="flex flex-col gap-3"
-            :submit="event.preventDefault();
+          <p
+            class="text-base text-gray-900"
+            :class="userId == null ? '' : 'hidden'"
+          >
+            Your account has been deleted.
+
+            <button
+              type="button"
+              :click="userId = 1"
+              class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              Reset
+            </button>
+          </p>
+
+          <dialog id="delete-account-dialog" class="p-4 rounded-lg max-w-sm">
+            <form
+              class="flex flex-col gap-3"
+              :submit="event.preventDefault();
                      userId = null;
                      this.closest('dialog').close()"
-          >
-            <h1 class="text-lg text-gray-900 font-bold">
-              Are you sure you want to delete your account?
-            </h1>
-            
-            <p class="text-base text-gray-700">
-              This action cannot be undone. This will permanently delete your account and remove all your data.
-            </p>
-  
-            <div class="flex justify-end gap-2">
-              <button
-                type="button"
-                :click="this.closest('dialog').close()"
-                class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
-              >
-                Yes, delete my account
-              </button>
-            </div>
-          </form>
-        </dialog>
-      </div>
+            >
+              <h1 class="text-lg text-gray-900 font-bold">
+                Are you sure you want to delete your account?
+              </h1>
 
-      <div class="hidden" :class="showCode5 ? 'block' : 'hidden'">
-        <pre>
+              <p class="text-base text-gray-700">
+                This action cannot be undone. This will permanently delete your
+                account and remove all your data.
+              </p>
+
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  :click="this.closest('dialog').close()"
+                  class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="py-1.5 px-3 text-base text-red-700 rounded-lg shadow-sm bg-red-100 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+                >
+                  Yes, delete my account
+                </button>
+              </div>
+            </form>
+          </dialog>
+        </div>
+
+        <div class="hidden" :class="showCode5 ? 'block' : 'hidden'">
+          <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
   userId = 1;
@@ -1235,131 +1688,132 @@ Delete Account
 &lt;/dialog&gt;         
           </code>
         </pre>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="font-bold font-mono">Dialog:</h3>
-        <button
-          :click="showCode6 = !showCode6"
-          class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-4 h-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-          </svg>
-          Show Code
-        </button>
-      </div>
-
-      <div>
-        <script>
-          firstName = 'John';
-          lastName = 'Doe';
-          username = 'johndoe';
-        </script>
-
-        <div class="flex flex-col gap-4 max-w-sm">
-          <div class="flex justify-between gap-4">
-            <p :text="`Hello ${firstName}`"></p>
-
-            <button
-              id="edit-profile-btn"
-              type="button"
-              class="inline-block w-max py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-              :click="$('#edit-profile-dialog').showModal()"
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Dialog:</h3>
+          <button
+            :click="showCode6 = !showCode6"
+            class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
             >
-              Edit Profile
-            </button>
-          </div>
-
-          <dl class="grid grid-cols-2 text-sm text-gray-900">
-            <dt class="font-bold">Your Name:</dt>
-            <dt :text="firstName + ' ' + lastName"></dt>
-            <dt class="font-bold">Username:</dt>
-            <dt :text="username"></dt>
-          </dl>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            Show Code
+          </button>
         </div>
 
-        <dialog
-          id="edit-profile-dialog"
-          class="rounded-lg max-w-sm"
-          :click="if (event.target == this) { this.close() }"
-        >
-          <form
-            class="p-4 flex flex-col gap-4"
-            :submit="event.preventDefault(); this.closest('dialog').close()"
-          >
-            <h1 class="text-xl text-gray-900 font-bold">
-              Edit Profile
-            </h1>
+        <div>
+          <script>
+            firstName = 'John'
+            lastName = 'Doe'
+            username = 'johndoe'
+          </script>
 
-            <div class="flex flex-col gap-2">
-              <div class="grid grid-cols-3 items-center gap-4">
-                <label class="text-right text-base">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  name="first_name"
-                  class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="firstName"
-                  :change="firstName = this.value"
-                />
-              </div>
+          <div class="flex flex-col gap-4 max-w-sm">
+            <div class="flex justify-between gap-4">
+              <p :text="`Hello ${firstName}`"></p>
 
-              <div class="grid grid-cols-3 items-center gap-4">
-                <label class="text-right text-base">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="last_name"
-                  class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="lastName"
-                  :change="lastName = this.value"
-                />
-              </div>
-
-              <div class="grid grid-cols-3 items-center gap-4">
-                <label class="text-right text-base">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                  :value="username"
-                  :change="username = this.value"
-                />
-              </div>
-            </div>
-
-            <div class="flex justify-end gap-2">
               <button
+                id="edit-profile-btn"
                 type="button"
-                :click="this.closest('dialog').close()"
-                class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                class="inline-block w-max py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                :click="$('#edit-profile-dialog').showModal()"
               >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-              >
-                Update Profile
+                Edit Profile
               </button>
             </div>
-          </form>
-        </dialog>
-      </div>
 
-      <div class="hidden" :class="showCode6 ? 'block' : 'hidden'">
-        <pre>
+            <dl class="grid grid-cols-2 text-sm text-gray-900">
+              <dt class="font-bold">Your Name:</dt>
+              <dt :text="firstName + ' ' + lastName"></dt>
+              <dt class="font-bold">Username:</dt>
+              <dt :text="username"></dt>
+            </dl>
+          </div>
+
+          <dialog
+            id="edit-profile-dialog"
+            class="rounded-lg max-w-sm"
+            :click="if (event.target == this) { this.close() }"
+          >
+            <form
+              class="p-4 flex flex-col gap-4"
+              :submit="event.preventDefault(); this.closest('dialog').close()"
+            >
+              <h1 class="text-xl text-gray-900 font-bold">Edit Profile</h1>
+
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3 items-center gap-4">
+                  <label class="text-right text-base"> First Name </label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    :value="firstName"
+                    :change="firstName = this.value"
+                  />
+                </div>
+
+                <div class="grid grid-cols-3 items-center gap-4">
+                  <label class="text-right text-base"> Last Name </label>
+                  <input
+                    type="text"
+                    name="last_name"
+                    class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    :value="lastName"
+                    :change="lastName = this.value"
+                  />
+                </div>
+
+                <div class="grid grid-cols-3 items-center gap-4">
+                  <label class="text-right text-base"> Username </label>
+                  <input
+                    type="text"
+                    name="username"
+                    class="col-span-2 py-1.5 px-2 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    :value="username"
+                    :change="username = this.value"
+                  />
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  :click="this.closest('dialog').close()"
+                  class="py-1.5 px-3 text-base text-gray-900 rounded-lg shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="py-1.5 px-3 text-base text-indigo-700 rounded-lg shadow-sm bg-indigo-100 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                >
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          </dialog>
+        </div>
+
+        <div class="hidden" :class="showCode6 ? 'block' : 'hidden'">
+          <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;script&gt;
   firstName = 'John';
@@ -1456,106 +1910,138 @@ Delete Account
 &lt;/dialog&gt;                
           </code>
         </pre>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <section class="p-5 bg-gray-100 mt-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold font-mono">Tonic Dialog:</h3>
+          <button
+            :click="showCode7 = !showCode7"
+            class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+            Show Code
+          </button>
+        </div>
 
-  <section class="p-5 bg-gray-100 mt-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="font-bold font-mono">Tonic Dialog:</h3>
-        <button
-          :click="showCode7 = !showCode7"
-          class="px-5 py-2 flex items-center bg-white text-xs uppercase font-bold font-mono border shadow rounded-full hover:bg-blue-50"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-4 h-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-          </svg>
-          Show Code
-        </button>
-      </div>
+        <div>
+          <style>
+            .shimmer {
+              background: #f6f7f8;
+              background-image: linear-gradient(
+                to right,
+                #f6f7f8 0%,
+                #edeef1 20%,
+                #f6f7f8 40%,
+                #f6f7f8 100%
+              );
+              background-repeat: no-repeat;
+              background-size: 800px 100px;
+              position: relative;
 
-      <div>
-        <style>
-          .shimmer {
-            background: #f6f7f8;
-            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-            background-repeat: no-repeat;
-            background-size: 800px 100px; 
-            position: relative; 
-            
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
-            animation-fill-mode: forwards;
-            animation-name: placeholderShimmer;
-            animation-timing-function: linear;
-          }
-
-          @keyframes placeholderShimmer {
-            0% {
-              background-position: -468px 0;
+              animation-duration: 1s;
+              animation-iteration-count: infinite;
+              animation-fill-mode: forwards;
+              animation-name: placeholderShimmer;
+              animation-timing-function: linear;
             }
-            
-            100% {
-              background-position: 468px 0; 
-            }
-          }
-        </style>
-        <script>
-          isModalOpen = false;
-        </script>
 
-        <a
-          class="bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer"
-          :click="isModalOpen = true;
+            @keyframes placeholderShimmer {
+              0% {
+                background-position: -468px 0;
+              }
+
+              100% {
+                background-position: 468px 0;
+              }
+            }
+          </style>
+          <script>
+            isModalOpen = false
+          </script>
+
+          <a
+            class="bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer"
+            :click="isModalOpen = true;
                   el.loader = document.createElement('div');
                   el.loader.className = 'shimmer h-32 w-full';
                   el.loader.style.minWidth = '300px';
                   el.modalContent = $('#modal-container-content');
                   el.modalContent.innerHTML = el.loader.outerHTML;"
-        >
-          Open Modal
-        </a>
-
-        <div
-          id="modal-outer"
-          class="relative z-10 duration-300 transition-all opacity-0"
-          aria-labelledby="modal-title"
-          aria-modal="true"
-          :class="isModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-          :click="if (event.target.id == 'modal-container-outer') { isModalOpen = false }"
-        >
-          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-          <div
-            id="modal-inner"
-            class="transition-all fixed inset-0 z-10 overflow-y-auto"
-            :class="isModalOpen ? 'opacity-100 translate-y-0 sm:scale-100' : 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'"
           >
-            <div id="modal-container-outer" class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">  
-              <div class="relative">
-                <button
-                  style="left:-30px; top:2rem"
-                  class="hidden md:block cursor-pointer absolute"
-                  :click="isModalOpen = false"
-                  aria-label="Close Modal"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </button>
-                <div id="modal-container-content" class="overflow-y-scroll rounded-lg bg-white max-h-96 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:w-96 sm:p-6">
+            Open Modal
+          </a>
+
+          <div
+            id="modal-outer"
+            class="relative z-10 duration-300 transition-all opacity-0"
+            aria-labelledby="modal-title"
+            aria-modal="true"
+            :class="isModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+            :click="if (event.target.id == 'modal-container-outer') { isModalOpen = false }"
+          >
+            <div
+              class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            ></div>
+            <div
+              id="modal-inner"
+              class="transition-all fixed inset-0 z-10 overflow-y-auto"
+              :class="isModalOpen ? 'opacity-100 translate-y-0 sm:scale-100' : 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'"
+            >
+              <div
+                id="modal-container-outer"
+                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+              >
+                <div class="relative">
+                  <button
+                    style="left: -30px; top: 2rem"
+                    class="hidden md:block cursor-pointer absolute"
+                    :click="isModalOpen = false"
+                    aria-label="Close Modal"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6 text-white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </button>
+                  <div
+                    id="modal-container-content"
+                    class="overflow-y-scroll rounded-lg bg-white max-h-96 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:w-96 sm:p-6"
+                  ></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="hidden" :class="showCode7 ? 'block' : 'hidden'">
-        <pre>
+        <div class="hidden" :class="showCode7 ? 'block' : 'hidden'">
+          <pre>
           <code class="language-html text-xs overflow-hidden rounded-lg">
 &lt;style&gt;
   .shimmer {
@@ -1630,9 +2116,8 @@ Open Modal
 &lt;/div&gt;                 
           </code>
         </pre>
+        </div>
       </div>
-    </div>
-  </section>
-</body>
-
+    </section>
+  </body>
 </html>
