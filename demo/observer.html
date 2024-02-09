@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Demo Observer</title>
+    <script src="/dist/minijs.umd.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-40">
+    <button class="px-2 py-1 bg-gray-200 rounded-md text-base">Add Item</button>
+
+    <ol class="mt-8 list-decimal ml-4">
+      <li>
+        <button
+          :mouseenter="isHovered = true"
+          :mouseleave="isHovered = false"
+          :class="isHovered ? 'bg-red-200' : ''"
+          :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+        >
+          list item (click to delete)
+        </button>
+      </li>
+      <li>
+        <button
+          :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+        >
+          list item (click to delete)
+        </button>
+      </li>
+      <li>
+        <button
+          :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+        >
+          list item (click to delete)
+        </button>
+      </li>
+      <li>
+        <button
+          :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+        >
+          list item (click to delete)
+        </button>
+      </li>
+      <li><em>&hellip;More will be added after 3 seconds&hellip;</em></li>
+    </ol>
+
+    <script>
+      const listEl = document.querySelector('ol')
+      const listItemsEl = [
+        '<li><button :click="this.parentNode.parentNode.removeChild(this.parentNode)">list item (click to delete)</button></li>',
+        '<li><button :mouseover="this.parentNode.parentNode.removeChild(this.parentNode)">Hover over me and I\'ll disappear</button></li>',
+        '<li><p :click="alert(\'See your console logs\')" :mouseenter="console.log(\'mouseenter on p\')" :mouseleave="console.log(\'mouseleave on p\'); this.parentNode.parentNode.removeChild(this.parentNode)">Just a text. Click on me to alert! Hover then leave me to disappear</p></li>',
+      ]
+
+      document.querySelector('body > button').onclick = function () {
+        const listItemEl =
+          listItemsEl[Math.floor(Math.random() * listItemsEl.length)]
+        listEl.insertAdjacentHTML('beforeend', listItemEl)
+      }
+
+      // Insert 3 DOM nodes at once after 3 seconds
+      setTimeout(function () {
+        listEl.removeChild(listEl.lastElementChild)
+
+        const listItemEl =
+          listItemsEl[Math.floor(Math.random() * listItemsEl.length)]
+        listEl.insertAdjacentHTML('beforeend', listItemEl)
+
+        const listItemEl2 =
+          listItemsEl[Math.floor(Math.random() * listItemsEl.length)]
+        listEl.insertAdjacentHTML('beforeend', listItemEl2)
+
+        const listItemEl3 =
+          listItemsEl[Math.floor(Math.random() * listItemsEl.length)]
+        listEl.insertAdjacentHTML('beforeend', listItemEl3)
+      }, 3000)
+    </script>
+  </body>
+</html>
