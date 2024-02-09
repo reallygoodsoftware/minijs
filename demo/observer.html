@@ -20,6 +20,12 @@
         >
           list item (click to delete)
         </button>
+        <button
+          class="px-2 py-1 bg-gray-200 rounded-md text-base"
+          :click="this.previousElementSibling.setAttribute(':class', 'isHovered ? \'bg-red-200\' : \'bg-gray-200\'')"
+        >
+          Change :class Attribute
+        </button>
       </li>
       <li>
         <button
@@ -27,8 +33,13 @@
           :mouseleave="isHovered2 = false"
           :class="isHovered2 ? 'bg-red-200' : ''"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+          :text="`my id is ${this.getAttribute('id')} (hover me to change) list item (click to delete)`"
+        ></button>
+        <button
+          class="px-2 py-1 bg-gray-200 rounded-md text-base"
+          :click="this.previousElementSibling.setAttribute(':id', '`list2${Math.random()}`')"
         >
-          list item (click to delete)
+          Change :id Attribute
         </button>
       </li>
       <li>
