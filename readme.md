@@ -11,16 +11,17 @@ To setup MiniJS in your local machine, you can do the following:
 5. Run `npm run build-watch` to run build when code changes.
 
 ## The Idea
-- HTML is great because it's easy to learn and extremely accessible. But HTML has shortcomings when it comes to building interfaces with interactivity. 
+
+- HTML is great because it's easy to learn and extremely accessible. But HTML has shortcomings when it comes to building interfaces with interactivity.
 - Lots of libraries have emerged to address these shortcomings - react, vue etc. These libraries are great but they:
   - Have a high learning curve when it comes to code patterns and tooling.
-  - Are primarily suited for interfaces with *lots* of interactivity.
-- Mini JS lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new  concepts. It's designed to be extremely minimal and learnable within an afternoon.
-- The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2). 
+  - Are primarily suited for interfaces with _lots_ of interactivity.
+- Mini JS lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new concepts. It's designed to be extremely minimal and learnable within an afternoon.
+- The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2).
 
 ## Setting State
 
-`State` are variables that changes the UI or the DOM that uses it when they get updated. 
+`State` are variables that changes the UI or the DOM that uses it when they get updated.
 
 ### Setting Initial State
 
@@ -28,8 +29,8 @@ You can set the initial state of the variables using vanilla JS:
 
 ```html
 <script type="text/javascript">
-  firstName = "Tony"
-  lastName = "Ennis"
+  firstName = 'Tony'
+  lastName = 'Ennis'
 </script>
 ```
 
@@ -38,7 +39,7 @@ You can set the initial state of the variables using vanilla JS:
 These are the following attributes that you can use to sync the DOM with your state:
 
 - `:value`
-  - Set the value of a form input to a JS variable which stays in sync when that variable changes. 
+  - Set the value of a form input to a JS variable which stays in sync when that variable changes.
   - Works with the following input types: text, textarea, select, datepicker.
 - `:class`
   - Set the class of any DOM element based on the value of a js variable.
@@ -47,12 +48,12 @@ These are the following attributes that you can use to sync the DOM with your st
 
 ```html
 <script type="text/javascript">
-  firstName = "Tony"
+  firstName = 'Tony'
 </script>
 
 <input type="text" :change="firstName = this.value" />
 
-<!-- The innerText of this paragraph changes based on the firstName variable --> 
+<!-- The innerText of this paragraph changes based on the firstName variable -->
 <p :text="firstName"></p>
 ```
 
@@ -167,23 +168,24 @@ Whenever you create a variable, it will automatically be added to the global sco
 
 ```html
 <script type="text/javascript">
-  firstName = "Tony"
+  firstName = 'Tony'
 </script>
 
 <button :click="console.log(firstName)">Click Me</button>
 ```
 
 If you want to create a local variable, instead of using `const`, `var`, and `let` variable declarations, you need use `el.`:
-  
+
 ```html
 <script>
-  items = ["Tag 1", "Tag 2", "Tag 3", "Tag 4"]
+  items = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   selectedItem = null
 </script>
 
-<button :click="el.lastItem = items.pop();
+<button
+  :click="el.lastItem = items.pop();
                 selectedItem = `Last Item: ${el.lastItem}`"
-        :text="selectedItem"
+  :text="selectedItem"
 >
   Click Me
 </button>
