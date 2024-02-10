@@ -66,6 +66,26 @@ A DOM update or a re-render happens when the state variable is re-assigned:
 <!-- the re-assignment of firstName will trigger DOM updates that uses that variable -->
 ```
 
+## Dynamic Attributes
+
+Besides `:value`, `:class`, and `:text`, you can also use the make **any** attribute dynamic by renaming it from `attribute` to `:attribute`. Values set to dynamic attributes are evaluated as JavaScript:
+
+```html
+<script>
+  pStyle = 'color: red'
+</script>
+
+<p :style="pStyle">My style is changing</p>
+<button
+  :click="if (pStyle === 'color: red')
+						pStyle = 'color: blue';
+					else
+						pStyle = 'color: red'"
+>
+  Toggle Style
+</button>
+```
+
 ## Classes
 
 You can make your class names reactive by using the `:class` attribute:
