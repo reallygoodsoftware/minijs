@@ -4,11 +4,11 @@
 
 To setup MiniJS in your local machine, you can do the following:
 
-1. Clone [repository](https://github.com/Group-One-Technology/minijs).
+1. Clone the [repository](https://github.com/Group-One-Technology/minijs).
 2. Run `npm install` to install dependencies.
-3. Run `npm run build` to create a `dist` -> output for MiniJS.
-4. Run `npm run dev` to run demo page locally.
-5. Run `npm run build-watch` to run build when code changes.
+3. Run `npm run build` to create the `dist` folder -> output for MiniJS.
+4. Run `npm run dev` to run the demo page locally.
+5. Run `npm run build-watch` on another terminal to build the code whenever the Mini.js code changes.
 
 ## The Idea
 
@@ -201,48 +201,71 @@ Here are the custom array methods which are available for you to use:
 
 - `first` - returns the first item in the array.
   Usage: `array.first`
-  ```js
-  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
-  array.last // returns 'Vanilla'
-  ```
-- `last` - returns the last item in the array.
-  Usage: `array.last`
+
   ```js
   array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   array.first // returns 'Cherries'
   ```
+
+- `last` - returns the last item in the array.
+  Usage: `array.last`
+
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.last // returns 'Vanilla'
+  ```
+
 - `search` - returns an array of items that match the query.
   Usage: `array.search('query')`
+
   ```js
   array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   array.search('c') // returns ['Cherries', 'Chocolate']
   ```
-- `toggle`
-  Usage: `array.toggle('item')`
+
 - `add` - adds an item to the array if it doesn't exist.
   Usage: `array.add('item')`
+
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.add('Tag 5') // returns ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']
   ```
+
 - `remove` - removes an item from the array if it exists.
   Usage: `array.remove('item')`
+
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.remove('Tag 2') // returns ['Tag 1', 'Tag 3', 'Tag 4']
   ```
-- `nextItem` - gets the next item in the array.
+
+- `toggle` - removes / adds the item in the array
+  Usage: `array.toggle('item')`
+
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.toggle('Cherries') // removes 'Cherries'
+  // returns ['Chocolate', 'Blueberry', 'Vanilla']
+
+  array.toggle('Cherries') // re-adds 'Cherries'
+  // returns ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  ```
+
+- `nextItem` - gets the next item based on the given item in the array.
   Usage: `array.nextItem('item')`
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.nextItem('Tag 2') // returns 'Tag 3'
   ```
-- `previousItem` - gets the next item in the array.
+- `previousItem` - gets the next item based on the given item in the array.
   Usage: `array.previousOf('item')`
+
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.previousItem('Tag 2') // returns 'Tag 1'
   ```
+
+#### Triggering Array Updates
 
 To trigger a re-render you need to update the variable:
 
