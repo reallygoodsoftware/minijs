@@ -1400,9 +1400,12 @@
                   :click="selectedTags = selectedTags.add(tag);
                         filteredTags = filteredTags.remove(selectedTag);
                         selectedTag = filteredTags.first"
-                  :mouseover="selectedTag = tag"
-                  :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
-                  class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
+                  :mouseover="el.isHovering = true"
+                  :mouseout="el.isHovering = false"
+                  :class="(selectedTag == tag ? 'text-blue-700' : 'text-gray-700')
+                    (selectedTag == tag ? 'bg-blue-100' : '')
+                    (el.isHovering && selectedTag != tag ? 'bg-gray-50' : '')"
+                  class="font-mono font-semibold py-2 px-3 rounded cursor-pointer"
                   :text="tag"
                 ></li>
               </ul>
