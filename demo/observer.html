@@ -13,6 +13,7 @@
     <ol class="mt-8 list-decimal ml-4">
       <li>
         <button
+          :load="el.isHovered = true"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
           :mouseenter="el.isHovered = true"
           :mouseleave="el.isHovered = false"
