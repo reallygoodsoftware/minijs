@@ -1996,11 +1996,11 @@ Delete Account
           <a
             class="bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer"
             :click="isModalOpen = true;
-                  el.loader = document.createElement('div');
-                  el.loader.className = 'shimmer h-32 w-full';
-                  el.loader.style.minWidth = '300px';
-                  el.modalContent = $('#modal-container-content');
-                  el.modalContent.innerHTML = el.loader.outerHTML;"
+                  const loader = document.createElement('div');
+                  loader.className = 'shimmer h-32 w-full';
+                  loader.style.minWidth = '300px';
+                  const modalContent = $('#modal-container-content');
+                  modalContent.innerHTML = loader.outerHTML;"
           >
             Open Modal
           </a>
