@@ -23,6 +23,8 @@ To setup MiniJS in your local machine, you can do the following:
 
 `State` are variables that changes the UI or the DOM that uses it when they get updated.
 
+Note: Only non-nested objects are supported for reactive state.
+
 ### Setting Initial State
 
 You can set the initial state of the variables using vanilla JS:
@@ -178,11 +180,28 @@ These are the events added in by MiniJS:
 
 ## Statements
 
-- `:each` - loop through an array and render a template for each item
+- `:each` (experimental!) - loop through an array and render a template for each item
+  - do not use in production
 
-## Variable
+## Variables
+
+### Variables saved in Local Storage
+
+Appending `$` to the variable name will save the variable in the local storage:
+
+```html
+<script type="text/javascript">
+  $firstName = 'Tony'
+</script>
+
+<input type="text" :change="$firstName = this.value" />
+```
+
+Note: Currently, this is only available for globally declared variables.
 
 ### Variable Scoping
+
+#### Global Variables
 
 Whenever you create a variable, it will automatically be added to the global scope. This means that you can access it anywhere in your code.
 
@@ -194,22 +213,36 @@ Whenever you create a variable, it will automatically be added to the global sco
 <button :click="console.log(firstName)">Click Me</button>
 ```
 
-If you want to create a local variable, instead of using `const`, `var`, and `let` variable declarations, you need use `el.`:
+#### Local Variables
+
+To use variables only in a current event, you can create a local variable using `const`, and `let`:
 
 ```html
-<script>
-  items = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  selectedItem = null
-</script>
-
 <button
-  :click="el.lastItem = items.pop();
-                selectedItem = `Last Item: ${el.lastItem}`"
-  :text="selectedItem"
+  :click="const time = new Date();
+          window.alert(time.toLocaleTimeString())"
 >
   Click Me
 </button>
 ```
+
+If you want to use the variable across the element's attributes and events, you can use `el.`:
+
+```html
+<script>
+  items = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+</script>
+
+<button
+  :load="el.selectedItem = items.pop()"
+  :click="el.selectedItem = items.pop()"
+  :text="`Last Item: ${el.selectedItem}`"
+>
+  Click Me
+</button>
+```
+
+Like the example above, `:load` can be used to set the initial value of the variable.
 
 ### Variable Methods
 
