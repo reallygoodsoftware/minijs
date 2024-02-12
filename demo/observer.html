@@ -39,6 +39,7 @@
           :class="el.isHovered ? 'bg-red-200' : ''"
         ></button>
         <button
+          class="px-2 py-1 bg-gray-200 rounded-md text-base"
           :click="this.previousElementSibling.setAttribute(':id', '`list2${Math.random()}`')"
           :mouseenter="el.isHovered = true"
           :mouseleave="el.isHovered = false"
