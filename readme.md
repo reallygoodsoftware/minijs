@@ -315,8 +315,6 @@ A children's `parent.` variable is the same as the parent's `el.` variable.
 </div>
 ```
 
-You
-
 ### Variable Methods
 
 MiniJS added some commonly-used custom methods to variables.
