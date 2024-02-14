@@ -1304,7 +1304,7 @@
               class="ml-3 mt-2 text-lg font-medium font-mono"
               :text="$storedValue"
             >
-              Update and Reload
+              Loading...
             </h2>
           </div>
 
@@ -1400,9 +1400,12 @@
                   :click="selectedTags = selectedTags.add(tag);
                         filteredTags = filteredTags.remove(selectedTag);
                         selectedTag = filteredTags.first"
-                  :mouseover="selectedTag = tag"
-                  :class="selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'"
-                  class="font-mono font-semibold py-2 px-3 rounded cursor-pointer hover:bg-blue-100 hover:text-blue-700"
+                  :mouseover="el.isHovering = true"
+                  :mouseout="el.isHovering = false"
+                  :class="(selectedTag == tag ? 'text-blue-700' : 'text-gray-700')
+                    (selectedTag == tag ? 'bg-blue-100' : '')
+                    (el.isHovering && selectedTag != tag ? 'bg-gray-50' : '')"
+                  class="font-mono font-semibold py-2 px-3 rounded cursor-pointer"
                   :text="tag"
                 ></li>
               </ul>
@@ -1502,13 +1505,13 @@
           grid-template-rows: 0fr 1fr;
         }
       </style>
-      <div class="accordion">
+      <div class="accordion" :parent>
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="activeSection =='about' ? 'active' : ''"
+          :class="parent.activeSection =='about' ? 'active' : ''"
         >
           <a
-            :click="activeSection='about'"
+            :click="parent.activeSection='about'"
             class="cursor-pointer font-bold p-4"
           >
             About Us
@@ -1523,10 +1526,10 @@
 
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="activeSection =='contact' ? 'active' : ''"
+          :class="parent.activeSection =='contact' ? 'active' : ''"
         >
           <a
-            :click="activeSection='contact'"
+            :click="parent.activeSection='contact'"
             class="cursor-pointer font-bold p-4"
           >
             Contact Us
@@ -1541,9 +1544,12 @@
 
         <section
           class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-          :class="activeSection =='team' ? 'active' : ''"
+          :class="parent.activeSection =='team' ? 'active' : ''"
         >
-          <a :click="activeSection='team'" class="cursor-pointer font-bold p-4">
+          <a
+            :click="parent.activeSection='team'"
+            class="cursor-pointer font-bold p-4"
+          >
             Team 3
           </a>
           <div class="overflow-hidden">
@@ -1996,11 +2002,11 @@ Delete Account
           <a
             class="bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer"
             :click="isModalOpen = true;
-                  el.loader = document.createElement('div');
-                  el.loader.className = 'shimmer h-32 w-full';
-                  el.loader.style.minWidth = '300px';
-                  el.modalContent = $('#modal-container-content');
-                  el.modalContent.innerHTML = el.loader.outerHTML;"
+                  const loader = document.createElement('div');
+                  loader.className = 'shimmer h-32 w-full';
+                  loader.style.minWidth = '300px';
+                  const modalContent = $('#modal-container-content');
+                  modalContent.innerHTML = loader.outerHTML;"
           >
             Open Modal
           </a>

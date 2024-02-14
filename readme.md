@@ -23,6 +23,8 @@ To setup MiniJS in your local machine, you can do the following:
 
 `State` are variables that changes the UI or the DOM that uses it when they get updated.
 
+Note: Only non-nested objects are supported for reactive state.
+
 ### Setting Initial State
 
 You can set the initial state of the variables using vanilla JS:
@@ -178,11 +180,28 @@ These are the events added in by MiniJS:
 
 ## Statements
 
-- `:each` - loop through an array and render a template for each item
+- `:each` (experimental!) - loop through an array and render a template for each item
+  - do not use in production
 
-## Variable
+## Variables
+
+### Variables saved in Local Storage
+
+Appending `$` to the variable name will save the variable in the local storage:
+
+```html
+<script type="text/javascript">
+  $firstName = 'Tony'
+</script>
+
+<input type="text" :change="$firstName = this.value" />
+```
+
+Note: Currently, this is only available for globally declared variables.
 
 ### Variable Scoping
+
+#### Global Variables
 
 Whenever you create a variable, it will automatically be added to the global scope. This means that you can access it anywhere in your code.
 
@@ -194,21 +213,106 @@ Whenever you create a variable, it will automatically be added to the global sco
 <button :click="console.log(firstName)">Click Me</button>
 ```
 
-If you want to create a local variable, instead of using `const`, `var`, and `let` variable declarations, you need use `el.`:
+#### Local Variables
+
+To use variables only in a current event, you can create a local variable using `const`, and `let`:
+
+```html
+<button
+  :click="const time = new Date();
+          window.alert(time.toLocaleTimeString())"
+>
+  Click Me
+</button>
+```
+
+### Element Variables
+
+If you want to use the variable across an element's attributes and events, you can use `el.`:
 
 ```html
 <script>
   items = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  selectedItem = null
 </script>
 
 <button
-  :click="el.lastItem = items.pop();
-                selectedItem = `Last Item: ${el.lastItem}`"
-  :text="selectedItem"
+  :load="el.selectedItem = items.pop()"
+  :click="el.selectedItem = items.pop()"
+  :text="`Last Item: ${el.selectedItem}`"
 >
   Click Me
 </button>
+```
+
+Like the example above, `:load` can be used to set the initial value of the variable.
+
+### Parent Element Variables
+
+Adding a `:parent` attribute to an element will allow you to access its variables from its children using `parent.` variables.
+
+A children's `parent.` variable is the same as the parent's `el.` variable.
+
+```html
+<div id="accordion" class="accordion" :parent>
+  <!-- Parent Element -->
+
+  <!-- Children Elements -->
+  <!-- parent.variable == #accordion's el.variable -->
+  <section
+    class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+  >
+    <button
+      :click="parent.activeSection = 'about'"
+      class="cursor-pointer font-bold p-4"
+    >
+      About Us
+    </button>
+    <div
+      class="p-4 pt-2 overflow-hidden hidden"
+      :class="parent.activeSection =='about' ? 'block' : 'hidden'"
+    >
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod.
+    </div>
+  </section>
+
+  <section
+    class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+  >
+    <button
+      :click="parent.activeSection = 'contact'"
+      class="cursor-pointer font-bold p-4"
+    >
+      Contact Us
+    </button>
+    <div
+      class="p-4 pt-2 overflow-hidden"
+      :class="parent.activeSection =='contact' ? 'block' : 'hidden'"
+    >
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod.
+    </div>
+  </section>
+
+  <section
+    class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
+    :class="parent.activeSection =='team' ? 'active' : ''"
+  >
+    <button
+      :click="parent.activeSection = 'team'"
+      class="cursor-pointer font-bold p-4"
+    >
+      Team 3
+    </button>
+    <div
+      class="p-4 pt-2 overflow-hidden"
+      :class="parent.activeSection =='team' ? 'block' : 'hidden'"
+    >
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod.
+    </div>
+  </section>
+</div>
 ```
 
 ### Variable Methods

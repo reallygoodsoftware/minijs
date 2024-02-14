@@ -13,51 +13,58 @@
     <ol class="mt-8 list-decimal ml-4">
       <li>
         <button
-          :mouseenter="isHovered = true"
-          :mouseleave="isHovered = false"
-          :class="isHovered ? 'bg-red-200' : ''"
+          :load="el.isHovered = true"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         >
           list item (click to delete)
         </button>
         <button
           class="px-2 py-1 bg-gray-200 rounded-md text-base"
-          :click="this.previousElementSibling.setAttribute(':class', 'isHovered ? \'bg-red-200\' : \'bg-gray-200\'')"
+          :click="this.previousElementSibling.setAttribute(':class', 'el.isHovered ? \'bg-red-200\' : \'bg-gray-200\'')"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         >
           Change :class Attribute
         </button>
       </li>
       <li>
         <button
-          :mouseenter="isHovered2 = true"
-          :mouseleave="isHovered2 = false"
-          :class="isHovered2 ? 'bg-red-200' : ''"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
           :text="`my id is ${this.getAttribute('id')} (hover me to change) list item (click to delete)`"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         ></button>
         <button
           class="px-2 py-1 bg-gray-200 rounded-md text-base"
           :click="this.previousElementSibling.setAttribute(':id', '`list2${Math.random()}`')"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         >
           Change :id Attribute
         </button>
       </li>
       <li>
         <button
-          :mouseenter="isHovered3 = true"
-          :mouseleave="isHovered3 = false"
-          :class="isHovered3 ? 'bg-red-200' : ''"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         >
           list item (click to delete)
         </button>
       </li>
       <li>
         <button
-          :mouseenter="isHovered4 = true"
-          :mouseleave="isHovered4 = false"
-          :class="isHovered4 ? 'bg-red-200' : ''"
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
         >
           list item (click to delete)
         </button>
