@@ -58,12 +58,50 @@
 
             // Where Tab
             regions = [
-              'Europe',
-              'Japan',
-              'United States',
-              'South Korea',
-              'Australia',
+              {
+                name: "I'm flexible",
+                image:
+                  'https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg',
+                alt: 'Map of whole world',
+                value: '',
+              },
+              {
+                name: 'Europe',
+                image:
+                  'https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg',
+                alt: 'Map of Europe',
+                value: 'Europe',
+              },
+              {
+                name: 'Japan',
+                image:
+                  'https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320',
+                alt: 'Map of Japan',
+                value: 'Japan',
+              },
+              {
+                name: 'United States',
+                image:
+                  'https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg',
+                alt: 'Map of United States',
+                value: 'United States',
+              },
+              {
+                name: 'South Korea',
+                image:
+                  'https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg',
+                alt: 'Map of South Korea',
+                value: 'South Korea',
+              },
+              {
+                name: 'Australia',
+                image:
+                  'https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg',
+                alt: 'Map of Australia',
+                value: 'Australia',
+              },
             ]
+            regionNames = regions.map((region) => region.name)
             destinations = [
               'Boracay, Philippines',
               'Kyoto, Japan',
@@ -370,107 +408,33 @@
               <!-- Where: Search by Region -->
               <div
                 class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
-                :class="selectedTab === 'Where' && (regions.includes(destination) || !destination.length) ? '' : 'hidden'"
+                :class="selectedTab === 'Where' && (regionNames.includes(destination) || !destination.length) ? '' : 'hidden'"
               >
                 <div class="text-xs font-bold text-gray-900">
                   Search by region
                 </div>
 
-                <div class="my-6 grid grid-cols-3 gap-x-3 gap-y-6">
+                <div
+                  class="my-6 grid grid-cols-3 gap-x-3 gap-y-6"
+                  :each="region in regions"
+                >
                   <div class="flex flex-col gap-2">
                     <button
                       type="button"
                       class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = '';
+                      :click="destination = region.value;
                             selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
                     >
                       <img
                         class="touch-none h-full w-full"
-                        alt="Map of whole world"
-                        src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
+                        :src="region.image"
+                        :alt="region.alt"
                       />
                     </button>
-                    <div class="text-sm text-gray-600">I'm flexible</div>
-                  </div>
-
-                  <div class="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = 'Europe';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    >
-                      <img
-                        class="touch-none h-full w-full"
-                        alt="Map of Europe"
-                        src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg"
-                      />
-                    </button>
-                    <div class="text-sm text-gray-600">Europe</div>
-                  </div>
-
-                  <div class="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = 'Japan';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    >
-                      <img
-                        class="touch-none h-full w-full"
-                        alt="Map of Japan"
-                        src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320"
-                      />
-                    </button>
-                    <div class="text-sm text-gray-600">Japan</div>
-                  </div>
-
-                  <div class="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = 'United States';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    >
-                      <img
-                        class="touch-none h-full w-full"
-                        alt="Map of United States"
-                        src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg"
-                      />
-                    </button>
-                    <div class="text-sm text-gray-600">United States</div>
-                  </div>
-
-                  <div class="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = 'South Korea';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    >
-                      <img
-                        class="touch-none h-full w-full"
-                        alt="Map of South Korea"
-                        src="https://a0.muscache.com/im/pictures/c193e77c-0b2b-4f76-8101-b869348d8fc4.jpg"
-                      />
-                    </button>
-                    <div class="text-sm text-gray-600">South Korea</div>
-                  </div>
-
-                  <div class="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
-                      :click="destination = 'Australia';
-                            selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
-                    >
-                      <img
-                        class="touch-none h-full w-full"
-                        alt="Map of Australia"
-                        src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg"
-                      />
-                    </button>
-                    <div class="text-sm text-gray-600">Australia</div>
+                    <div
+                      class="text-sm text-gray-600"
+                      :text="region.name"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -478,7 +442,7 @@
               <!-- Where: Search Results -->
               <div
                 class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
-                :class="selectedTab === 'Where' && destination.length && !regions.includes(destination) ? '' : 'hidden'"
+                :class="selectedTab === 'Where' && destination.length && !regionNames.includes(destination) ? '' : 'hidden'"
               >
                 <ul :each="place in filteredDestinations">
                   <li
@@ -852,7 +816,7 @@
                 ></span>
               </a>
               <a
-                :class="activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500' "
+                :class="activeTab == 'Team Members' ? 'text-gray-900' : 'text-gray-500'"
                 :click="activeTab = 'Team Members'"
                 class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
               >
