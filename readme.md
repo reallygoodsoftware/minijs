@@ -238,8 +238,40 @@ The following are the available key modifiers:
 
 ## Statements
 
-- `:each` (experimental!) - loop through an array and render a template for each item
-  - do not use in production
+### Each Statement
+
+The `:each` statement is used to loop through an array and render a template for each item.
+
+```html
+<script>
+  items = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+</script>
+
+<ul :each="item in items">
+  <li :text="item"></li>
+</ul>
+
+<ul :each="item, index in items">
+  <li :text="item"></li>
+</ul>
+```
+
+You can also use complex variables for the `:each` statement:
+
+```html
+<script>
+  items = [
+    { name: 'Tag 1', id: 1 },
+    { name: 'Tag 2', id: 2 },
+    { name: 'Tag 3', id: 3 },
+    { name: 'Tag 4', id: 4 },
+  ]
+</script>
+
+<ul :each="item in items">
+  <li :text="item.name"></li>
+</ul>
+```
 
 ## Variables
 
