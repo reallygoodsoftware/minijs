@@ -1737,7 +1737,7 @@ Delete Account
           <dialog
             id="edit-profile-dialog"
             class="rounded-lg max-w-sm"
-            :click="if (event.target == this) { this.close() }"
+            :clickme="this.close()"
           >
             <form
               class="p-4 flex flex-col gap-4"
@@ -1831,7 +1831,7 @@ Delete Account
 &lt;dialog
   id=&quot;edit-profile-dialog&quot;
   class=&quot;rounded-lg max-w-sm&quot;
-  :click=&quot;if (event.target == this) { this.close() }&quot;
+  :clickme=&quot;this.close()&quot;
   &gt;
   &lt;form
       class=&quot;p-4 flex flex-col gap-4&quot;
@@ -1981,7 +1981,6 @@ Delete Account
             aria-labelledby="modal-title"
             aria-modal="true"
             :class="isModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-            :click="if (event.target.id == 'modal-container-outer') { isModalOpen = false }"
           >
             <div
               class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
@@ -1994,6 +1993,7 @@ Delete Account
               <div
                 id="modal-container-outer"
                 class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                :clickme="isModalOpen = false"
               >
                 <div class="relative">
                   <button
@@ -2060,11 +2060,11 @@ Delete Account
 &lt;a
   class=&quot;bg-indigo-600 hover:bg-indigo-800 transition-all text-white rounded px-3 py-2 cursor-pointer&quot;
   :click=&quot;isModalOpen = true;
-          el.loader = document.createElement('div');
-          el.loader.className = 'shimmer h-32 w-full';
-          el.loader.style.minWidth = '300px';
-          el.modalContent = $('#modal-container-content');
-          el.modalContent.innerHTML = el.loader.outerHTML;&quot;
+          const loader = document.createElement('div');
+          loader.className = 'shimmer h-32 w-full';
+          loader.style.minWidth = '300px';
+          const modalContent = $('#modal-container-content');
+          modalContent.innerHTML = loader.outerHTML;&quot;
   &gt;
 Open Modal
 &lt;/a&gt;
@@ -2075,7 +2075,6 @@ Open Modal
   aria-labelledby=&quot;modal-title&quot;
   aria-modal=&quot;true&quot;
   :class=&quot;isModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'&quot;
-  :click=&quot;if (event.target.id == 'modal-container-outer') { isModalOpen = false }&quot;
 &gt;
   &lt;div class=&quot;fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity&quot;&gt;&lt;/div&gt;
   &lt;div
@@ -2083,7 +2082,10 @@ Open Modal
     class=&quot;transition-all fixed inset-0 z-10 overflow-y-auto&quot;
     :class=&quot;isModalOpen ? 'opacity-100 translate-y-0 sm:scale-100' : 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'&quot;
   &gt;
-      &lt;div id=&quot;modal-container-outer&quot; class=&quot;flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0&quot;&gt;
+      &lt;div
+        id=&quot;modal-container-outer&quot; class=&quot;flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0&quot;
+        :clickme=&quot;isModalOpen = false&quot;
+      &gt;
         &lt;div class=&quot;relative&quot;&gt;
             &lt;button
               style=&quot;left:-30px; top:2rem&quot;
