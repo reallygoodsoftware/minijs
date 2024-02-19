@@ -51,12 +51,22 @@
       </li>
       <li>
         <button
-          :click="this.parentNode.parentNode.removeChild(this.parentNode)"
           :mouseenter="el.isHovered = true"
           :mouseleave="el.isHovered = false"
           :class="el.isHovered ? 'bg-red-200' : ''"
         >
-          list item (click to delete)
+          list item
+        </button>
+        <button
+          class="px-2 py-1 bg-gray-200 rounded-md text-base"
+          :click="const btnEl = this.previousElementSibling
+                  btnEl.setAttribute(':click', 'this.parentNode.parentNode.removeChild(this.parentNode)')
+                  btnEl.setAttribute(':text', '\'list item (click to delete)\'')"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
+        >
+          Change :text and :click Attributes
         </button>
       </li>
       <li>
@@ -67,6 +77,17 @@
           :class="el.isHovered ? 'bg-red-200' : ''"
         >
           list item (click to delete)
+        </button>
+        <button
+          class="px-2 py-1 bg-gray-200 rounded-md text-base"
+          :click="const btnEl = this.previousElementSibling
+                  btnEl.setAttribute(':click', '')
+                  btnEl.setAttribute(':text', '\'list item\'')"
+          :mouseenter="el.isHovered = true"
+          :mouseleave="el.isHovered = false"
+          :class="el.isHovered ? 'bg-red-200' : ''"
+        >
+          Remove :click Attribute
         </button>
       </li>
       <li><em>&hellip;More will be added after 3 seconds&hellip;</em></li>
