@@ -368,23 +368,21 @@
                           }
                           
                           if (whenSelectedTab === 'Months') {
-                            const dates = getStartAndEndMonth(totalMonths);
-                            const startDate = dates[0];
-                            const endDate = dates[1];
+                            const [startDate, endDate] = getStartAndEndMonth(totalMonths);
 
                             let date = startDate.toLocaleString('default', {
                               month: 'short',
                               year: 'numeric',
                               day: 'numeric',
-                            });
-                            date += ' - ';
+                            })
+                            date += ' - '
                             date += endDate.toLocaleString('default', {
                               month: 'short',
                               year: 'numeric',
                               day: 'numeric',
-                            });
+                            })
 
-                            return date;
+                            return date
                           }
                           
                           return  ''"
