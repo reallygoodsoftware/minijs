@@ -19,6 +19,8 @@ To setup MiniJS in your local machine, you can do the following:
 - Mini JS lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new concepts. It's designed to be extremely minimal and learnable within an afternoon.
 - The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2).
 
+Read the [documentation](https://jorenrui.notion.site/Mini-js-7a51523e0a5845c782097782f49a5bae?pvs=74)
+
 ## Setting State
 
 `State` are variables that changes the UI or the DOM that uses it when they get updated.
