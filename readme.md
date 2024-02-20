@@ -41,12 +41,11 @@ You can set the initial state of the variables using vanilla JS:
 These are the following attributes that you can use to sync the DOM with your state:
 
 - `:value`
-  - Set the value of a form input to a JS variable which stays in sync when that variable changes.
-  - Works with the following input types: text, textarea, select, datepicker.
+  - Set the value of a form input to the result of the evaluated JS code.
 - `:class`
-  - Set the class of any DOM element based on the value of a js variable.
+  - Set the class of a DOM element to the result of the evaluated JS code.
 - `:text`
-  - Set the text of any DOM element based on the value of a js variable.
+  - Set the text content of a DOM element to the result of the evaluated JS code.
 
 ```html
 <script type="text/javascript">
