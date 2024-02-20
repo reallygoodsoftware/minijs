@@ -475,7 +475,7 @@ Here are the custom array methods which are available for you to use:
   array.nextItem('Tag 2') // returns 'Tag 3'
   ```
 - `previousItem` - gets the next item based on the given item in the array.
-  Usage: `array.previousOf('item')`
+  Usage: `array.previousItem('item')`
 
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
