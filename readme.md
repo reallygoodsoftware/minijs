@@ -460,6 +460,14 @@ Here are the custom array methods which are available for you to use:
   // returns ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   ```
 
+- `replaceAt` - replaces the item at the given index with the new item.
+  Usage: `array.replaceAt(index, 'newItem')`
+
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.replaceAt(1, 'Tag 5') // returns ['Tag 1', 'Tag 5', 'Tag 3', 'Tag 4']
+  ```
+
 - `nextItem` - gets the next item based on the given item in the array.
   Usage: `array.nextItem('item')`
   ```js
