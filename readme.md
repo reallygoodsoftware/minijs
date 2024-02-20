@@ -60,11 +60,18 @@ These are the following attributes that you can use to sync the DOM with your st
 
 ### Triggering DOM Updates / Re-renders
 
-A DOM update or a re-render happens when the state variable is re-assigned:
+A DOM update or a re-render happens when the state variable is re-assigned in dynamic events.
 
 ```html
 <input type="text" :change="firstName = this.value" />
 <!-- the re-assignment of firstName will trigger DOM updates that uses that variable -->
+```
+
+When re-assignment happens in dynamic attributes, it will not trigger a re-render to avoid infinite loops.
+
+```html
+<p :text="firstName = 'Tony'"></p>
+<!-- the re-assignment of firstName will not trigger DOM updates -->
 ```
 
 ## Dynamic Attributes
