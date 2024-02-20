@@ -171,13 +171,8 @@ You can access the current element in the event via `this`:
 These are the events added in by MiniJS:
 
 - `:clickout` - This will trigger when the user clicks outside of the current element.
+- `:clickme` - This will trigger when the user clicks the current element.
 - `:change` - This will trigger when the user changes the value of a form input.
-- `:keyup.up` - This will trigger when the user presses the up arrow key.
-- `:keyup.down` - This will trigger when the user presses the down arrow key.
-- `:keyup.left` - This will trigger when the user presses the left arrow key.
-- `:keyup.right` - This will trigger when the user presses the right arrow key.
-- `:keyup.enter` - This will trigger when the user presses "Enter".
-- `:keyup.space` - This will trigger when the user presses "Space".
 - `:press` - This will trigger when the user:
   - triggers the `click` event.
   - triggers the `keyup.enter` and `keyup.space` events.
