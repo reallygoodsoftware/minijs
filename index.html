@@ -14,8 +14,6 @@
 
     <script>
       hljs.highlightAll()
-    </script>
-    <script>
       MiniJS.debug = false
     </script>
   </head>
@@ -263,7 +261,7 @@
                     type="text"
                     :value="destination"
                     :change="destination = this.value;
-                           filteredDestinations = destinations.search(this.value)
+                           filteredDestinations = destinations.search(destination)
 
                           if (filteredDestinations.length)
                             selectedDestination = filteredDestinations.first
@@ -271,16 +269,17 @@
                             const region = regions.find((region) => region.name === destination)
                             if (region) selectedDestination = region.name
                             else selectedDestination = null
+
+                            console.log(region)
                           }"
                     :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
                     :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
                     placeholder="Search destinations"
                     class="bg-transparent font-normal placeholder:text-gray-400 focus:outline-none"
-                    :keyup.enter="if (selectedDestination != null) {
-                                  destination = selectedDestination;
-                                  selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
-                                  this.blur();
-                                 }"
+                    :keyup.enter="if (selectedDestination == null) return
+                                destination = selectedDestination;
+                                selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'
+                                this.blur();"
                   />
 
                   <button
