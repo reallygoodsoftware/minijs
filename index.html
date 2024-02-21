@@ -264,7 +264,14 @@
                     :value="destination"
                     :change="destination = this.value;
                            filteredDestinations = destinations.search(this.value)
-                           selectedDestination = filteredDestinations.first"
+
+                          if (filteredDestinations.length)
+                            selectedDestination = filteredDestinations.first
+                          else {
+                            const region = regions.find((region) => region.name === destination)
+                            if (region) selectedDestination = region.name
+                            else selectedDestination = null
+                          }"
                     :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
                     :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
                     placeholder="Search destinations"
@@ -709,18 +716,18 @@
                         :mousedown="mousedown = true"
                         :mouseup="mousedown = false"
                         :mousemove="if (mousedown) {
-                                    const value = getSliderValue({
+                                    const { percentage, left, top } = getSliderValue({
                                       x: event.clientX,
                                       y: event.clientY,
                                     });
 
-                                    totalMonths = Math.round(value.percentage / 100 * 12) === 0
+                                    totalMonths = Math.round(percentage / 100 * 12) === 0
                                       ? 12
-                                      : Math.round(value.percentage / 100 * 12);
+                                      : Math.round(percentage / 100 * 12);
                                     
-                                    $('.slider-fill').style.setProperty('--percentage', value.percentage);
-                                    $('.slider-handle').style.left = `${value.left}%`;
-                                    $('.slider-handle').style.top = `${value.top}%`;
+                                    $('.slider-fill').style.setProperty('--percentage', percentage);
+                                    $('.slider-handle').style.left = `${left}%`;
+                                    $('.slider-handle').style.top = `${top}%`;
                                   }"
                       >
                         <div
