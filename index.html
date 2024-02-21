@@ -405,7 +405,7 @@
               <!-- Where: Search by Region -->
               <div
                 class="w-max p-6 bg-white rounded-3xl border border-gray-300 shadow"
-                :class="selectedTab === 'Where' && (regions.some((region) => region === destination) || !destination.length) ? '' : 'hidden'"
+                :class="selectedTab === 'Where' && (regions.some((region) => region.name === destination) || !destination.length) ? '' : 'hidden'"
               >
                 <div class="text-xs font-bold text-gray-900">
                   Search by region
@@ -421,6 +421,7 @@
                       class="h-32 w-32 border border-gray-300 rounded-lg overflow-hidden hover:border-gray-900 focus:border-gray-900"
                       :click="destination = region.value;
                             selectedTab = whenSelectedTab === 'Dates' ? 'Check In' : 'When'"
+                      :class="region.name === destination ? 'border-gray-900' : ''"
                     >
                       <img
                         class="touch-none h-full w-full"
@@ -439,7 +440,7 @@
               <!-- Where: Search Results -->
               <div
                 class="w-max py-6 bg-white rounded-3xl border border-gray-300 shadow"
-                :class="selectedTab === 'Where' && destination.length && !regions.some((region) => region === destination) ? '' : 'hidden'"
+                :class="selectedTab === 'Where' && destination.length && !regions.some((region) => region.name === destination) ? '' : 'hidden'"
               >
                 <ul :each="place in filteredDestinations">
                   <li
