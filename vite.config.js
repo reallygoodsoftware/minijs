@@ -6,7 +6,11 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
       name: 'minijs',
-      fileName: (format) => `minijs.${format}.js`
-    }
-  }
-});
+      fileName: (format) => `minijs.${format}.js`,
+    },
+  },
+  test: {
+    include: ['lib/__tests__/**/*.test.js'],
+    environment: 'jsdom',
+  },
+})
