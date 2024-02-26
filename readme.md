@@ -448,6 +448,14 @@ Here are the custom array methods which are available for you to use:
   array.add('Tag 5') // returns ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']
   ```
 
+- `subtract` - removes a list of items from the array if they exist.
+  Usage: `array.subtract(['item1', 'item2'])`
+
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.subtract(['Tag 2', 'Tag 3']) // returns ['Tag 1', 'Tag 4']
+  ```
+
 - `remove` - removes an item from the array if it exists.
   Usage: `array.remove('item')`
 
