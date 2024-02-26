@@ -24,11 +24,14 @@ jobs:
           key: yarn-deps-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-deps-${{ hashFiles('yarn.lock') }}
+
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          git config user.name 'Tonic Labs'
+          git config user.email '<>'
           yarn install --frozen-lockfile
           yarn build
           npx auto shipit
