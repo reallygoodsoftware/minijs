@@ -269,8 +269,6 @@
                             const region = regions.find((region) => region.name === destination)
                             if (region) selectedDestination = region.name
                             else selectedDestination = null
-
-                            console.log(region)
                           }"
                     :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
                     :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
