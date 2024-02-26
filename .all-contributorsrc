@@ -1,0 +1,49 @@
+{
+  "projectName": "minijs",
+  "projectOwner": "Group-One-Technology",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "readme.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "jensnowww",
+      "name": "Jen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26903002?v=4",
+      "profile": "https://github.com/jensnowww",
+      "contributions": [
+        "code",
+        "infra",
+        "doc"
+      ]
+    },
+    {
+      "login": "tonyennis145",
+      "name": "tonyennis145",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3110339?v=4",
+      "profile": "https://github.com/tonyennis145",
+      "contributions": [
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "jorenrui",
+      "name": "Joeylene",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23741509?v=4",
+      "profile": "https://joeylene.com/",
+      "contributions": [
+        "infra",
+        "code",
+        "doc",
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": false
+}

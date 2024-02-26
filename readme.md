@@ -511,3 +511,21 @@ filteredTags.remove('Chocolates')
 // filteredTags variable.
 filteredTags = filteredTags.remove('Chocolates')
 ```
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/jensnowww"><img src="https://avatars.githubusercontent.com/u/26903002?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jen</b></sub></a><br /><a href="https://github.com/Group-One-Technology/minijs/commits?author=jensnowww" title="Code">💻</a> <a href="#infra-jensnowww" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Group-One-Technology/minijs/commits?author=jensnowww" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/tonyennis145"><img src="https://avatars.githubusercontent.com/u/3110339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tonyennis145</b></sub></a><br /><a href="https://github.com/Group-One-Technology/minijs/commits?author=tonyennis145" title="Documentation">📖</a> <a href="https://github.com/Group-One-Technology/minijs/commits?author=tonyennis145" title="Code">💻</a></td>
+    <td align="center"><a href="https://joeylene.com/"><img src="https://avatars.githubusercontent.com/u/23741509?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Joeylene</b></sub></a><br /><a href="#infra-jorenrui" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Group-One-Technology/minijs/commits?author=jorenrui" title="Code">💻</a> <a href="https://github.com/Group-One-Technology/minijs/commits?author=jorenrui" title="Documentation">📖</a> <a href="https://github.com/Group-One-Technology/minijs/commits?author=jorenrui" title="Tests">⚠️</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
