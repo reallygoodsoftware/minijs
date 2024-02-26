@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Custom Events</title>
+    <script src="/dist/minijs.umd.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-40">
+    <script>
+      MiniJS.extendEvents({ ':htmx:afteronload': 'htmx:afterOnLoad' })
+    </script>
+
+    <button
+      :htmx:afteronload="console.log('custom event!', event)"
+      :click="const event = document.createEvent('CustomEvent');
+              event.initCustomEvent('htmx:afterOnLoad', true, true, { name: 'htmx:afterOnLoad' });
+              this.dispatchEvent(event)"
+    >
+      Click Me
+    </button>
+  </body>
+</html>
