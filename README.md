@@ -1,5 +1,7 @@
 # MiniJS
 
+Mini is a ~~library~~ extension for HTML which lets you add interactivity to your app without needing a full blown frontend framework.
+
 ## The Idea
 
 - HTML is great because it's easy to learn and extremely accessible. But HTML has shortcomings when it comes to building interfaces with interactivity.
