@@ -13,4 +13,9 @@ module.exports = defineConfig({
     include: ['lib/__tests__/**/*.test.js'],
     environment: 'jsdom',
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './lib'),
+    },
+  },
 })

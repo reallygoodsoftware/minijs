@@ -1,16 +1,5 @@
 # MiniJS
 
-## Installation
-
-To setup MiniJS in your local machine, you can do the following:
-
-1. Clone the [repository](https://github.com/Group-One-Technology/minijs).
-2. Run `yarn` to install dependencies.
-3. Run `yarn build` to create the `dist` folder -> output for MiniJS.
-4. Run `yarn dev` to run the demo page locally.
-5. Run `yarn build-watch` on another terminal to build the code whenever the Mini.js code changes.
-6. Run `yarn test` to run the tests.
-
 ## The Idea
 
 - HTML is great because it's easy to learn and extremely accessible. But HTML has shortcomings when it comes to building interfaces with interactivity.
@@ -21,6 +10,17 @@ To setup MiniJS in your local machine, you can do the following:
 - The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2).
 
 Read the [documentation](https://jorenrui.notion.site/Mini-js-7a51523e0a5845c782097782f49a5bae?pvs=74)
+
+## Installation
+
+To setup MiniJS in your local machine, you can do the following:
+
+1. Clone the [repository](https://github.com/Group-One-Technology/minijs).
+2. Run `yarn` to install dependencies.
+3. Run `yarn build` to create the `dist` folder -> output for MiniJS.
+4. Run `yarn dev` to run the demo page locally.
+5. Run `yarn build-watch` on another terminal to build the code whenever the Mini.js code changes.
+6. Run `yarn test` to run the tests.
 
 ## Setting State
 
