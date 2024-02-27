@@ -1,6 +1,6 @@
 name: NPM Publish
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   automated_tests:
@@ -8,12 +8,10 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') && github.ref !== main"
     steps:
       - uses: actions/checkout@v2
-
       - name: Use Node.js 20.x
         uses: actions/setup-node@v1
         with:
           node-version: 20.x
-
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -21,12 +19,10 @@ jobs:
           key: yarn-deps-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-deps-${{ hashFiles('yarn.lock') }}
-
       - name: Run tests
         run: |
           yarn install --frozen-lockfile
           yarn test
-
   release:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
