@@ -340,30 +340,26 @@ If you want to use the variable across an element's attributes and events, you c
 
 Like the example above, `:load` can be used to set the initial value of the variable.
 
-### Parent Element Variables
+### Group Variables
 
-Adding a `:parent` attribute to an element will allow you to access its variables from its children using `parent.` variables.
-
-A children's `parent.` variable is the same as the parent's `el.` variable.
+Adding a `:group` attribute to an element will allow you to access its variables from its children using `group.` variables.
 
 ```html
-<div id="accordion" class="accordion" :parent>
-  <!-- Parent Element -->
-
+<!-- Group Element -->
+<div id="accordion" class="accordion" :group>
   <!-- Children Elements -->
-  <!-- parent.variable == #accordion's el.variable -->
   <section
     class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
   >
     <button
-      :click="parent.activeSection = 'about'"
+      :click="group.activeSection = 'about'"
       class="cursor-pointer font-bold p-4"
     >
       About Us
     </button>
     <div
       class="p-4 pt-2 overflow-hidden hidden"
-      :class="parent.activeSection =='about' ? 'block' : 'hidden'"
+      :class="group.activeSection =='about' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
@@ -374,14 +370,14 @@ A children's `parent.` variable is the same as the parent's `el.` variable.
     class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
   >
     <button
-      :click="parent.activeSection = 'contact'"
+      :click="group.activeSection = 'contact'"
       class="cursor-pointer font-bold p-4"
     >
       Contact Us
     </button>
     <div
       class="p-4 pt-2 overflow-hidden"
-      :class="parent.activeSection =='contact' ? 'block' : 'hidden'"
+      :class="group.activeSection =='contact' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
@@ -390,22 +386,30 @@ A children's `parent.` variable is the same as the parent's `el.` variable.
 
   <section
     class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-    :class="parent.activeSection =='team' ? 'active' : ''"
+    :class="group.activeSection =='team' ? 'active' : ''"
   >
     <button
-      :click="parent.activeSection = 'team'"
+      :click="group.activeSection = 'team'"
       class="cursor-pointer font-bold p-4"
     >
       Team 3
     </button>
     <div
       class="p-4 pt-2 overflow-hidden"
-      :class="parent.activeSection =='team' ? 'block' : 'hidden'"
+      :class="group.activeSection =='team' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
     </div>
   </section>
+</div>
+```
+
+You can set the default value of the group variables in the `:group` directive:
+
+```html
+<div id="accordion" class="accordion" :group="activeSection = 'about'">
+  <!-- ... -->
 </div>
 ```
 
