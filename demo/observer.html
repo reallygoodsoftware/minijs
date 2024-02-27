@@ -34,7 +34,7 @@
       <li>
         <button
           :click="this.parentNode.parentNode.removeChild(this.parentNode)"
-          :text="`my id is ${this.getAttribute('id')} (hover me to change) list item (click to delete)`"
+          :text="`look at my id list item (click to delete)`"
           :mouseenter="el.isHovered = true"
           :mouseleave="el.isHovered = false"
           :class="el.isHovered ? 'bg-red-200' : ''"
