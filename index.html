@@ -1474,12 +1474,13 @@
       </style>
       <div class="accordion" :group="activeSection = 'about'">
         <section
-          class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+          class="transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
           :class="group.activeSection == 'about' ? 'active' : ''"
         >
           <a
             :click="group.activeSection = 'about'"
             class="cursor-pointer font-bold p-4"
+            :aria-expanded="group.activeSection == 'about'"
           >
             About Us
           </a>
@@ -1492,12 +1493,13 @@
         </section>
 
         <section
-          class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
+          class="transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
           :class="group.activeSection =='contact' ? 'active' : ''"
         >
           <a
             :click="group.activeSection = 'contact'"
             class="cursor-pointer font-bold p-4"
+            :aria-expanded="group.activeSection == 'contact'"
           >
             Contact Us
           </a>
@@ -1510,11 +1512,12 @@
         </section>
 
         <section
-          class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-          :class="group.activeSection =='team' ? 'active' : ''"
+          class="transition-all border-gray-300 border rounded hover:bg-gray-100"
+          :class="group.activeSection == 'team' ? 'active' : ''"
         >
           <a
             :click="group.activeSection = 'team'"
+            :aria-expanded="group.activeSection == 'team'"
             class="cursor-pointer font-bold p-4"
           >
             Team 3
