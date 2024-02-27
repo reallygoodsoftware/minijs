@@ -263,13 +263,14 @@
                     :change="destination = this.value;
                            filteredDestinations = destinations.search(destination)
 
-                          if (filteredDestinations.length)
-                            selectedDestination = filteredDestinations.first
-                          else {
-                            const region = regions.find((region) => region.name === destination)
-                            if (region) selectedDestination = region.name
-                            else selectedDestination = null
-                          }"
+                           const region = regions.find((region) => region.name === destination)
+
+                           if (region)
+                              selectedDestination = region.name
+                           else if (filteredDestinations.length)
+                              selectedDestination = filteredDestinations.first
+                           else
+                              selectedDestination = null"
                     :keyup.up="selectedDestination = filteredDestinations.previousItem(selectedDestination)"
                     :keyup.down="selectedDestination = filteredDestinations.nextItem(selectedDestination)"
                     placeholder="Search destinations"
