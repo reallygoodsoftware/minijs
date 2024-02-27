@@ -1,6 +1,6 @@
 name: NPM Publish
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   automated_tests:
