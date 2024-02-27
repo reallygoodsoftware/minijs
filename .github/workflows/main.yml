@@ -1,11 +1,11 @@
 name: NPM Publish
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   automated_tests:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') && github.ref !== main"
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') && github.ref != main"
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
