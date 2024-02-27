@@ -1471,13 +1471,13 @@
           grid-template-rows: 0fr 1fr;
         }
       </style>
-      <div class="accordion" :parent>
+      <div class="accordion" :group>
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="parent.activeSection == 'about' ? 'active' : ''"
+          :class="group.activeSection == 'about' ? 'active' : ''"
         >
           <a
-            :click="parent.activeSection='about'"
+            :click="group.activeSection = 'about'"
             class="cursor-pointer font-bold p-4"
           >
             About Us
@@ -1492,10 +1492,10 @@
 
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="parent.activeSection =='contact' ? 'active' : ''"
+          :class="group.activeSection =='contact' ? 'active' : ''"
         >
           <a
-            :click="parent.activeSection='contact'"
+            :click="group.activeSection = 'contact'"
             class="cursor-pointer font-bold p-4"
           >
             Contact Us
@@ -1510,10 +1510,10 @@
 
         <section
           class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-          :class="parent.activeSection =='team' ? 'active' : ''"
+          :class="group.activeSection =='team' ? 'active' : ''"
         >
           <a
-            :click="parent.activeSection='team'"
+            :click="group.activeSection = 'team'"
             class="cursor-pointer font-bold p-4"
           >
             Team 3
