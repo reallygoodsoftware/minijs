@@ -1,3 +1,17 @@
+# v1.0.2 (Tue Feb 27 2024)
+
+#### 🐛 Bug Fix
+
+- Release: v1.0.2 [#19](https://github.com/Group-One-Technology/minijs/pull/19) ([@jorenrui](https://github.com/jorenrui))
+- Refactor: Entity Variable Restructure [#21](https://github.com/Group-One-Technology/minijs/pull/21) ([@jorenrui](https://github.com/jorenrui))
+- Refactor: Group Variables (rename of Parent Variables) [#20](https://github.com/Group-One-Technology/minijs/pull/20) ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.1 (Mon Feb 26 2024)
 
 :tada: This release contains work from new contributors! :tada:
