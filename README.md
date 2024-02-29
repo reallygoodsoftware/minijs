@@ -43,7 +43,7 @@ You can set the initial state of the variables using vanilla JS:
 
 ### Syncing the DOM with your state
 
-These are the following attributes that you can use to sync the DOM with your state:
+These are the following **dynamic attributes** that you can use to sync the DOM with your state:
 
 - `:value`
   - Set the value of a form input to the result of the evaluated JS code.
@@ -65,7 +65,7 @@ These are the following attributes that you can use to sync the DOM with your st
 
 ### Triggering DOM Updates / Re-renders
 
-A DOM update or a re-render happens when the state variable is re-assigned in dynamic events.
+A DOM update or a re-render happens when the state variable is re-assigned in **dynamic events**.
 
 ```html
 <input type="text" :change="firstName = this.value" />
@@ -81,7 +81,7 @@ When re-assignment happens in dynamic attributes, it will not trigger a re-rende
 
 ## Dynamic Attributes
 
-Besides `:value`, `:class`, and `:text`, you can also use the make **any** attribute dynamic by renaming it from `attribute` to `:attribute`. Values set to dynamic attributes are evaluated as JavaScript:
+Besides `:value`, `:class`, and `:text`, you can also make **any** attribute dynamic by renaming it from `attribute` to `:attribute`. Values set to dynamic attributes are evaluated as JavaScript:
 
 ```html
 <script>
@@ -98,6 +98,10 @@ Besides `:value`, `:class`, and `:text`, you can also use the make **any** attri
   Toggle Style
 </button>
 ```
+
+Special variables available in dynamic attributes:
+
+- `this` - the current element
 
 ## Classes
 
