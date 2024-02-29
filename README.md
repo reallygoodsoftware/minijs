@@ -28,7 +28,7 @@ To setup MiniJS in your local machine, you can do the following:
 
 `State` are variables that changes the UI or the DOM that uses it when they get updated.
 
-Note: Only non-nested objects are supported for reactive state.
+Note: Only non-objects are supported for reactive state.
 
 ### Setting Initial State
 
