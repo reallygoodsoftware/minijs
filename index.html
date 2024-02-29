@@ -1472,15 +1472,15 @@
           grid-template-rows: 0fr 1fr;
         }
       </style>
-      <div class="accordion" :group="activeSection = 'about'">
+      <div class="accordion" :scope="activeSection = 'about'">
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="group.activeSection == 'about' ? 'active' : ''"
+          :class="scope.activeSection == 'about' ? 'active' : ''"
         >
           <a
-            :click="group.activeSection = 'about'"
+            :click="scope.activeSection = 'about'"
             class="cursor-pointer font-bold p-4"
-            :aria-expanded="group.activeSection == 'about'"
+            :aria-expanded="scope.activeSection == 'about'"
           >
             About Us
           </a>
@@ -1494,12 +1494,12 @@
 
         <section
           class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
-          :class="group.activeSection =='contact' ? 'active' : ''"
+          :class="scope.activeSection =='contact' ? 'active' : ''"
         >
           <a
-            :click="group.activeSection = 'contact'"
+            :click="scope.activeSection = 'contact'"
             class="cursor-pointer font-bold p-4"
-            :aria-expanded="group.activeSection == 'contact'"
+            :aria-expanded="scope.activeSection == 'contact'"
           >
             Contact Us
           </a>
@@ -1513,11 +1513,11 @@
 
         <section
           class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-          :class="group.activeSection == 'team' ? 'active' : ''"
+          :class="scope.activeSection == 'team' ? 'active' : ''"
         >
           <a
-            :click="group.activeSection = 'team'"
-            :aria-expanded="group.activeSection == 'team'"
+            :click="scope.activeSection = 'team'"
+            :aria-expanded="scope.activeSection == 'team'"
             class="cursor-pointer font-bold p-4"
           >
             Team 3
