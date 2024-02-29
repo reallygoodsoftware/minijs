@@ -262,7 +262,7 @@ The `:each` statement is used to loop through an array and render a template for
 </ul>
 
 <ul :each="item, index in items">
-  <li :text="item"></li>
+  <li :text=" `The item is ${item}. The index is ${index}` "></li>
 </ul>
 ```
 
@@ -280,6 +280,14 @@ You can also use complex variables for the `:each` statement:
 
 <ul :each="item in items">
   <li :text="item.name"></li>
+</ul>
+```
+
+Note: Each item variables are **read-only**, which means you can't re-assign them like:
+
+```html
+<ul :each="item in items">
+  <li :load="item = 'new value'" :text="item"></li>
 </ul>
 ```
 
