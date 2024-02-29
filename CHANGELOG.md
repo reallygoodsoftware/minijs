@@ -1,3 +1,15 @@
+# v1.0.3 (Thu Feb 29 2024)
+
+#### 🐛 Bug Fix
+
+- Refactor: Rename :group to :scope [#22](https://github.com/Group-One-Technology/minijs/pull/22) ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.2 (Tue Feb 27 2024)
 
 #### 🐛 Bug Fix
