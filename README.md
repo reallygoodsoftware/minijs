@@ -342,26 +342,26 @@ If you want to use the variable across an element's attributes and events, you c
 
 Like the example above, `:load` can be used to set the initial value of the variable.
 
-### Group Variables
+### Scope Variables
 
-Adding a `:group` attribute to an element will allow you to access its variables from its children using `group.` variables.
+Adding a `:scope` attribute to an element will allow you to access its variables from its children using `scope.` variables.
 
 ```html
-<!-- Group Element -->
-<div id="accordion" class="accordion" :group>
+<!-- Scope Element -->
+<div id="accordion" class="accordion" :scope>
   <!-- Children Elements -->
   <section
     class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
   >
     <button
-      :click="group.activeSection = 'about'"
+      :click="scope.activeSection = 'about'"
       class="cursor-pointer font-bold p-4"
     >
       About Us
     </button>
     <div
       class="p-4 pt-2 overflow-hidden hidden"
-      :class="group.activeSection =='about' ? 'block' : 'hidden'"
+      :class="scope.activeSection =='about' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
@@ -372,14 +372,14 @@ Adding a `:group` attribute to an element will allow you to access its variables
     class="grid transition-all border-gray-300 border border-b-0 rounded hover:bg-gray-100"
   >
     <button
-      :click="group.activeSection = 'contact'"
+      :click="scope.activeSection = 'contact'"
       class="cursor-pointer font-bold p-4"
     >
       Contact Us
     </button>
     <div
       class="p-4 pt-2 overflow-hidden"
-      :class="group.activeSection =='contact' ? 'block' : 'hidden'"
+      :class="scope.activeSection =='contact' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
@@ -388,17 +388,17 @@ Adding a `:group` attribute to an element will allow you to access its variables
 
   <section
     class="grid transition-all border-gray-300 border rounded hover:bg-gray-100"
-    :class="group.activeSection =='team' ? 'active' : ''"
+    :class="scope.activeSection =='team' ? 'active' : ''"
   >
     <button
-      :click="group.activeSection = 'team'"
+      :click="scope.activeSection = 'team'"
       class="cursor-pointer font-bold p-4"
     >
       Team 3
     </button>
     <div
       class="p-4 pt-2 overflow-hidden"
-      :class="group.activeSection =='team' ? 'block' : 'hidden'"
+      :class="scope.activeSection =='team' ? 'block' : 'hidden'"
     >
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
       eirmod.
@@ -407,10 +407,10 @@ Adding a `:group` attribute to an element will allow you to access its variables
 </div>
 ```
 
-You can set the default value of the group variables in the `:group` directive:
+You can set the default value of the scope variables in the `:scope` directive:
 
 ```html
-<div id="accordion" class="accordion" :group="activeSection = 'about'">
+<div id="accordion" class="accordion" :scope="activeSection = 'about'">
   <!-- ... -->
 </div>
 ```
