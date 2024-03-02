@@ -79,6 +79,13 @@ When re-assignment happens in dynamic attributes, it will not trigger a re-rende
 <!-- the re-assignment of firstName will not trigger DOM updates -->
 ```
 
+### Special Variables
+
+There are special variables that you can use inside dynamic attributes and events:
+
+- `this` - the current element
+- `$` - equal to the `document.querySelector`.
+
 ## Dynamic Attributes
 
 Besides `:value`, `:class`, and `:text`, you can also make **any** attribute dynamic by renaming it from `attribute` to `:attribute`. Values set to dynamic attributes are evaluated as JavaScript:
@@ -98,10 +105,6 @@ Besides `:value`, `:class`, and `:text`, you can also make **any** attribute dyn
   Toggle Style
 </button>
 ```
-
-Special variables available in dynamic attributes:
-
-- `this` - the current element
 
 ## Classes
 
@@ -160,10 +163,11 @@ To set multiple reactive classes, you can use the `:class` attribute:
 
 You can create, use, and update state variables inside DOM events.
 
-Special variables are available in events:
+In events, you can get the current event using the `event` variable:
 
-- `event` - the event object
-- `this` - the current element
+```html
+<button :click="console.log(event)">Click Me</button>
+```
 
 ### Native Events
 
