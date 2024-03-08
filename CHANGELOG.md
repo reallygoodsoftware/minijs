@@ -1,3 +1,15 @@
+# v1.0.4 (Fri Mar 08 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: non conditional :class not working ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.3 (Thu Feb 29 2024)
 
 #### 🐛 Bug Fix
