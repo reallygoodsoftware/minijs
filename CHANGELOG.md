@@ -1,3 +1,15 @@
+# v1.0.5 (Fri Mar 08 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: :scope not working for dynamically inserted nodes ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.4 (Fri Mar 08 2024)
 
 #### ⚠️ Pushed to `main`
