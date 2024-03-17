@@ -1,3 +1,17 @@
+# v1.0.6 (Sun Mar 17 2024)
+
+#### ⚠️ Pushed to `main`
+
+- refactor: update array add, remove, toggle and replaceAt to be mutating array methods ([@jorenrui](https://github.com/jorenrui))
+- feat: trigger re-render for array mutation variables ([@jorenrui](https://github.com/jorenrui))
+- feat: identify array method usage with the lexer ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.5 (Fri Mar 08 2024)
 
 #### ⚠️ Pushed to `main`
