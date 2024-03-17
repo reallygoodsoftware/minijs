@@ -9,20 +9,10 @@ Mini is a ~~library~~ extension for HTML which lets you add interactivity to you
   - Have a high learning curve when it comes to code patterns and tooling.
   - Are primarily suited for interfaces with _lots_ of interactivity.
 - Mini JS lets you build interfaces with moderate amounts of interactivity without needing a heavyweight, javascript-centered library. Because it follows the same patterns as html, it doesn't require learning lots of new concepts. It's designed to be extremely minimal and learnable within an afternoon.
-- The key idea is that if we have 1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and 2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do. Technically vanilla HTML can already do (1), but it can't do (2).
-
-Read the [documentation](https://jorenrui.notion.site/Mini-js-7a51523e0a5845c782097782f49a5bae?pvs=74)
-
-## Installation
-
-To setup MiniJS in your local machine, you can do the following:
-
-1. Clone the [repository](https://github.com/Group-One-Technology/minijs).
-2. Run `yarn` to install dependencies.
-3. Run `yarn build` to create the `dist` folder -> output for MiniJS.
-4. Run `yarn dev` to run the demo page locally.
-5. Run `yarn build-watch` on another terminal to build the code whenever the Mini.js code changes.
-6. Run `yarn test` to run the tests.
+- The key idea is that if we have
+  1. A way to set state when an interaction happens (e.g a user clicks a button or types in an input), and
+  2. A way to update other parts of the UI when those variables change, we can now easily do a range of things we previously couldn't do.
+- Technically vanilla HTML can already do (1), but it can't do (2).
 
 ## Setting State
 
@@ -542,3 +532,16 @@ Here are the custom array methods which are available for you to use:
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+
+
+## Installation
+
+To setup MiniJS in your local machine, you can do the following:
+
+1. Clone the [repository](https://github.com/Group-One-Technology/minijs).
+2. Run `yarn` to install dependencies.
+3. Run `yarn build` to create the `dist` folder -> output for MiniJS.
+4. Run `yarn dev` to run the demo page locally.
+5. Run `yarn build-watch` on another terminal to build the code whenever the Mini.js code changes.
+6. Run `yarn test` to run the tests.
