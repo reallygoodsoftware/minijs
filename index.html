@@ -616,7 +616,7 @@
                             type="button"
                             class="h-36 w-28 flex flex-col items-center justify-center gap-1 text-center text-gray-900 rounded-2xl"
                             :class="selectedMonths.includes(month) ? 'ring-2 ring-gray-900' : 'ring-1 ring-gray-200'"
-                            :click="selectedMonths = selectedMonths.toggle(month);"
+                            :click="selectedMonths.toggle(month);"
                           >
                             <span
                               :class="selectedMonths.includes(month) ? 'text-gray-900' : 'text-gray-600'"
@@ -1339,8 +1339,8 @@
               :change="searchQuery = this.value;
                      filteredTags = allTags.subtract(selectedTags).search(searchQuery);
                      selectedTag = filteredTags.first"
-              :keyup.enter="selectedTags = selectedTags.add(selectedTag);
-                    filteredTags = filteredTags.remove(selectedTag);
+              :keyup.enter="selectedTags.add(selectedTag);
+                    filteredTags.remove(selectedTag);
                     selectedTag = filteredTags.first"
               :keyup.up="selectedTag = filteredTags.previousItem(selectedTag)"
               :keyup.down="selectedTag = filteredTags.nextItem(selectedTag)"
@@ -1364,8 +1364,8 @@
               >
                 <li
                   role="option"
-                  :click="selectedTags = selectedTags.add(tag);
-                        filteredTags = filteredTags.remove(selectedTag);
+                  :click="selectedTags.add(tag);
+                        filteredTags.remove(selectedTag);
                         selectedTag = filteredTags.first"
                   :mouseover="el.isHovering = true"
                   :mouseout="el.isHovering = false"
@@ -1392,7 +1392,7 @@
                 ></span>
                 <span
                   class="px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600"
-                  :click="selectedTags = selectedTags.remove(tag);
+                  :click="selectedTags.remove(tag);
                         filteredTags = allTags.subtract(selectedTags).search(searchQuery);
                         selectedTag = filteredTags.first"
                 >
@@ -1420,8 +1420,8 @@
    :change=&quot;searchQuery = this.value;
    filteredTags = allTags.subtract(selectedTags).search(searchQuery);
    selectedTag = filteredTags.first&quot;
-   :keyup.enter=&quot;selectedTags = selectedTags.add(selectedTag);
-   filteredTags = filteredTags.remove(selectedTag);
+   :keyup.enter=&quot;selectedTags.add(selectedTag);
+   filteredTags.remove(selectedTag);
    selectedTag = filteredTags.first&quot;
    :keyup.up=&quot;selectedTag = filteredTags.previousItem(selectedTag)&quot;
    :keyup.down=&quot;selectedTag = filteredTags.nextItem(selectedTag)&quot;
@@ -1431,8 +1431,8 @@
    &lt;p class=&quot;p-3 font-mono font-semibold mb-2 pb-1 border-b-2 border-gray-500 border-dashed&quot;&gt;Search Result:&lt;/p&gt;
    &lt;div :each=&quot;tag in filteredTags&quot;&gt;
       &lt;div
-         :click=&quot;selectedTags = selectedTags.add(tag);
-         filteredTags = filteredTags.remove(selectedTag);
+         :click=&quot;selectedTags.add(tag);
+         filteredTags.remove(selectedTag);
          selectedTag = filteredTags.first&quot;
          :mouseover=&quot;selectedTag = tag&quot;
          :class=&quot;selectedTag == tag ? 'bg-blue-100 text-blue-700' : 'text-gray-700'&quot;
@@ -1449,7 +1449,7 @@
       &lt;span :text=&quot;tag&quot; class=&quot;font-semibold font-mono text-xs&quot;&gt;&lt;/span&gt;
       &lt;span
          class=&quot;px-2 py-1 text-xs text-blue-800 font-semibold ml-2 cursor-pointer rounded-full hover:bg-red-200 hover:text-red-600&quot;
-         :click=&quot;selectedTags = selectedTags.remove(tag);
+         :click=&quot;selectedTags.remove(tag);
          filteredTags = allTags.subtract(selectedTags).search(searchQuery);
          selectedTag = filteredTags.first&quot;
          &gt;

@@ -455,20 +455,12 @@ Here are the custom array methods which are available for you to use:
   array.last // returns 'Vanilla'
   ```
 
-- `search` - returns an array of items that match the query.
+- `search` - returns a new array of items that match the query.
   Usage: `array.search('query')`
 
   ```js
   array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
   array.search('c') // returns ['Cherries', 'Chocolate']
-  ```
-
-- `add` - adds an item to the array if it doesn't exist.
-  Usage: `array.add('item')`
-
-  ```js
-  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.add('Tag 5') // returns ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']
   ```
 
 - `subtract` - removes a list of items from the array if they exist.
@@ -477,34 +469,6 @@ Here are the custom array methods which are available for you to use:
   ```js
   array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
   array.subtract(['Tag 2', 'Tag 3']) // returns ['Tag 1', 'Tag 4']
-  ```
-
-- `remove` - removes an item from the array if it exists.
-  Usage: `array.remove('item')`
-
-  ```js
-  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.remove('Tag 2') // returns ['Tag 1', 'Tag 3', 'Tag 4']
-  ```
-
-- `toggle` - removes / adds the item in the array
-  Usage: `array.toggle('item')`
-
-  ```js
-  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
-  array.toggle('Cherries') // removes 'Cherries'
-  // returns ['Chocolate', 'Blueberry', 'Vanilla']
-
-  array.toggle('Cherries') // re-adds 'Cherries'
-  // returns ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
-  ```
-
-- `replaceAt` - replaces the item at the given index with the new item.
-  Usage: `array.replaceAt(index, 'newItem')`
-
-  ```js
-  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
-  array.replaceAt(1, 'Tag 5') // returns ['Tag 1', 'Tag 5', 'Tag 3', 'Tag 4']
   ```
 
 - `nextItem` - gets the next item based on the given item in the array.
@@ -521,18 +485,45 @@ Here are the custom array methods which are available for you to use:
   array.previousItem('Tag 2') // returns 'Tag 1'
   ```
 
-#### Triggering Array Updates
+- `add` - adds an item to the original array if it doesn't exist.
+  - This mutates the original array.
+  Usage: `array.add('item')`
 
-To trigger a re-render you need to update the variable:
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.add('Tag 5') // returns ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5']
+  ```
 
-```js
-// Will not trigger a re-render
-filteredTags.remove('Chocolates')
+- `remove` - removes an item from the original array if it exists.
+  - This mutates the original array.
+  Usage: `array.remove('item')`
 
-// Will trigger a re-render due to re-assignment of the
-// filteredTags variable.
-filteredTags = filteredTags.remove('Chocolates')
-```
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.remove('Tag 2') // returns ['Tag 1', 'Tag 3', 'Tag 4']
+  ```
+
+- `toggle` - removes / adds the item in the original array
+  - This mutates the original array.
+  Usage: `array.toggle('item')`
+
+  ```js
+  array = ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  array.toggle('Cherries') // removes 'Cherries'
+  // returns ['Chocolate', 'Blueberry', 'Vanilla']
+
+  array.toggle('Cherries') // re-adds 'Cherries'
+  // returns ['Cherries', 'Chocolate', 'Blueberry', 'Vanilla']
+  ```
+
+- `replaceAt` - replaces the item at the given index with the new item.
+  - This mutates the original array.
+  Usage: `array.replaceAt(index, 'newItem')`
+
+  ```js
+  array = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4']
+  array.replaceAt(1, 'Tag 5') // returns ['Tag 1', 'Tag 5', 'Tag 3', 'Tag 4']
+  ```
 
 ## Contributors
 
