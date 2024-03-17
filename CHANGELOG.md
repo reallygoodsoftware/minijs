@@ -1,3 +1,15 @@
+# v1.0.7 (Sun Mar 17 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Update README.md ([@tonyennis145](https://github.com/tonyennis145))
+
+#### Authors: 1
+
+- [@tonyennis145](https://github.com/tonyennis145)
+
+---
+
 # v1.0.6 (Sun Mar 17 2024)
 
 #### ⚠️ Pushed to `main`
