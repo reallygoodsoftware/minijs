@@ -1,3 +1,15 @@
+# v1.0.8 (Wed Mar 20 2024)
+
+#### ⚠️ Pushed to `main`
+
+- feat: make array mutations re-renders work for el and scope variables ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.7 (Sun Mar 17 2024)
 
 #### ⚠️ Pushed to `main`
