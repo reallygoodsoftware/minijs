@@ -1,3 +1,22 @@
+# v1.0.9 (Sat Mar 23 2024)
+
+#### ⚠️ Pushed to `main`
+
+- feat: add array.deepFirst and array.deepLast properties ([@jorenrui](https://github.com/jorenrui))
+- feat: add support for multi-dimensional arrays for array.add ([@jorenrui](https://github.com/jorenrui))
+- feat: add support for multi dimensional arrays for array.toggle ([@jorenrui](https://github.com/jorenrui))
+- feat: add deep equality checker for arrays with array.sameAs(array) ([@jorenrui](https://github.com/jorenrui))
+- feat: add support for multi dimensional array for array.remove and array.subtract ([@jorenrui](https://github.com/jorenrui))
+- feat: support multi-dimensional arrays in array.nextItem and array.previousItem ([@jorenrui](https://github.com/jorenrui))
+- feat: add array.deepFlat and support multi dimensional array in array.search ([@jorenrui](https://github.com/jorenrui))
+- feat: expose MiniArray as MiniJS.Array ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.8 (Wed Mar 20 2024)
 
 #### ⚠️ Pushed to `main`
