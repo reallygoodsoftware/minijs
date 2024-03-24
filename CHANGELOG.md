@@ -1,3 +1,16 @@
+# v1.0.11 (Sun Mar 24 2024)
+
+#### ⚠️ Pushed to `main`
+
+- refactor: prevent array.nextItem and array.previousItem to return null ([@jorenrui](https://github.com/jorenrui))
+- refactor: update how array.previousItem and array.nextItem works for multi dimensional arrays ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.10 (Sun Mar 24 2024)
 
 #### ⚠️ Pushed to `main`
