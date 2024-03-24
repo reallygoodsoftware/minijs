@@ -1,3 +1,15 @@
+# v1.0.10 (Sun Mar 24 2024)
+
+#### ⚠️ Pushed to `main`
+
+- refactor: update array.search to return the same structure of the searched array ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.9 (Sat Mar 23 2024)
 
 #### ⚠️ Pushed to `main`
