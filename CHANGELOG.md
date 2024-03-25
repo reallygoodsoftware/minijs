@@ -1,3 +1,16 @@
+# v1.0.13 (Mon Mar 25 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: do not flatten arrays for array toggle, remove, and subtract ([@jorenrui](https://github.com/jorenrui))
+- fix: do not flatten array for array.add ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.12 (Mon Mar 25 2024)
 
 #### ⚠️ Pushed to `main`
