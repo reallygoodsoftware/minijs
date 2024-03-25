@@ -1,3 +1,15 @@
+# v1.0.12 (Mon Mar 25 2024)
+
+#### ⚠️ Pushed to `main`
+
+- feat: deep clone mini array ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.11 (Sun Mar 24 2024)
 
 #### ⚠️ Pushed to `main`
