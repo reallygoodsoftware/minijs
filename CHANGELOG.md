@@ -1,3 +1,15 @@
+# v1.0.14 (Mon Mar 25 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: delay in applying custom helpers to current state ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.13 (Mon Mar 25 2024)
 
 #### ⚠️ Pushed to `main`
