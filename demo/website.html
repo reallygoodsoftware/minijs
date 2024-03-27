@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full min-h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini.js</title>
+    <script src="/dist/minijs.umd.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/google-light.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/atom-one-dark.min.css"
+    />
+  </head>
+  <body class="h-full min-h-full bg-black-900 text-white">
+    <script>
+      hljs.highlightAll()
+    </script>
+    <style>
+      :root {
+        --primary: #72cb66;
+        --secondary: #c5d940;
+        --secondary-muted: #91a410;
+        --neutral: #d9d9d9;
+        --muted: #b8b8b8;
+
+        --black-900: #05090c;
+        --black-800: #0f1b21;
+      }
+
+      .bg-black-900 {
+        background-color: var(--black-900);
+      }
+
+      .bg-black-800,
+      .hover\:bg-black-800:hover,
+      .focus\:bg-black-800:focus {
+        background-color: var(--black-800);
+      }
+
+      .text-gradient {
+        background-image: linear-gradient(
+          to bottom,
+          var(--secondary),
+          #82c850,
+          #41d3a6
+        );
+        background-clip: text;
+        color: transparent;
+      }
+
+      .bg-gradient {
+        background-image: linear-gradient(
+          -200deg,
+          hsl(113deg 63% 25%) 0%,
+          hsl(113deg 63% 26%) 11%,
+          hsl(116deg 85% 21%) 22%,
+          hsl(120deg 100% 8%) 33%,
+          hsl(225deg 100% 3%) 44%,
+          hsl(218deg 60% 4%) 56%,
+          hsl(188deg 100% 20%) 70%,
+          hsl(113deg 49% 60%) 100%
+        );
+        filter: drop-shadow(0px 4px 4px #72cb661f);
+      }
+
+      .text-primary {
+        color: var(--primary);
+      }
+      .text-secondary {
+        color: var(--secondary);
+      }
+      .text-secondary-muted {
+        color: var(--secondary-muted);
+      }
+      .text-neutral {
+        color: var(--neutral);
+      }
+      .text-muted {
+        color: var(--muted);
+      }
+
+      .bg-primary {
+        background-color: var(--primary);
+      }
+      .bg-secondary {
+        background-color: var(--secondary);
+      }
+      .bg-neutral {
+        background-color: var(--neutral);
+      }
+    </style>
+
+    <header class="h-screen flex flex-col">
+      <nav class="relative py-8 px-10 flex items-center justify-between">
+        <a href="/" class="text-base text-gradient">Mini</a>
+
+        <ul
+          class="absolute left-1/2 -translate-x-1/2 flex gap-8 text-base text-neutral"
+        >
+          <li>
+            <a href="#">About Mini</a>
+          </li>
+          <li>
+            <a href="#">Use Cases</a>
+          </li>
+          <li>
+            <a href="#">FAQs</a>
+          </li>
+        </ul>
+
+        <a
+          href="#"
+          class="px-5 py-1.5 text-base text-black bg-secondary rounded-lg"
+        >
+          Learn Mini
+        </a>
+      </nav>
+
+      <div class="flex-grow flex items-center justify-center">
+        <div class="-mt-30 text-center">
+          <h1 class="text-7xl text-gradient">Build awesome sh*t</h1>
+          <p class="mt-2 text-3xl text-muted">
+            (without ever leaving your HTML)
+          </p>
+
+          <p class="mt-8 text-xl text-muted max-w-sm mx-auto">
+            Mini is a teeny tiny <del>library</del>
+            <span class="text-secondary">extension for HTML which</span>
+            lets you add interactivity to your app
+            <span class="text-gradient">without</span> needing a full blown
+            frontend framework.
+          </p>
+        </div>
+      </div>
+
+      <div class="pb-12">
+        <a
+          href="#"
+          class="flex items-center justify-center gap-2 text-center text-base text-secondary-muted"
+        >
+          Learn More
+          <svg
+            width="18"
+            height="17"
+            viewBox="0 0 18 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="mt-1 animate-bounce"
+          >
+            <path
+              d="M8.99588 16.8775C13.6233 16.8775 17.4428 13.058 17.4428 8.43876C17.4428 3.81948 13.6152 0 8.98772 0C4.36844 0 0.557129 3.81948 0.557129 8.43876C0.557129 13.058 4.3766 16.8775 8.99588 16.8775ZM8.99588 15.1963C5.24986 15.1963 2.25467 12.1848 2.25467 8.43876C2.25467 4.69273 5.24986 1.68938 8.98772 1.68938C12.7337 1.68938 15.7453 4.69273 15.7534 8.43876C15.7616 12.1848 12.7419 15.1963 8.99588 15.1963ZM9.86098 11.0504L12.9867 7.72872C13.2561 7.43492 13.2642 7.00237 13.0112 6.74937C12.7256 6.47189 12.2849 6.46373 12.0237 6.74121L8.99588 9.95675L5.96805 6.74121C5.70689 6.46373 5.25802 6.46373 4.98054 6.74937C4.7357 7.01053 4.7357 7.43492 5.00502 7.72056L8.13079 11.0422C8.65311 11.6053 9.33866 11.6053 9.86098 11.0504Z"
+              fill="#91A410"
+            />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <section class="relative my-20 py-20">
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 h-4 w-4 rounded-full bg-primary"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 bg-primary"
+        style="height: 800px"
+        aria-hidden="true"
+      ></div>
+
+      <div class="max-w-2xl mx-auto flex flex-col gap-20">
+        <div class="w-full rounded-2xl p-0.5 bg-gradient">
+          <div
+            class="p-12 h-full w-full items-center justify-center bg-black-900 rounded-2xl text-center"
+          >
+            <h2 class="text-5xl text-white">
+              <span class="text-gradient">Insanely</span> easy to get started
+            </h2>
+            <p class="mt-2 text-muted text-xl font-thin">
+              Just add the script to your page and you're off
+            </p>
+
+            <div class="mt-12">
+              <div
+                class="relative"
+                :load="el.link = '<script src=&ldquo;https://unpkg.com/tonic-minijs@1.0.1-canary.12.9c978f6.0/dist/minijs.umd.js&ldquo;></script>'"
+                :scope
+              >
+                <input
+                  type="text"
+                  class="w-full px-5 py-3 bg-black-800 text-xl rounded-lg text-muted"
+                  :value="scope.link"
+                />
+
+                <button
+                  type="button"
+                  class="absolute top-2 right-2 px-5 py-1.5 text-base text-black bg-secondary rounded-lg"
+                  :click="window.navigator.clipboard.writeText(scope.link);
+                  scope.copied = true;
+
+                  setTimeout(() => {
+                    scope.copied = false;
+                  }, 2000);"
+                  :text="scope.copied ? 'Copied!' : 'Copy'"
+                >
+                  Copy
+                </button>
+              </div>
+
+              <p class="mt-2 text-muted">
+                Prefer to see
+                <span class="text-gradient">some examples</span> before you
+                start?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full rounded-2xl p-0.5 bg-gradient">
+          <div
+            class="p-12 h-full w-full items-center justify-center bg-black-900 rounded-2xl text-center"
+          >
+            <h2 class="text-5xl text-white">
+              <span class="text-gradient">Zero</span> New Concepts
+            </h2>
+            <p class="mt-2 text-muted text-xl font-thin max-w-md mx-auto">
+              Mini is based on
+              <span class="text-secondary text-xl"
+                >concepts you already know</span
+              >, which means the learning curve is almost zero.
+            </p>
+
+            <div class="mt-12 flex flex-col gap-4">
+              <p class="text-muted text-xs">
+                Some concepts you may be familiar with
+              </p>
+
+              <ul class="flex item-center gap-2 text-base text-primary">
+                <li class="px-5 py-2 bg-black-800 rounded-lg whitespace-nowrap">
+                  Forms & Inputs
+                </li>
+                <li class="px-5 py-2 bg-black-800 rounded-lg whitespace-nowrap">
+                  Attributes
+                </li>
+                <li class="px-5 py-2 bg-black-800 rounded-lg whitespace-nowrap">
+                  JavaScript Variables
+                </li>
+                <li class="px-5 py-2 bg-black-800 rounded-lg whitespace-nowrap">
+                  CSS Classes
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 flex flex-col items-center">
+      <div class="mx-auto inline-block bg-black-800 p-4 rounded-full">
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+        >
+          <path
+            d="M19.9903 40C30.9908 40 40 30.9908 40 19.9903C40 9.00918 31.0101 0 20.0097 0C18.811 0 18.1344 0.715321 18.1344 1.8753V8.98985C18.1344 9.97583 18.8304 10.7492 19.8163 10.7492C20.8023 10.7492 21.4983 9.97583 21.4983 8.98985V4.02127C29.6762 4.77525 35.9787 11.6191 35.9787 19.9903C35.9787 28.8449 28.8835 35.9981 19.9903 35.9981C11.1165 35.9981 3.9826 28.8449 4.00193 19.9903C4.02127 16.1817 5.35524 12.6438 7.59787 9.91783C8.33253 8.91252 8.44853 7.8492 7.61721 7.01788C6.78589 6.18656 5.45191 6.2639 4.58192 7.40454C1.73997 10.8458 0 15.2344 0 19.9903C0 30.9908 9.00918 40 19.9903 40ZM23.1029 22.9676C24.6883 21.2856 24.3596 19.0043 22.465 17.709L12.6438 10.9618C11.4838 10.1885 10.3625 11.3291 11.1358 12.4891L17.883 22.291C19.1783 24.2049 21.4596 24.5529 23.1029 22.9676Z"
+            fill="#C5D940"
+          />
+        </svg>
+      </div>
+      <h2 class="mt-2 text-5xl text-white text-center">
+        Learn Mini<br />in
+        <span class="text-gradient">30 seconds</span>
+      </h2>
+
+      <div
+        :load="el.tab = 'step-1'"
+        class="mt-20 flex gap-2 w-full max-w-3xl"
+        :scope
+      >
+        <ul class="flex-1 flex flex-col gap-2 text-neutral">
+          <li>
+            <button
+              type="button"
+              :click="scope.tab = 'step-1'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-1' ? 'text-gradient' : ''"
+            >
+              Define a variable.
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="name = 'Tony'; scope.tab = 'step-2'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-2' ? 'text-gradient' : ''"
+            >
+              Use it in your HTML.
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="name = 'Tony'; scope.tab = 'step-3'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-3' ? 'text-gradient' : ''"
+            >
+              Update it when a user clicks<br />
+              on a button.
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="name = 'Tony'; scope.tab = 'step-4'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-4' ? 'text-gradient' : ''"
+            >
+              Update it when a user fills out a field.
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="scope.tab = 'step-5'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-5' ? 'text-gradient' : ''"
+            >
+              Watch your UI update magically.
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="scope.tab = 'step-6'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-black-800 focus:bg-black-800"
+              :class="scope.tab === 'step-6' ? 'text-gradient' : ''"
+            >
+              Use Javascript to add a dash of logic
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              :click="scope.tab = 'step-7'"
+              class="w-full p-4 text-left text-xl rounded hover:bg-gray-800 focus:bg-gray-800"
+              :class="scope.tab === 'step-7' ? 'text-gradient' : ''"
+            >
+              That's it!
+            </button>
+          </li>
+        </ul>
+
+        <div class="flex-1 rounded-2xl p-0.5 bg-gradient">
+          <div
+            class="relative px-6 h-full w-full items-center justify-center bg-black-900 rounded-2xl text-lg"
+          >
+            <div :class="scope.tab === 'step-1' ? 'block' : 'hidden'">
+              <pre><code class="language-html theme-atom-one-dark bg-black-900 !p-0">
+&lt;script&gt;
+  name = 'Tony'
+&lt;/script&gt;
+              </code></pre>
+            </div>
+
+            <div :class="scope.tab === 'step-2' ? 'block' : 'hidden'">
+              <pre><code class="language-html theme-atom-one-dark bg-black-900 !p-0">
+&lt;p :text=&quot;name&quot;&gt;&lt;/p&gt;
+              </code></pre>
+            </div>
+
+            <div :class="scope.tab === 'step-3' ? 'block' : 'hidden'">
+              <pre><code class="language-html theme-atom-one-dark bg-black-900 !p-0">
+&lt;p :text=&quot;name&quot;&gt;&lt;/p&gt;
+
+&lt;button
+  type=&quot;button&quot;
+  :click=&quot;name = 'Arya'&quot;
+&gt;
+  Update Name
+&lt;/button&gt;
+              </code></pre>
+            </div>
+
+            <div :class="scope.tab === 'step-4' ? 'block' : 'hidden'">
+              <pre><code class="language-html theme-atom-one-dark bg-black-900 !p-0">
+&lt;p :text=&quot;name&quot;&gt;&lt;/p&gt;
+
+&lt;input
+  type=&quot;text&quot;
+  :value=&quot;name&quot;
+  :change=&quot;name = this.value&quot;
+/&gt;
+              </code></pre>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 box-border w-full p-4 hidden"
+              :class="scope.tab !== 'step-1' ? 'block' : 'hidden'"
+            >
+              <div class="relative px-2 pt-6 pb-2 bg-black-800 rounded-lg">
+                <div
+                  class="absolute top-1 left-1 flex gap-1"
+                  aria-hidden="true"
+                >
+                  <span class="bg-green-700 h-3 w-3 rounded-full"></span>
+                  <span class="bg-yellow-700 h-3 w-3 rounded-full"></span>
+                  <span class="bg-red-700 h-3 w-3 rounded-full"></span>
+                </div>
+
+                <script>
+                  name = 'Tony'
+                </script>
+
+                <div :class="scope.tab === 'step-2' ? 'block' : 'hidden'">
+                  <p :text="name" style="all: revert"></p>
+                </div>
+
+                <div :class="scope.tab === 'step-3' ? 'block' : 'hidden'">
+                  <p :text="name" style="all: revert"></p>
+                  <button
+                    type="button"
+                    :click="name = 'Arya'"
+                    style="all: revert"
+                  >
+                    Update Name
+                  </button>
+                </div>
+
+                <div :class="scope.tab === 'step-4' ? 'block' : 'hidden'">
+                  <p :text="name" style="all: revert"></p>
+
+                  <input
+                    type="text"
+                    :value="name"
+                    :change="name = this.value"
+                    style="all: revert"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
