@@ -1,3 +1,15 @@
+# v1.0.15 (Sat Apr 13 2024)
+
+#### ⚠️ Pushed to `main`
+
+- feat: add wait helper to mini ([@jorenrui](https://github.com/jorenrui))
+
+#### Authors: 1
+
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.14 (Mon Mar 25 2024)
 
 #### ⚠️ Pushed to `main`
