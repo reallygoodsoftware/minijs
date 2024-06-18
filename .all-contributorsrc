@@ -42,6 +42,16 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "notthatjen",
+      "name": "Jen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26903002?v=4",
+      "profile": "https://github.com/notthatjen",
+      "contributions": [
+        "doc",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
