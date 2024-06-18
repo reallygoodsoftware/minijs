@@ -1,3 +1,16 @@
+# v1.0.16 (Tue Jun 18 2024)
+
+#### 🐛 Bug Fix
+
+- feat: allow custom attributes to be dynamic [#26](https://github.com/Group-One-Technology/minijs/pull/26) ([@jorenrui](https://github.com/jorenrui) [@tonyennis145](https://github.com/tonyennis145))
+
+#### Authors: 2
+
+- [@tonyennis145](https://github.com/tonyennis145)
+- Joeylene ([@jorenrui](https://github.com/jorenrui))
+
+---
+
 # v1.0.15 (Sat Apr 13 2024)
 
 #### ⚠️ Pushed to `main`
