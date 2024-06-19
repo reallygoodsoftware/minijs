@@ -1,3 +1,16 @@
+# v1.0.17 (Tue Jun 18 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of github.com:Group-One-Technology/minijs ([@notthatjen](https://github.com/notthatjen))
+- bugfix: fix domReady, wait for the entire page to load ([@notthatjen](https://github.com/notthatjen))
+
+#### Authors: 1
+
+- Jen ([@notthatjen](https://github.com/notthatjen))
+
+---
+
 # v1.0.16 (Tue Jun 18 2024)
 
 #### 🐛 Bug Fix
