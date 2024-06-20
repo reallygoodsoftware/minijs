@@ -1,3 +1,16 @@
+# v1.0.20 (Thu Jun 20 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of github.com:Group-One-Technology/minijs ([@notthatjen](https://github.com/notthatjen))
+- refactor: use math random better for uuid ([@notthatjen](https://github.com/notthatjen))
+
+#### Authors: 1
+
+- Jen ([@notthatjen](https://github.com/notthatjen))
+
+---
+
 # v1.0.19 (Thu Jun 20 2024)
 
 #### ⚠️ Pushed to `main`
