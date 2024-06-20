@@ -1,3 +1,16 @@
+# v1.0.18 (Wed Jun 19 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of github.com:Group-One-Technology/minijs ([@notthatjen](https://github.com/notthatjen))
+- refactor: failsafe domReady, wrap MiniJS init with domReady ([@notthatjen](https://github.com/notthatjen))
+
+#### Authors: 1
+
+- Jen ([@notthatjen](https://github.com/notthatjen))
+
+---
+
 # v1.0.17 (Tue Jun 18 2024)
 
 #### ⚠️ Pushed to `main`
